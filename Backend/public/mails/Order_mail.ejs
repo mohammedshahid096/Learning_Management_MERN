@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+      header {
+        background-color: #333;
+        color: #fff;
+        padding: 10px;
+        text-align: center;
+      }
+      header h1 {
+        color: white;
+      }
+      .container {
+        margin: 0 auto;
+        width: 80%;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+      }
+      .header {
+        text-align: center;
+        color: #333;
+        border-bottom: 1px solid #ddd;
+        padding: 20px 0;
+      }
+      .content {
+        margin-top: 20px;
+        line-height: 1.6;
+      }
+      .content p {
+        margin-bottom: 10px;
+      }
+      .footer {
+        margin-top: 30px;
+        text-align: center;
+        color: #777;
+        border-top: 1px solid #ddd;
+        padding: 20px 0;
+      }
+      .highlight {
+        color: #4caf50;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Learning Management System</h1>
+    </header>
+    <main>
+      <div class="container">
+        <h2 class="header">Order Confirmation</h2>
+        <div class="content">
+          <p>Dear <%= user.name %>,</p>
+          <p>Thank you for your purchase! Your order details are as follows:</p>
+          <p><strong class="highlight">Order ID:</strong> <%= order.uuid %></p>
+          <p>
+            <strong class="highlight">Course Name:</strong> <%= order.course %>
+          </p>
+          <p><strong class="highlight">Price:</strong> ₹ <%= order.price %></p>
+          <p><strong class="highlight">Date:</strong> <%= order.date %></p>
+        </div>
+        <div class="footer">
+          <p>
+            If you have any questions or concerns, please contact us at
+            <a href="mailto:[Support Email]">support@gmail.com</a>.
+          </p>
+          <p class="highlight">
+            Thank you for choosing our Learning Management System!
+          </p>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

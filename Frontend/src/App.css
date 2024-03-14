@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: rgb(0, 0, 0);
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --foreground-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  @apply text-[--foreground-rgb];
+}
+
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+@layer utilities {
+  * {
+    @apply m-0 p-0 box-border;
+  }
+  .app {
+    @apply bg-white dark:bg-gradient-to-b dark:from-gray-900 dark:to-black duration-300 dark:text-white;
+  }
+  .navbar {
+    @apply bg-zinc-100 dark:bg-gradient-to-b dark:from-gray-900 dark:to-black duration-300;
+  }
+  .fullScreen {
+    @apply min-h-screen w-screen;
+  }
+}

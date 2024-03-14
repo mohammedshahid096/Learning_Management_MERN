@@ -1,0 +1,19 @@
+{
+  "declaration": true,
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDirs": ["./src"],
+    "sourceMap": true,
+    "module": "commonjs",
+    "esModuleInterop": false,
+    "target": "es5",
+    "lib": ["es5", "es2015.promise", "DOM", "ScriptHost"],
+    "moduleResolution": "node"
+  },
+  "include": ["src/**/*"],
+  "exclude": [
+    "node_modules",
+    "./dist",
+    "./test"
+  ]
+}
