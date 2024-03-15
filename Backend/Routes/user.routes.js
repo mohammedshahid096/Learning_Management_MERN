@@ -21,11 +21,7 @@ UserRoutes.route("/verify").post(ActivateUserController);
 
 // ### Login related routes
 UserRoutes.route("/login").post(LoginUserController);
-UserRoutes.route("/logout").get(
-  Authentication,
-  Authorization("user"),
-  LogoutUserController
-);
+UserRoutes.route("/logout").get(Authentication, LogoutUserController);
 
 // ### Socail Auth logins
 UserRoutes.route("/socialAuth").post(SocailAuthValidation);
@@ -35,8 +31,8 @@ UserRoutes.route("/refresh_token").get(UpdateAccessTokenController);
 
 // ### user info
 UserRoutes.route("/me")
-  .get(Authentication, Authorization("user"), MyAccountController)
-  .put(Authentication, Authorization("user"), UpdateAccountController);
+  .get(Authentication, MyAccountController)
+  .put(Authentication, Authorization("user", "admin"), UpdateAccountController);
 
 UserRoutes.route("/me/update-password").put(
   Authentication,

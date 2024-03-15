@@ -13,10 +13,19 @@ import {
   RegisterUserAction,
   VerifyUserAction,
 } from "../Redux/actions/auth.action";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export const Login = ({ setaccountType, setOpenModal }) => {
   // ### usestates
   const [showPassword, setshowPassword] = useState(false);
+
+  // ### Autho
+  const {
+    loginWithPopup,
+    isAuthenticated,
+    user: AuthUser,
+    logout,
+  } = useAuth0();
 
   // ### react redux
   const dispatch = useDispatch();
@@ -63,6 +72,7 @@ export const Login = ({ setaccountType, setOpenModal }) => {
     }
   }, [error, user]);
 
+  console.log(AuthUser);
   return (
     <div className="space-y-5">
       <form onSubmit={handleSubmit}>
@@ -152,12 +162,12 @@ export const Login = ({ setaccountType, setOpenModal }) => {
       </div>
 
       <div className="flex gap-2">
-        <Button color="failure">
+        <Button color="failure" onClick={() => loginWithPopup()}>
           <FaGoogle className="h-4 -ml-1 mr-2" />
           Sign in with Google
         </Button>
 
-        <Button color="dark">
+        <Button color="dark" onClick={logout}>
           <FaGithub className=" h-4 -ml-1 mr-2" />
           Sign in with GitHub
         </Button>

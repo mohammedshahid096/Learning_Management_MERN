@@ -36,6 +36,10 @@ const ModelSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    isSocialAuth: {
+      type: Boolean,
+      default: false,
+    },
     courses: [
       {
         type: mongoose.Schema.Types.ObjectId,

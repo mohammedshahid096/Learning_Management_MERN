@@ -41,6 +41,7 @@ module.exports.SocailAuthValidation = (body) => {
   const schema = Joi.object({
     email: Joi.string().email().required().label("email"),
     name: Joi.string().required().label("name"),
+    picture: Joi.string().required().label("picture"),
   });
   return schema.validate(body);
 };

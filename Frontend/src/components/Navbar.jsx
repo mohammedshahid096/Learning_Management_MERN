@@ -102,18 +102,20 @@ const Navbar = () => {
             </button>
 
             {user ? (
-              <Avatar
-                img={user?.profile?.public_id ? user.profile.url : null}
-                rounded
-                size={"sm"}
-              />
+              <NavLink to={"/profile"}>
+                <Avatar
+                  img={user?.profile?.public_id ? user.profile.url : null}
+                  rounded
+                  size={"sm"}
+                />
+              </NavLink>
             ) : (
-              <button
+              <span
                 className="mt-1 focus:outline-none dark:text-white text-black"
                 onClick={() => setOpenModal(true)}
               >
                 <FaUserCircle size={22} />
-              </button>
+              </span>
             )}
           </nav>
         </div>

@@ -190,8 +190,9 @@ module.exports.UpdateAccessTokenController = async (req, res, next) => {
       httpOnly: true,
       // maxAge: parseInt(process.env.COOKIE_MAX_TIME),
     };
+    const expiryTime = 7 * 24 * 60 * 60;
 
-    await redis.set(getUser._id, JSON.stringify(getUser), "EX", 5);
+    await redis.set(getUser._id, JSON.stringify(getUser), "EX", expiryTime);
     res.cookie("access_token", AccessToken, AccessTokenOptions);
     res.status(200).json({
       success: true,
@@ -210,14 +211,16 @@ module.exports.SocialAuth = async (req, res, next) => {
       return next(httpErrors.BadRequest(error.details[0].message));
     }
 
-    const { email, name, avatar } = req.body;
+    const { email, name, picture } = req.body;
     const user = await userModel.findOne({ email });
 
     if (!user) {
       const newUser = new userModel({
         email,
         name,
+        profile: { url: picture },
         isVerified: true,
+        isSocialAuth: true,
       });
       await newUser.save();
       SendToken(newUser);

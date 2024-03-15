@@ -29,11 +29,7 @@ module.exports = async (userData, status, res) => {
   res.status(status).json({
     success: true,
     statusCode: status,
-    user: {
-      email: userData.email,
-      _id: userData._id,
-      role: userData.role,
-    },
+    user: userData,
     AccessToken,
   });
 };

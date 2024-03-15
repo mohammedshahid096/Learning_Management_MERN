@@ -12,6 +12,11 @@ import {
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
   USER_LOGIN_FAIL,
+  USER_LOGOUT_FAIL,
+  USER_LOGOUT_SUCCESS,
+  USER_LOGOUT_RESET,
+  USER_DETAIL_FAIL,
+  USER_DETAIL_SUCCESS,
 } from "../constants/user.constant";
 
 export const AuthReducer = (
@@ -29,6 +34,7 @@ export const AuthReducer = (
     case USER_LOGIN_SUCCESS:
       return {
         ...state,
+        loading: false,
         Accesstoken: action.payload.Accesstoken,
         user: action.payload.user,
       };
@@ -46,9 +52,22 @@ export const AuthReducer = (
         AccountCreated: action.payload.success,
         message: action.payload.message,
       };
+    case USER_LOGOUT_SUCCESS:
+      return {
+        ...state,
+        user: null,
+        message: action.payload.message,
+      };
+    case USER_DETAIL_SUCCESS:
+      return {
+        ...state,
+        user: action.payload.data,
+      };
     case USER_REGISTER_FAIL:
     case USER_VERIFY_FAIL:
     case USER_LOGIN_FAIL:
+    case USER_LOGOUT_FAIL:
+    case USER_DETAIL_FAIL:
       return {
         ...state,
         loading: false,
@@ -58,6 +77,7 @@ export const AuthReducer = (
 
     case USER_REGISTER_RESET:
     case USER_VERIFY_RESET:
+    case USER_LOGOUT_RESET:
       return {
         ...state,
         message: null,

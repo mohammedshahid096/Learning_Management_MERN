@@ -1,4 +1,6 @@
 import { URLConstant } from "../../config/URLConstant";
+import axiosInstance from "../../config/axiosInstance";
+import { createAccessCookie, removeAccessCookie } from "../../config/cookie";
 import {
   USER_CLEAR_ERRORS,
   USER_REGISTER_FAIL,
@@ -13,6 +15,11 @@ import {
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
   USER_LOGIN_FAIL,
+  USER_LOGOUT_SUCCESS,
+  USER_LOGOUT_FAIL,
+  USER_LOGOUT_RESET,
+  USER_DETAIL_SUCCESS,
+  USER_DETAIL_FAIL,
 } from "../constants/user.constant";
 import axios from "axios";
 
@@ -114,6 +121,36 @@ export const LoginUserAction = (Details) => async (dispatch) => {
       config
     );
     //  const data =  { message: "user created successfully", success: true }
+    createAccessCookie();
+    dispatch({
+      type: USER_LOGIN_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: USER_LOGIN_FAIL,
+      payload: error?.response?.data || error,
+    });
+  }
+};
+
+export const SocialUserLoginAction = (Details) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+    };
+
+    const { data } = await axios.post(
+      `${URLConstant}/user/socialAuth`,
+      Details,
+      config
+    );
+    //  const data =  { message: "user created successfully", success: true }
+
+    createAccessCookie();
 
     dispatch({
       type: USER_LOGIN_SUCCESS,
@@ -122,6 +159,54 @@ export const LoginUserAction = (Details) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: USER_LOGIN_FAIL,
+      payload: error?.response?.data || error,
+    });
+  }
+};
+
+export const UserLogoutAction =
+  (reset = false) =>
+  async (dispatch) => {
+    try {
+      if (reset) {
+        dispatch({ type: USER_LOGOUT_RESET });
+        return;
+      }
+      const config = {
+        withCredentials: true,
+      };
+
+      const { data } = await axios.get(`${URLConstant}/user/logout`, config);
+
+      removeAccessCookie();
+
+      dispatch({
+        type: USER_LOGOUT_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: USER_LOGOUT_FAIL,
+        payload: error?.response?.data || error,
+      });
+    }
+  };
+
+export const UserDetailProfileAction = () => async (dispatch) => {
+  try {
+    const config = {
+      withCredentials: true,
+    };
+
+    const { data } = await axiosInstance.get(`${URLConstant}/user/me`, config);
+
+    dispatch({
+      type: USER_DETAIL_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: USER_DETAIL_FAIL,
       payload: error?.response?.data || error,
     });
   }

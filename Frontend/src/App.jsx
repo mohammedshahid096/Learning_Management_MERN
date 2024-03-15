@@ -6,8 +6,15 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Courses from "./pages/Courses";
 import { Toaster } from "react-hot-toast";
+import Profile from "./pages/Profile";
+import ProtectedRoute from "./routes/ProtectedRoute";
+import { useDispatch } from "react-redux";
+import { UserDetailProfileAction } from "./Redux/actions/auth.action";
 
 function App() {
+  // ### react redux
+  const dispatch = useDispatch();
+
   const loadFonts = () => {
     webfont.load({
       families: [
@@ -17,8 +24,13 @@ function App() {
     });
   };
 
+  const fetchUserDetails = () => {
+    dispatch(UserDetailProfileAction());
+  };
+
   useEffect(() => {
     loadFonts();
+    fetchUserDetails();
   }, []);
   return (
     <div className="fullScreen app">
@@ -27,6 +39,14 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/courses" element={<Courses />} />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </BrowserRouter>
 
