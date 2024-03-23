@@ -9,9 +9,9 @@ const {
   UpdateAccountController,
   UpdatePasswordController,
   UserAvatarController,
+  SocialAuth,
 } = require("../Controllers/user.controller");
 const { Authentication, Authorization } = require("../Middlewares/Auth");
-const { SocailAuthValidation } = require("../JoiSchemas/user.schema");
 const { UserProfileUpload } = require("../Middlewares/Multer");
 const UserRoutes = express.Router();
 
@@ -24,7 +24,7 @@ UserRoutes.route("/login").post(LoginUserController);
 UserRoutes.route("/logout").get(Authentication, LogoutUserController);
 
 // ### Socail Auth logins
-UserRoutes.route("/socialAuth").post(SocailAuthValidation);
+UserRoutes.route("/socialAuth").post(SocialAuth);
 
 // ### Refresh Access Token
 UserRoutes.route("/refresh_token").get(UpdateAccessTokenController);

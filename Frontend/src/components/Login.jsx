@@ -11,6 +11,7 @@ import {
   ClearAuthReducer,
   LoginUserAction,
   RegisterUserAction,
+  SocialUserLoginAction,
   VerifyUserAction,
 } from "../Redux/actions/auth.action";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -73,6 +74,7 @@ export const Login = ({ setaccountType, setOpenModal }) => {
   }, [error, user]);
 
   console.log(AuthUser);
+  console.log(isAuthenticated);
   return (
     <div className="space-y-5">
       <form onSubmit={handleSubmit}>

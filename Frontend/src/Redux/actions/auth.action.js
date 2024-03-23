@@ -1,6 +1,10 @@
 import { URLConstant } from "../../config/URLConstant";
 import axiosInstance from "../../config/axiosInstance";
-import { createAccessCookie, removeAccessCookie } from "../../config/cookie";
+import {
+  createAccessCookie,
+  getAccessCookie,
+  removeAccessCookie,
+} from "../../config/cookie";
 import {
   USER_CLEAR_ERRORS,
   USER_REGISTER_FAIL,
@@ -20,6 +24,12 @@ import {
   USER_LOGOUT_RESET,
   USER_DETAIL_SUCCESS,
   USER_DETAIL_FAIL,
+  UPDATE_USER_DETAIL_REQUEST,
+  UPDATE_USER_DETAIL_SUCCESS,
+  UPDATE_USER_DETAIL_FAIL,
+  UPDATE_USER_DETAIL_RESET,
+  SOCAIL_AUTH_SUCCESS,
+  SOCAIL_AUTH_FAIL,
 } from "../constants/user.constant";
 import axios from "axios";
 
@@ -148,17 +158,16 @@ export const SocialUserLoginAction = (Details) => async (dispatch) => {
       Details,
       config
     );
-    //  const data =  { message: "user created successfully", success: true }
 
     createAccessCookie();
 
     dispatch({
-      type: USER_LOGIN_SUCCESS,
+      type: SOCAIL_AUTH_SUCCESS,
       payload: data,
     });
   } catch (error) {
     dispatch({
-      type: USER_LOGIN_FAIL,
+      type: SOCAIL_AUTH_FAIL,
       payload: error?.response?.data || error,
     });
   }
@@ -193,24 +202,73 @@ export const UserLogoutAction =
   };
 
 export const UserDetailProfileAction = () => async (dispatch) => {
+  const haveToken = getAccessCookie();
   try {
     const config = {
       withCredentials: true,
     };
 
-    const { data } = await axiosInstance.get(`${URLConstant}/user/me`, config);
-
-    dispatch({
-      type: USER_DETAIL_SUCCESS,
-      payload: data,
-    });
+    if (haveToken) {
+      const { data } = await axiosInstance.get(
+        `${URLConstant}/user/me`,
+        config
+      );
+      dispatch({
+        type: USER_DETAIL_SUCCESS,
+        payload: data,
+      });
+    } else {
+      const response = await axios.get(
+        `${URLConstant}/user/refresh_token`,
+        config
+      );
+      if (response.data.success) {
+        createAccessCookie();
+        const { data } = await axios.get(`${URLConstant}/user/me`, config);
+        if (data.success) {
+          dispatch({
+            type: USER_DETAIL_SUCCESS,
+            payload: data,
+          });
+        }
+      }
+    }
   } catch (error) {
-    dispatch({
-      type: USER_DETAIL_FAIL,
-      payload: error?.response?.data || error,
-    });
+    // dispatch({
+    //   type: USER_DETAIL_FAIL,
+    //   payload: error?.response?.data || error,
+    // });
   }
 };
+
+export const UpdateUserDetailAction =
+  (Details, Reset = false) =>
+  async (dispatch) => {
+    try {
+      if (Reset) {
+        dispatch({ type: UPDATE_USER_DETAIL_RESET });
+        return;
+      }
+      dispatch({ type: UPDATE_USER_DETAIL_REQUEST });
+      const config = {
+        withCredentials: true,
+      };
+      const { data } = await axios.put(
+        `${URLConstant}/user/me`,
+        Details,
+        config
+      );
+      dispatch({
+        type: UPDATE_USER_DETAIL_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: UPDATE_USER_DETAIL_FAIL,
+        payload: error?.response?.data || error,
+      });
+    }
+  };
 
 export const ClearAuthReducer = () => (dispatch) => {
   dispatch({

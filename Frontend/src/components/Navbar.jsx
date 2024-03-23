@@ -104,14 +104,20 @@ const Navbar = () => {
             {user ? (
               <NavLink to={"/profile"}>
                 <Avatar
-                  img={user?.profile?.public_id ? user.profile.url : null}
+                  img={
+                    user?.isSocialAuth
+                      ? user.profile.url
+                      : user?.profile?.public_id
+                      ? user.profile.url
+                      : null
+                  }
                   rounded
                   size={"sm"}
                 />
               </NavLink>
             ) : (
               <span
-                className="mt-1 focus:outline-none dark:text-white text-black"
+                className="mt-1 focus:outline-none dark:text-white text-black cursor-pointer"
                 onClick={() => setOpenModal(true)}
               >
                 <FaUserCircle size={22} />

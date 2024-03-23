@@ -133,7 +133,7 @@ module.exports.LoginUserController = async (req, res, next) => {
 
     delete userExist.password;
 
-    redis.set(userExist._id, JSON.stringify(userExist));
+    await redis.set(userExist._id, JSON.stringify(userExist));
 
     SendToken(userExist, 200, res);
   } catch (error) {
@@ -223,9 +223,11 @@ module.exports.SocialAuth = async (req, res, next) => {
         isSocialAuth: true,
       });
       await newUser.save();
-      SendToken(newUser);
+      await redis.set(user._id, JSON.stringify(user));
+      SendToken(newUser, 201, res);
     } else {
-      SendToken(user);
+      await redis.set(user._id, JSON.stringify(user));
+      SendToken(user, 200, res);
     }
   } catch (error) {
     next(httpErrors.InternalServerError(error.message));
@@ -266,9 +268,9 @@ module.exports.UpdateAccountController = async (req, res, next) => {
       return next(httpErrors.NotFound(errorConstant.USER_NOT_FOUND));
     }
 
-    if (email) {
-      user.email = email;
-    }
+    // if (email) {
+    //   user.email = email;
+    // }
 
     if (name) {
       user.name = name;
