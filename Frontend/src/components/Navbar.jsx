@@ -32,7 +32,7 @@ const NavItems = [
 
 const Navbar = () => {
   // ### states
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
   const [openSidebar, setopenSidebar] = useState(false);
   const [openModal, setOpenModal] = useState(false);
 

@@ -6,13 +6,16 @@ const { redis } = require("../Config/redis.config");
 // for authentication
 module.exports.Authentication = async (req, res, next) => {
   try {
-    const { access_token } = req.cookies;
+    const { access_token, refresh_token } = req.cookies;
     if (!access_token) {
+      console.log(refresh_token);
       return next(httpErrors.Unauthorized(errorConstant.NOT_AUTHENTICATED));
     }
 
     const decode = await VerifyAccessToken(access_token);
     if (!decode.success) {
+      res.clearCookie("access_token");
+      res.clearCookie("refresh_token");
       return next(httpErrors.Unauthorized(decode.error.message));
     }
 
@@ -36,6 +39,8 @@ module.exports.Authentication = async (req, res, next) => {
 module.exports.Authorization = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.role)) {
+      res.clearCookie("access_token");
+      res.clearCookie("refresh_token");
       return next(httpErrors.Unauthorized(errorConstant.NOT_AUTHORIZED));
     }
     next();

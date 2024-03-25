@@ -11,6 +11,7 @@ const {
   GetSingleAllCourseDataService,
   UpdateCourseService,
   GetAllCoursesService,
+  CoursesListService,
 } = require("../Services/course.service");
 const { errorConstant, successConstant } = require("../Utils/constants");
 const { redis } = require("../Config/redis.config");
@@ -146,6 +147,19 @@ module.exports.AllCoursesWithout = async (req, res, next) => {
     }
     const data = await GetAllCoursesService();
     await redis.set("allCourses", JSON.stringify(data));
+    res.status(200).json({
+      success: true,
+      statusCode: 200,
+      data,
+    });
+  } catch (error) {
+    next(httpErrors.InternalServerError(error.message));
+  }
+};
+
+module.exports.AllCoursesList = async (req, res, next) => {
+  try {
+    const data = await CoursesListService();
     res.status(200).json({
       success: true,
       statusCode: 200,

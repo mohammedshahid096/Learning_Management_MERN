@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { UserLogoutAction } from "../Redux/actions/auth.action";
 import { ChangeUserPassword, UserProfileData } from "../components/UserProfile";
 import { useAuth0 } from "@auth0/auth0-react";
+import { Navigate } from "react-router-dom";
 
 const AllSideBars = {
   adminSideBars: [
@@ -17,6 +18,7 @@ const AllSideBars = {
   userSideBars: [
     { name: "Profile", icon: HiUser, activeCount: 1 },
     { name: "Reset Password", icon: TbPasswordUser, activeCount: 2 },
+    { name: "Dashboard", icon: HiChartPie, activeCount: 3 },
   ],
 };
 
@@ -93,6 +95,7 @@ const Profile = () => {
       <div className="w-full">
         {activeTab === 1 && <UserProfileData />}
         {activeTab === 2 && <ChangeUserPassword />}
+        {activeTab === 3 && <Navigate to={"/admin"} />}
       </div>
     </div>
   );

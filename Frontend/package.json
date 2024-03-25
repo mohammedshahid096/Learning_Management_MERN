@@ -17,6 +17,7 @@
     "formik": "^2.4.5",
     "js-cookie": "^3.0.5",
     "react": "^18.2.0",
+    "react-data-table-component": "^7.6.2",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
     "react-hot-toast": "^2.4.1",
@@ -25,6 +26,7 @@
     "react-router-dom": "^6.22.3",
     "redux": "^5.0.1",
     "redux-thunk": "^3.1.0",
+    "timeago.js": "^4.0.2",
     "webfontloader": "^1.6.28",
     "yup": "^1.4.0"
   },

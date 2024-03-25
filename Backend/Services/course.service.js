@@ -44,6 +44,14 @@ module.exports.UpdateCourseService = async (id, details) => {
   return data;
 };
 
+// only list of the course
+module.exports.CoursesListService = async () => {
+  let data = await coursesModel
+    .find()
+    .select("name rating purchase level createdAt");
+  return data;
+};
+
 module.exports.GetAllCoursesService = async () => {
   let aggregationPipeLine = [
     {

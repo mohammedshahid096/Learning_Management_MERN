@@ -1,22 +1,22 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import "./App.css";
 import webfont from "webfontloader";
 import Navbar from "./components/Navbar";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "./pages/Home";
-import Courses from "./pages/Courses";
 import { Toaster } from "react-hot-toast";
-import Profile from "./pages/Profile";
 import ProtectedRoute from "./routes/ProtectedRoute";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   UserDetailProfileAction,
   SocialUserLoginAction,
 } from "./Redux/actions/auth.action";
 import { useAuth0 } from "@auth0/auth0-react";
+import AllRoutesItems from "./routes/AllRoutesItems";
+import { removeAccessCookie } from "./config/cookie";
 function App() {
   // ### react redux
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.AuthState);
 
   const { isAuthenticated, user: AuthUser } = useAuth0();
 
@@ -42,10 +42,20 @@ function App() {
     dispatch(SocialUserLoginAction(details));
   };
 
+  const getLogout = () => {
+    removeAccessCookie();
+  };
+
   useEffect(() => {
     loadFonts();
     fetchUserDetails();
   }, []);
+
+  useEffect(() => {
+    if (!user) {
+      getLogout();
+    }
+  }, [user]);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -53,23 +63,36 @@ function App() {
     }
   }, [isAuthenticated]);
 
-  console.log(isAuthenticated);
+  // console.log(isAuthenticated);
 
   return (
     <div className="fullScreen app">
       <BrowserRouter>
         <Navbar />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/courses" element={<Courses />} />
-          <Route
-            path="/profile"
-            element={
-              <ProtectedRoute>
-                <Profile />
-              </ProtectedRoute>
+          {AllRoutesItems.map((singleRoutes) => {
+            if (singleRoutes.protected) {
+              return (
+                <Route
+                  path={singleRoutes.path}
+                  key={singleRoutes.num}
+                  element={
+                    <ProtectedRoute Access={singleRoutes.Access}>
+                      <singleRoutes.element />
+                    </ProtectedRoute>
+                  }
+                />
+              );
+            } else {
+              return (
+                <Route
+                  path={singleRoutes.path}
+                  key={singleRoutes.num}
+                  element={<singleRoutes.element />}
+                />
+              );
             }
-          />
+          })}
         </Routes>
       </BrowserRouter>
 

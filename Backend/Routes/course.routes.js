@@ -6,6 +6,7 @@ const {
   EditCourseController,
   AllCoursesWithout,
   GetUserSingleCourse,
+  AllCoursesList,
 } = require("../Controllers/course.controller");
 const CourseRoutes = express.Router();
 
@@ -19,6 +20,12 @@ CourseRoutes.route("/uploadCourse").post(
 CourseRoutes.route("/single/:courseid")
   .get(Authentication, GetSpecificCompleteCourse)
   .put(Authentication, Authorization("admin"), EditCourseController);
+
+CourseRoutes.route("/courses/list").get(
+  Authentication,
+  Authorization("admin", "user"),
+  AllCoursesList
+);
 
 CourseRoutes.route("/all").get(Authentication, AllCoursesWithout);
 
