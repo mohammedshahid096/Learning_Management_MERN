@@ -10,6 +10,9 @@ const {
   UpdatePasswordController,
   UserAvatarController,
   SocialAuth,
+  UsersListController,
+  UpdateUserRoleController,
+  DeleteUserController,
 } = require("../Controllers/user.controller");
 const { Authentication, Authorization } = require("../Middlewares/Auth");
 const { UserProfileUpload } = require("../Middlewares/Multer");
@@ -36,14 +39,31 @@ UserRoutes.route("/me")
 
 UserRoutes.route("/me/update-password").put(
   Authentication,
-  Authorization("user"),
+  Authorization("user", "admin"),
   UpdatePasswordController
 );
 UserRoutes.route("/me/avatar").put(
   Authentication,
-  Authorization("user"),
+  Authorization("user", "admin"),
   UserProfileUpload,
   UserAvatarController
+);
+
+// ### Admin
+UserRoutes.route("/users/all").get(
+  Authentication,
+  Authorization("admin"),
+  UsersListController
+);
+UserRoutes.route("/role/:userid").patch(
+  Authentication,
+  Authorization("admin"),
+  UpdateUserRoleController
+);
+UserRoutes.route("/delete/:userid").delete(
+  Authentication,
+  Authorization("admin"),
+  DeleteUserController
 );
 
 module.exports = UserRoutes;

@@ -30,12 +30,6 @@ function AccountCustomModal({ openModal, setOpenModal }) {
           <VerifyAccount setaccountType={setaccountType} />
         )}
       </Modal.Body>
-
-      {/* <Modal.Footer className="justify-end bg-white dark:bg-slate-900">
-        <Button color="failure" onClick={() => setOpenModal(false)}>
-          Close
-        </Button>
-      </Modal.Footer> */}
     </Modal>
   );
 }

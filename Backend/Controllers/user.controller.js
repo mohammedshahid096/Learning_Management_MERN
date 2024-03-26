@@ -6,6 +6,7 @@ const {
   SocailAuthValidation,
   UpdateAccountValidation,
   UpdatePasswordValidation,
+  UpdateUserRoleValidation,
 } = require("../JoiSchemas/user.schema");
 const userModel = require("../Models/user.model");
 const {
@@ -368,6 +369,70 @@ module.exports.UserAvatarController = async (req, res, next) => {
       success: true,
       statusCode: 200,
       data: user,
+    });
+  } catch (error) {
+    next(httpErrors.InternalServerError(error.message));
+  }
+};
+
+// -----------------------
+// ADMIN
+// -----------------------
+
+// list of the users
+module.exports.UsersListController = async (req, res, next) => {
+  try {
+    const data = await userModel.find();
+    res.status(200).json({
+      success: true,
+      statusCode: 200,
+      data,
+    });
+  } catch (error) {
+    next(httpErrors.InternalServerError(error.message));
+  }
+};
+
+// updating a user role
+module.exports.UpdateUserRoleController = async (req, res, next) => {
+  try {
+    const { userid } = req.params;
+    const { error } = UpdateUserRoleValidation(req.body);
+    if (error) {
+      return next(httpErrors.BadRequest(error.details[0].message));
+    }
+    const data = await userModel.findByIdAndUpdate(userid, {
+      role: req.body.role,
+    });
+
+    if (!data) {
+      return next(httpErrors.NotFound(errorConstant.USER_NOT_FOUND));
+    }
+
+    res.status(200).json({
+      success: true,
+      statusCode: 200,
+      message: successConstant.USER_UPDATED,
+    });
+  } catch (error) {
+    next(httpErrors.InternalServerError(error.message));
+  }
+};
+
+// deleting a user by user
+module.exports.DeleteUserController = async (req, res, next) => {
+  try {
+    const { userid } = req.params;
+    const data = await userModel.findByIdAndDelete(userid);
+
+    if (!data) {
+      return next(httpErrors.NotFound(errorConstant.USER_NOT_FOUND));
+    }
+
+    res.status(200).json({
+      success: true,
+      statusCode: 200,
+      message: successConstant.USER_DELETED,
     });
   } catch (error) {
     next(httpErrors.InternalServerError(error.message));

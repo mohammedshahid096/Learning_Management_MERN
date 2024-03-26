@@ -16,11 +16,11 @@ const ProtectedRoute = ({ children, Access }) => {
 
   useEffect(() => {
     if (!Access.includes(user?.role)) {
-      console.log("should back");
-      navigate(-1);
+      navigate("/");
       return;
     }
   }, [location?.pathname]);
+
   return children;
 };
 

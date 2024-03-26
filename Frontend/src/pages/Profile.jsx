@@ -18,7 +18,6 @@ const AllSideBars = {
   userSideBars: [
     { name: "Profile", icon: HiUser, activeCount: 1 },
     { name: "Reset Password", icon: TbPasswordUser, activeCount: 2 },
-    { name: "Dashboard", icon: HiChartPie, activeCount: 3 },
   ],
 };
 

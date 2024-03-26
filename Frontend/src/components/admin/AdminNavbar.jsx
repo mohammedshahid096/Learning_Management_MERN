@@ -4,6 +4,7 @@ import { Avatar, Sidebar } from "flowbite-react";
 import { HiChartPie, HiInbox } from "react-icons/hi";
 import { AiOutlineVideoCameraAdd } from "react-icons/ai";
 import { MdOutlineOndemandVideo } from "react-icons/md";
+import { FaUsersCog } from "react-icons/fa";
 import { FaUsers } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -58,6 +59,15 @@ const AdminNavbar = () => {
               onClick={() => navigate("/admin/course/all")}
             >
               Live Courses
+            </Sidebar.Item>
+          </Sidebar.Collapse>
+
+          <Sidebar.Collapse label="Collabration">
+            <Sidebar.Item
+              icon={FaUsersCog}
+              onClick={() => navigate("/admin/user/team")}
+            >
+              Team Members
             </Sidebar.Item>
           </Sidebar.Collapse>
         </Sidebar.ItemGroup>

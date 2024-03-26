@@ -3,6 +3,7 @@ import { thunk } from "redux-thunk";
 import { AuthReducer } from "./reducers/Auth.reducer";
 import { AdminCourseReducer } from "./reducers/Course.reducer";
 import { getAccessCookie } from "../config/cookie";
+import { AdminUserReducer } from "./reducers/user.reducer.js";
 
 const middleware = (getDefaultMiddleware) =>
   getDefaultMiddleware().concat(thunk);
@@ -17,6 +18,7 @@ const initialState = {
 const reducer = {
   AuthState: AuthReducer,
   AdminCourseState: AdminCourseReducer,
+  AdminUserState: AdminUserReducer,
 };
 
 const store = configureStore({

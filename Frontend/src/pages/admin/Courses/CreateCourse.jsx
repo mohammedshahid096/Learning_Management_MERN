@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import AdminLayout from "./AdminLayout";
-import CourseTimeline from "../../components/admin/courses/CourseTimeline";
+import AdminLayout from "../AdminLayout";
+import CourseTimeline from "../../../components/admin/courses/CourseTimeline";
 import {
   CourseInformation,
   CourseOptions,
-} from "../../components/admin/courses/AddCourseComp";
+} from "../../../components/admin/courses/AddCourseComp";
+import { useParams } from "react-router-dom";
 
 const CreateCourse = () => {
+  // ### usestates
   const [ActiveTimeLine, setActiveTimeLine] = useState(1);
   const [courseInfo, setcourseInfo] = useState({
     name: "",
@@ -20,6 +22,11 @@ const CreateCourse = () => {
   });
   const [benefits, setbenefits] = useState([{ title: "" }]);
   const [prerequisites, setprerequisites] = useState([{ title: "" }]);
+  // const [isNewCourse, setisNewCourse] = useState(true);
+
+  // ### react router dom
+  const { courseId } = useParams();
+  console.log(courseId);
 
   return (
     <AdminLayout>

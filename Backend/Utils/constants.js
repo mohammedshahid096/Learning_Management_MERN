@@ -3,6 +3,8 @@ module.exports.successConstant = {
   NEW_USER_CREATED: "New user is created successfully",
   LOGOUT: "Logged out successfully",
   PASSWORD_UPDATED: "Successfully password is updated",
+  USER_UPDATED: "Successfully user is updated",
+  USER_DELETED: "Successfully user is deleted",
 
   // ### course
   COURSE_UPDATED_SUCCESS: "Successfully Updated the Course",

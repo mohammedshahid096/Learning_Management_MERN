@@ -4,8 +4,7 @@ import "../../../styles/table.css";
 import { Spinner } from "flowbite-react";
 import { useSelector } from "react-redux";
 import { format } from "timeago.js";
-import { Link } from "react-router-dom";
-import { MdModeEdit, MdDeleteOutline } from "react-icons/md";
+import { MdDeleteOutline, MdOutlineMail } from "react-icons/md";
 
 const customStyles = {
   table: {
@@ -53,8 +52,8 @@ const Loader = () => {
   );
 };
 
-const AllCoursesComponent = () => {
-  const { loading, courses } = useSelector((state) => state.AdminCourseState);
+const AllUsersComponent = ({ setselectedUser }) => {
+  const { loading, users } = useSelector((state) => state.AdminUserState);
 
   const columns = [
     {
@@ -71,57 +70,45 @@ const AllCoursesComponent = () => {
       name: "ID",
       selector: (row) => row.id,
       sortable: true,
-      wrap: true,
-      grow: 2,
       center: true,
+      wrap: true,
+      grow: 3,
     },
     {
-      name: "Course Title",
-      selector: (row) => row.title,
+      name: "Name",
+      selector: (row) => row.name,
       sortable: true,
       wrap: true,
       center: true,
     },
     {
-      name: "Level",
-      selector: (row) => row.level,
+      name: "Email",
+      selector: (row) => row.email,
       sortable: true,
+      wrap: true,
+      grow: 3,
       center: true,
     },
     {
-      name: "Ratings",
-      selector: (row) => row.rating,
+      name: "Courses",
+      selector: (row) => row.courses,
       sortable: true,
       wrap: true,
       center: true,
     },
     {
-      name: "Purchased",
-      selector: (row) => row.purchase,
+      name: "Role",
+      selector: (row) => row.role,
       sortable: true,
       wrap: true,
       center: true,
     },
     {
-      name: "Created At",
+      name: "Joined At",
       selector: (row) => row.createdAt,
       sortable: true,
       wrap: true,
       center: true,
-    },
-
-    {
-      name: "Edit",
-      center: true,
-      grow: 0,
-      cell: (row) => (
-        <Link
-          to={`/admin/course/${row.id}`}
-          className=" cursor-pointer hover:text-green-400"
-        >
-          <MdModeEdit size={20} />
-        </Link>
-      ),
     },
     {
       name: "Delete",
@@ -130,10 +117,23 @@ const AllCoursesComponent = () => {
       cell: (row) => (
         <span
           className=" cursor-pointer hover:text-red-500"
-          // onClick={() => setselectedUser({ id: row.id, name: row.name })}
+          onClick={() => setselectedUser({ id: row.id, name: row.name })}
         >
           <MdDeleteOutline size={20} />
         </span>
+      ),
+    },
+    {
+      name: "Email",
+      center: true,
+      grow: 0,
+      cell: (row) => (
+        <a
+          href={`mailto:${row.email}`}
+          className=" cursor-pointer hover:text-green-400"
+        >
+          <MdOutlineMail size={20} />
+        </a>
       ),
     },
   ];
@@ -144,15 +144,15 @@ const AllCoursesComponent = () => {
         <DataTable
           columns={columns}
           data={
-            (courses &&
-              courses.map((singleCourse, index) => ({
+            (users &&
+              users.map((singleUser, index) => ({
                 index: index + 1,
-                id: singleCourse?._id,
-                title: singleCourse?.name,
-                level: singleCourse?.level,
-                rating: singleCourse?.rating,
-                purchase: singleCourse?.purchase,
-                createdAt: format(singleCourse?.createdAt),
+                id: singleUser?._id,
+                name: singleUser?.name,
+                email: singleUser?.email,
+                role: singleUser?.role,
+                courses: singleUser?.courses.length,
+                createdAt: format(singleUser?.createdAt),
               }))) ||
             []
           }
@@ -167,4 +167,4 @@ const AllCoursesComponent = () => {
   );
 };
 
-export default AllCoursesComponent;
+export default AllUsersComponent;

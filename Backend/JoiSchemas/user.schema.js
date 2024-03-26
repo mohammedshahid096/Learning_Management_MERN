@@ -63,3 +63,14 @@ module.exports.UpdatePasswordValidation = (body) => {
   });
   return schema.validate(body);
 };
+
+// updating the user role by admin
+module.exports.UpdateUserRoleValidation = (body) => {
+  const schema = Joi.object({
+    role: Joi.string()
+      .required()
+      .valid("admin", "user", "teacher")
+      .label("user role"),
+  });
+  return schema.validate(body);
+};
