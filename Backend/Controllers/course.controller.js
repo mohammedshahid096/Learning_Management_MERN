@@ -101,7 +101,7 @@ module.exports.GetSpecificCompleteCourse = async (req, res, next) => {
 
     let isCacheExist = await redis.get(courseid);
 
-    if (isCacheExist) {
+    if (isCacheExist && req.role === "user") {
       isCacheExist = JSON.parse(isCacheExist);
       const { courseDetail, coursesData } = isCacheExist;
       return res.status(200).json({
@@ -118,9 +118,17 @@ module.exports.GetSpecificCompleteCourse = async (req, res, next) => {
       return next(httpErrors.NotFound(errorConstant.COURSE_NOT_FOUND));
     }
 
-    let coursesData = await GetSingleAllCourseDataService(courseid);
+    let coursesData = null;
 
-    await redis.set(courseid, JSON.stringify({ courseDetail, coursesData }));
+    if (req.role === "admin") {
+      coursesData = await GetSingleAllCourseDataService(courseid, false);
+    } else {
+      coursesData = await GetSingleAllCourseDataService(courseid);
+    }
+
+    if (req.role === "user") {
+      await redis.set(courseid, JSON.stringify({ courseDetail, coursesData }));
+    }
 
     res.status(200).json({
       success: true,

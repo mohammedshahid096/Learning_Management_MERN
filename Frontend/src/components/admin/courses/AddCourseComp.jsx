@@ -1,16 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import toast from "react-hot-toast";
-import { Button, Label, TextInput, Textarea, Select } from "flowbite-react";
+import {
+  Button,
+  Label,
+  TextInput,
+  Textarea,
+  Select,
+  Accordion,
+  Card,
+  List,
+} from "flowbite-react";
 import { IoIosAddCircle } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
+import { HiCheckCircle } from "react-icons/hi";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import ReactPlayer from "react-player/youtube";
+import RatingComponent from "../../../utils/RatingComponent";
 
 export const CourseInformation = ({
   courseInfo,
   setcourseInfo,
   setActiveTimeLine,
+  isReadOnly,
 }) => {
+  // ### function
   const validateSchema = Yup.object().shape({
     name: Yup.string().required("please enter your name!").min(6),
   });
@@ -26,6 +42,9 @@ export const CourseInformation = ({
       thumbnail: courseInfo.thumbnail,
       level: courseInfo.level,
     },
+    enableReinitialize: true,
+    // initialValues: courseInfo,
+
     validationSchema: validateSchema,
     onSubmit: (values) => {
       // resetForm();
@@ -55,8 +74,8 @@ export const CourseInformation = ({
                 {errors?.coursename}
               </div>
             }
-            readOnly={true}
-            // value={values.name}
+            readOnly={isReadOnly}
+            value={values.name}
             // onChange={handleChange}
           />
         </div>
@@ -83,7 +102,8 @@ export const CourseInformation = ({
                 {errors?.description}
               </div>
             }
-            readOnly={true}
+            value={values?.description}
+            readOnly={isReadOnly}
             rows={6}
           />
         </div>
@@ -109,6 +129,7 @@ export const CourseInformation = ({
                 </div>
               }
               value={values?.price}
+              readOnly={isReadOnly}
               // onChange={handleChange}
             />
           </div>
@@ -137,6 +158,7 @@ export const CourseInformation = ({
                   {errors?.estimatedPrice}
                 </div>
               }
+              readOnly={isReadOnly}
               value={values.estimatedPrice}
               // onChange={handleChange}
             />
@@ -161,6 +183,7 @@ export const CourseInformation = ({
                 {errors?.tags}
               </div>
             }
+            readOnly={isReadOnly}
             value={values?.tags}
             // onChange={handleChange}
           />
@@ -171,7 +194,7 @@ export const CourseInformation = ({
             <div className="mb-2 block">
               <Label htmlFor="level" value="Course Level" />
             </div>
-            <Select id="level" value={values.level}>
+            <Select id="level" value={values.level} readOnly={isReadOnly}>
               <option value="Beginner">Beginner</option>
               <option value="Intermediate">Intermediate</option>
               <option value="Expert">Expert</option>
@@ -198,6 +221,7 @@ export const CourseInformation = ({
                   {errors?.demorurl}
                 </div>
               }
+              readOnly={isReadOnly}
               value={values.demorurl}
               // onChange={handleChange}
             />
@@ -225,6 +249,7 @@ export const CourseOptions = ({
   setbenefits,
   prerequisites,
   setprerequisites,
+  isReadOnly,
 }) => {
   const AddNewBenefitFunction = () => {
     let update = [...benefits];
@@ -266,15 +291,16 @@ export const CourseOptions = ({
         <h2 className="font-semibold text-xl">
           What are the benefits for students in this course?
         </h2>
-        {benefits.map((singleBenifts, index) => (
+        {benefits?.map((singleBenifts, index) => (
           <div className="flex gap-3 items-center">
             <TextInput
               placeholder={`Enter benefit no : ${index + 1}`}
               className="w-11/12"
               value={singleBenifts.title}
+              readOnly={isReadOnly}
               onChange={(e) => BenefitChangeHandler(e, index)}
             />
-            {index !== 0 && (
+            {index !== 0 && !isReadOnly && (
               <Button
                 color="failure"
                 onClick={() => DeleteBenefitFunction(index)}
@@ -284,24 +310,27 @@ export const CourseOptions = ({
             )}
           </div>
         ))}
-        <Button outline color="dark" onClick={AddNewBenefitFunction}>
-          <IoIosAddCircle size={20} />
-        </Button>
+        {!isReadOnly && (
+          <Button outline color="dark" onClick={AddNewBenefitFunction}>
+            <IoIosAddCircle size={20} />
+          </Button>
+        )}
       </div>
 
       <div className="space-y-3">
         <h2 className="font-semibold text-xl">
           What are the prerequisites for students in this course?
         </h2>
-        {prerequisites.map((singlePrerequisites, index) => (
+        {prerequisites?.map((singlePrerequisites, index) => (
           <div className="flex gap-3 items-center">
             <TextInput
               placeholder={`Enter prerequisite no : ${index + 1}`}
               className="w-11/12"
               value={singlePrerequisites.title}
+              readOnly={isReadOnly}
               onChange={(e) => PrerequisitesChangeHandler(e, index)}
             />
-            {index !== 0 && (
+            {index !== 0 && !isReadOnly && (
               <Button
                 color="failure"
                 onClick={() => DeletePrerequisitesFunction(index)}
@@ -311,9 +340,12 @@ export const CourseOptions = ({
             )}
           </div>
         ))}
-        <Button outline color="dark" onClick={AddNewPrerequisitesFunction}>
-          <IoIosAddCircle size={20} />
-        </Button>
+
+        {!isReadOnly && (
+          <Button outline color="dark" onClick={AddNewPrerequisitesFunction}>
+            <IoIosAddCircle size={20} />
+          </Button>
+        )}
       </div>
 
       <div className="mt-5 flex justify-between">
@@ -322,6 +354,281 @@ export const CourseOptions = ({
         </Button>
         <Button color="purple" onClick={() => setActiveTimeLine(3)}>
           Next
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+const SinglCourseDataComponent = ({ data }) => {
+  const [isReadOnly, setisReadOnly] = useState(true);
+
+  const validateSchema = Yup.object().shape({
+    name: Yup.string().required("please enter your name!").min(6),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      title: data?.title || "",
+      description: data?.description || "",
+      videoUrl: data?.videoUrl || "",
+    },
+    // enableReinitialize: true,
+    validationSchema: validateSchema,
+    onSubmit: (values) => {
+      // resetForm();
+      //   sumbitFunction(values);
+    },
+  });
+
+  const { errors, values, touched, handleChange, handleSubmit } = formik;
+  return (
+    <div className="mb-3">
+      <h5 className=" font-semibold text-lg text-center">Id : {data?._id}</h5>
+      <div className=" w-1/2 m-auto p-2">
+        <hr />
+      </div>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <div className="mb-2 block">
+            <Label htmlFor="title" value="Video Title" />
+          </div>
+          <TextInput
+            id="title"
+            placeholder="Enter Couse Name"
+            color={touched?.title && errors?.title ? "failure" : "gray"}
+            helperText={
+              <div className={errors?.title ? "block mb-1" : "hidden"}>
+                <span className="font-medium">Oops! </span>
+                {errors?.title}
+              </div>
+            }
+            readOnly={isReadOnly}
+            value={values.title}
+            // onChange={handleChange}
+          />
+        </div>
+
+        <div className=" grid grid-cols-2 gap-3">
+          <div>
+            <div className="mb-2 block">
+              <Label htmlFor="videoUrl" value="Video URL" />
+            </div>
+            <TextInput
+              id="videoUrl"
+              placeholder="Enter Video URL"
+              color={touched?.videoUrl && errors?.videoUrl ? "failure" : "gray"}
+              helperText={
+                <div className={errors?.videoUrl ? "block mb-1" : "hidden"}>
+                  <span className="font-medium">Oops! </span>
+                  {errors?.videoUrl}
+                </div>
+              }
+              readOnly={isReadOnly}
+              value={values.videoUrl}
+              // onChange={handleChange}
+            />
+          </div>
+
+          <div>
+            <div className="mb-2 block">
+              <Label htmlFor="videoDuration" value="Video Duration" />
+            </div>
+            <TextInput
+              id="videoDuration"
+              placeholder="Enter Video URL"
+              readOnly={isReadOnly}
+              value={
+                data?.length?.accessibility?.accessibilityData?.label || ""
+              }
+            />
+          </div>
+        </div>
+
+        <div>
+          <div className="mb-2 block">
+            <Label htmlFor="description" value="Video Description" />
+          </div>
+          <Textarea
+            id="description"
+            placeholder="course description"
+            color={
+              touched?.description && errors?.description ? "failure" : "gray"
+            }
+            helperText={
+              <div
+                className={
+                  touched?.description && errors?.description
+                    ? "block mb-1"
+                    : "hidden"
+                }
+              >
+                <span className="font-medium">Oops! </span>
+                {errors?.description}
+              </div>
+            }
+            value={values?.description}
+            readOnly={isReadOnly}
+            rows={6}
+          />
+        </div>
+
+        <div>
+          <div className="mb-2 block">
+            <Label htmlFor="description" value="Video Description" />
+          </div>
+          <Card
+            className="p-3"
+            imgAlt={data?.title}
+            imgSrc={data?.videothumbnail?.url}
+          />
+        </div>
+
+        <div className="mt-2">
+          <Button
+            // type="submit"
+            color="green"
+            //   isProcessing={loading}
+          >
+            Update
+          </Button>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export const CourseContent = ({ setActiveTimeLine }) => {
+  const { SingleCourse } = useSelector((state) => state.AdminCourseState);
+
+  return (
+    <div className="p-3">
+      <h1 className="text-2xl font-bold text-center mb-4">Course Content:</h1>
+
+      <Accordion>
+        {SingleCourse?.coursesData.map((singleCourseData) => (
+          <Accordion.Panel>
+            <Accordion.Title>
+              <b className="text-purple-400">{singleCourseData?.sequence}. </b>
+              {singleCourseData?.title}
+            </Accordion.Title>
+            <Accordion.Content>
+              <SinglCourseDataComponent
+                key={singleCourseData._id}
+                data={singleCourseData}
+              />
+            </Accordion.Content>
+          </Accordion.Panel>
+        ))}
+      </Accordion>
+
+      <div className="mt-5 flex justify-between">
+        <Button color="warning" onClick={() => setActiveTimeLine(2)}>
+          Prev
+        </Button>
+        <Button color="purple" onClick={() => setActiveTimeLine(4)}>
+          Next
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+export const CoursePreview = ({
+  setActiveTimeLine,
+  courseInfo,
+  benefits,
+  prerequisites,
+}) => {
+  return (
+    <div className="bg-black p-5 mt-2">
+      <h1 className="text-2xl font-bold text-center mb-4">Course Preview:</h1>
+      <div className="flex flex-col space-y-5 justify-center rounded-lg">
+        <div className="w-11/12 h-[65vh]">
+          <ReactPlayer
+            className="rounded-md"
+            url={courseInfo?.demorurl}
+            controls={true}
+            loop={false}
+            thumbnail={true}
+            imgSrc={courseInfo?.thumbnail}
+            width={"100%"}
+            height={"100%"}
+          />
+        </div>
+        <div>
+          <h3 className="font-bold text-2xl">
+            {courseInfo?.price} ₹{" "}
+            <sup className=" line-through">{courseInfo?.estimatedPrice}₹</sup>{" "}
+            <span className=" text-red-600">
+              {parseInt(
+                ((courseInfo?.estimatedPrice - courseInfo?.price) /
+                  courseInfo?.estimatedPrice) *
+                  100
+              )}
+              % Off
+            </span>
+          </h3>
+        </div>
+
+        <div>
+          <Button color="failure" pill>
+            Buy Now {courseInfo?.price} ₹
+          </Button>
+        </div>
+
+        <div>
+          {" "}
+          <pre>{courseInfo?.description}</pre>{" "}
+        </div>
+
+        <div className="flex gap-3">
+          <TextInput placeholder="Discount Code..." className=" w-5/12" />
+          <Button pill>Apply</Button>
+        </div>
+
+        <div>
+          <h1 className="text-3xl font-bold mb-2 mt-3">{courseInfo?.name}</h1>
+          <RatingComponent rating={courseInfo?.rating} />
+        </div>
+
+        <div>
+          <h2 className="font-semibold text-2xl mb-2">
+            What are the benefits for students in this course?
+          </h2>
+
+          <List unstyled>
+            {benefits.map((item) => (
+              <List.Item icon={HiCheckCircle}>
+                {" "}
+                <div className="flex gap-2 items-center">
+                  <HiCheckCircle /> {item.title}
+                </div>
+              </List.Item>
+            ))}
+          </List>
+        </div>
+
+        <div>
+          <h2 className="font-semibold mb-2 text-2xl">
+            What are the prerequisites for students in this course?
+          </h2>
+
+          <List unstyled>
+            {prerequisites.map((item) => (
+              <List.Item icon={HiCheckCircle}>
+                {" "}
+                <div className="flex gap-2 items-center">
+                  <HiCheckCircle /> {item.title}
+                </div>
+              </List.Item>
+            ))}
+          </List>
+        </div>
+      </div>
+      <div className="mt-5">
+        <Button color="warning" onClick={() => setActiveTimeLine(3)}>
+          Prev
         </Button>
       </div>
     </div>
