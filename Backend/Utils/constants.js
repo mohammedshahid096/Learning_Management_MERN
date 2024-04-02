@@ -9,6 +9,11 @@ module.exports.successConstant = {
   // ### course
   COURSE_UPDATED_SUCCESS: "Successfully Updated the Course",
 
+  // ### category
+  CATEGORY_CREATED_SUCCESS: "Successfully categroy is added",
+  CATEGORY_UPDATED_SUCCESS: "Successfully categroy is updated",
+  CATEGORY_DELETED_SUCCESS: "Successfully categroy is deleted",
+
   // ### question
   QUESTION_ADDED: "Question is Added Successfully",
   ANSWER_ADDED: "Answer is Added Successfully",
@@ -41,6 +46,9 @@ module.exports.errorConstant = {
 
   // ### coursesData related
   COURSES_DATA_NOT_FOUND: "CoursesData not found with given id",
+
+  // ### category related
+  CATEGORY_NOT_FOUND: "Category not found",
 
   // ### questions related
   QUESTION_NOT_FOUND: "Question not found",

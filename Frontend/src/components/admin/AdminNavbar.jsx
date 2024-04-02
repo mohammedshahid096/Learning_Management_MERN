@@ -3,7 +3,7 @@
 import { Avatar, Sidebar } from "flowbite-react";
 import { HiChartPie, HiInbox } from "react-icons/hi";
 import { AiOutlineVideoCameraAdd } from "react-icons/ai";
-import { MdOutlineOndemandVideo } from "react-icons/md";
+import { MdOutlineOndemandVideo, MdOutlineCategory } from "react-icons/md";
 import { FaUsersCog } from "react-icons/fa";
 import { FaUsers } from "react-icons/fa";
 import { useSelector } from "react-redux";
@@ -59,6 +59,12 @@ const AdminNavbar = () => {
               onClick={() => navigate("/admin/course/all")}
             >
               Live Courses
+            </Sidebar.Item>
+            <Sidebar.Item
+              icon={MdOutlineCategory}
+              onClick={() => navigate("/admin/category")}
+            >
+              Categories
             </Sidebar.Item>
           </Sidebar.Collapse>
 

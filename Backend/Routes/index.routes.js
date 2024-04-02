@@ -7,12 +7,16 @@ const QuestionRoutes = require("./question.routes");
 const ReviewRoutes = require("./review.routes");
 const OrderRoutes = require("./order.routes");
 const NotificationRoutes = require("./notification.routes");
+const CategoriesRoutes = require("./category.routes");
 
 // # User routes
 IndexRoutes.use("/user", UserRoutes);
 
 // # Course Routes
 IndexRoutes.use("/course", CourseRoutes);
+
+// # Category Routes
+IndexRoutes.use("/category", CategoriesRoutes);
 
 // # Question Routes
 IndexRoutes.use("/question", QuestionRoutes);

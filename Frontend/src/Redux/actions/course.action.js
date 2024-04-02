@@ -5,6 +5,8 @@ import {
   ADMIN_ALL_COURSE_LIST_REQUEST,
   ADMIN_ALL_COURSE_LIST_SUCCESS,
   CLEAR_COURSE_ERRORS,
+  GET_ALL_CATEGORIES_REQUEST,
+  GET_ALL_CATEGORIES_SUCCESS,
   GET_SINGLE_COURSE_FAIL,
   GET_SINGLE_COURSE_REQUEST,
   GET_SINGLE_COURSE_SUCCESS,
@@ -33,6 +35,31 @@ export const AdminGetCourseList = () => async (dispatch) => {
     });
   }
 };
+
+export const GetCategoriesList =
+  (request = true) =>
+  async (dispatch) => {
+    try {
+      if (request) {
+        dispatch({ type: GET_ALL_CATEGORIES_REQUEST });
+      }
+      const config = {
+        withCredentials: true,
+      };
+
+      const { data } = await axiosInstance.get(
+        `${URLConstant}/category/all`,
+        config
+      );
+
+      dispatch({
+        type: GET_ALL_CATEGORIES_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error?.response?.data || error.message);
+    }
+  };
 
 export const GetSingleCourseDetail = (courseid) => async (dispatch) => {
   try {

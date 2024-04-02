@@ -2,6 +2,7 @@ import Home from "../pages/Home";
 import Profile from "../pages/Profile";
 import AdminHome from "../pages/admin/AdminHome";
 import AdminAllCourses from "../pages/admin/Courses/AdminAllCourses";
+import Categories from "../pages/admin/Courses/Categories";
 import CreateCourse from "../pages/admin/Courses/CreateCourse";
 import AdminAllUsers from "../pages/admin/users/AdminAllUsers";
 import AdminTeam from "../pages/admin/users/AdminTeam";
@@ -55,6 +56,13 @@ const AllRoutesItems = [
     num: 8,
     path: "/admin/user/team",
     element: AdminTeam,
+    protected: true,
+    Access: ["admin"],
+  },
+  {
+    num: 9,
+    path: "/admin/category",
+    element: Categories,
     protected: true,
     Access: ["admin"],
   },

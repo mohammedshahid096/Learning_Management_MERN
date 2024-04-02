@@ -16,7 +16,7 @@ const AdminTeam = () => {
   const [openModal, setopenModal] = useState(false);
   // redux
   const dispatch = useDispatch();
-  const { users } = useSelector((state) => state.AdminCourseState);
+  const { users } = useSelector((state) => state.AdminUserState);
 
   const fetchUsersList = () => {
     dispatch(AdminGetUsersList());
@@ -24,6 +24,7 @@ const AdminTeam = () => {
 
   useEffect(() => {
     if (!users) {
+      console.log("chciin", users);
       fetchUsersList();
     }
   }, []);

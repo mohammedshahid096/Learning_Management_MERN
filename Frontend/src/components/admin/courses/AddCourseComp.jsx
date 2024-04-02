@@ -19,20 +19,73 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ReactPlayer from "react-player/youtube";
 import RatingComponent from "../../../utils/RatingComponent";
+import MultiSelect from "react-select";
 
 export const CourseInformation = ({
   courseInfo,
   setcourseInfo,
   setActiveTimeLine,
+  categories,
   isReadOnly,
+  selectedCategories,
+  setselectedCategories,
 }) => {
+  // ### react-router-dom
+  const { courseId } = useParams();
+
   // ### function
-  const validateSchema = Yup.object().shape({
-    name: Yup.string().required("please enter your name!").min(6),
+  const validateSchemaCreate = Yup.object().shape({
+    playlistid: Yup.string().required("please enter youtube playlist Id!"),
+    price: Yup.number().required("please enter the course price"),
+    estimatedPrice: Yup.number().required(
+      "please enter the course Estimated price"
+    ),
+    tags: Yup.string().required("please enter the tags"),
+    level: Yup.string().required("please enter the Level"),
   });
 
+  const validateSchemaUpdate = Yup.object().shape({
+    name: Yup.string().required("please enter Course Name"),
+    price: Yup.number().required("please enter the course price"),
+    estimatedPrice: Yup.number().required(
+      "please enter the course Estimated price"
+    ),
+    tags: Yup.string().required("please enter the tags"),
+    level: Yup.string().required("please enter the Level"),
+    demorurl: Yup.string().required("please enter the demo url of the course"),
+    description: Yup.string().required("please enter the course description"),
+  });
+
+  const createNewCourse = () => {
+    setcourseInfo({
+      playlistid: values.playlistid,
+      price: values.price,
+      estimatedPrice: values.estimatedPrice,
+      tags: values.tags,
+      level: values.level,
+    });
+    setActiveTimeLine(2);
+  };
+
+  const updateCourse = () => {
+    setcourseInfo({
+      playlistid: values.playlistid,
+      name: values.name,
+      description: values.description,
+      price: values.price,
+      estimatedPrice: values.estimatedPrice,
+      tags: values.tags,
+      demorurl: values.demorurl,
+      thumbnail: values.thumbnail,
+      level: values.level,
+    });
+    setActiveTimeLine(2);
+  };
+
+  // ### formik
   const formik = useFormik({
     initialValues: {
+      playlistid: courseInfo.playlistid,
       name: courseInfo.name,
       description: courseInfo.description,
       price: courseInfo.price,
@@ -43,70 +96,101 @@ export const CourseInformation = ({
       level: courseInfo.level,
     },
     enableReinitialize: true,
-    // initialValues: courseInfo,
-
-    validationSchema: validateSchema,
-    onSubmit: (values) => {
-      // resetForm();
-      //   sumbitFunction(values);
+    validationSchema: courseId ? validateSchemaUpdate : validateSchemaCreate,
+    onSubmit: () => {
+      if (courseId) {
+        alert("jejj");
+        updateCourse();
+      } else {
+        createNewCourse();
+      }
     },
   });
 
   const { errors, values, touched, handleChange, handleSubmit } = formik;
-
   return (
     <div className="space-y-3 px-5">
       <h1 className="text-2xl font-bold text-center">Course Information:</h1>
       <form onSubmit={handleSubmit}>
         <div>
           <div className="mb-2 block">
-            <Label htmlFor="name" value="Course Name" />
+            <Label htmlFor="playlistid" value="Playlist ID" />
           </div>
           <TextInput
-            id="name"
-            placeholder="Enter Couse Name"
-            color={
-              touched?.coursename && errors?.coursename ? "failure" : "gray"
-            }
-            helperText={
-              <div className={errors?.coursename ? "block mb-1" : "hidden"}>
-                <span className="font-medium">Oops! </span>
-                {errors?.coursename}
-              </div>
-            }
-            readOnly={isReadOnly}
-            value={values.name}
-            // onChange={handleChange}
-          />
-        </div>
-
-        <div>
-          <div className="mb-2 block">
-            <Label htmlFor="description" value="Course Description" />
-          </div>
-          <Textarea
-            id="description"
-            placeholder="course description"
-            color={
-              touched?.description && errors?.description ? "failure" : "gray"
-            }
+            id="playlistid"
+            placeholder="Enter Youtube Playlist Id"
+            color={touched.playlistid && errors.playlistid ? "failure" : "gray"}
             helperText={
               <div
                 className={
-                  touched?.description && errors?.description
+                  touched.demorurl && errors.playlistid
                     ? "block mb-1"
                     : "hidden"
                 }
               >
                 <span className="font-medium">Oops! </span>
-                {errors?.description}
+                {errors?.playlistid}
               </div>
             }
-            value={values?.description}
             readOnly={isReadOnly}
-            rows={6}
+            value={values.playlistid}
+            onChange={handleChange}
           />
         </div>
+
+        {courseId && (
+          <>
+            <div>
+              <div className="mb-2 block">
+                <Label htmlFor="name" value="Course Name" />
+              </div>
+              <TextInput
+                id="name"
+                placeholder="Enter Couse Name"
+                color={touched?.name && errors?.name ? "failure" : "gray"}
+                helperText={
+                  <div className={errors?.name ? "block mb-1" : "hidden"}>
+                    <span className="font-medium">Oops! </span>
+                    {errors?.name}
+                  </div>
+                }
+                readOnly={isReadOnly}
+                value={values.name}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div>
+              <div className="mb-2 block">
+                <Label htmlFor="description" value="Course Description" />
+              </div>
+              <Textarea
+                id="description"
+                placeholder="course description"
+                color={
+                  touched?.description && errors?.description
+                    ? "failure"
+                    : "gray"
+                }
+                helperText={
+                  <div
+                    className={
+                      touched?.description && errors?.description
+                        ? "block mb-1"
+                        : "hidden"
+                    }
+                  >
+                    <span className="font-medium">Oops! </span>
+                    {errors?.description}
+                  </div>
+                }
+                value={values?.description}
+                readOnly={isReadOnly}
+                rows={6}
+              />
+            </div>
+          </>
+        )}
 
         <div className="flex gap-5 w-full max-md:block">
           <div className="w-1/2 max-md:w-full">
@@ -130,7 +214,7 @@ export const CourseInformation = ({
               }
               value={values?.price}
               readOnly={isReadOnly}
-              // onChange={handleChange}
+              onChange={handleChange}
             />
           </div>
 
@@ -160,7 +244,7 @@ export const CourseInformation = ({
               }
               readOnly={isReadOnly}
               value={values.estimatedPrice}
-              // onChange={handleChange}
+              onChange={handleChange}
             />
           </div>
         </div>
@@ -185,7 +269,26 @@ export const CourseInformation = ({
             }
             readOnly={isReadOnly}
             value={values?.tags}
-            // onChange={handleChange}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div>
+          <div className="mb-2 block">
+            <Label htmlFor="tags" value="Categories" />
+          </div>
+          <MultiSelect
+            className="text-gray-500 [&>*:nth-child(odd)]:bg-slate-700"
+            isSearchable={false}
+            value={selectedCategories}
+            isMulti={true}
+            onChange={(options) => setselectedCategories(options)}
+            options={
+              categories?.map((item) => ({
+                value: item?._id,
+                label: item?.name,
+              })) || []
+            }
           />
         </div>
 
@@ -194,47 +297,51 @@ export const CourseInformation = ({
             <div className="mb-2 block">
               <Label htmlFor="level" value="Course Level" />
             </div>
-            <Select id="level" value={values.level} readOnly={isReadOnly}>
+            <Select
+              id="level"
+              value={values.level}
+              readOnly={isReadOnly}
+              onChange={handleChange}
+            >
               <option value="Beginner">Beginner</option>
               <option value="Intermediate">Intermediate</option>
               <option value="Expert">Expert</option>
             </Select>
           </div>
 
-          <div className="w-1/2 max-md:w-full">
-            <div className="mb-2 block">
-              <Label htmlFor="demourl" value="Course Demo URL" />
+          {courseId && (
+            <div className="w-1/2 max-md:w-full">
+              <div className="mb-2 block">
+                <Label htmlFor="demourl" value="Course Demo URL" />
+              </div>
+              <TextInput
+                id="demourl"
+                placeholder="Paste Couse Demo URL Link "
+                color={
+                  touched?.demorurl && errors?.demorurl ? "failure" : "gray"
+                }
+                helperText={
+                  <div
+                    className={
+                      touched?.demorurl && errors?.demorurl
+                        ? "block mb-1"
+                        : "hidden"
+                    }
+                  >
+                    <span className="font-medium">Oops! </span>
+                    {errors?.demorurl}
+                  </div>
+                }
+                readOnly={isReadOnly}
+                value={values.demorurl}
+                // onChange={handleChange}
+              />
             </div>
-            <TextInput
-              id="demourl"
-              placeholder="Paste Couse Demo URL Link "
-              color={touched?.demorurl && errors?.demorurl ? "failure" : "gray"}
-              helperText={
-                <div
-                  className={
-                    touched?.demorurl && errors?.demorurl
-                      ? "block mb-1"
-                      : "hidden"
-                  }
-                >
-                  <span className="font-medium">Oops! </span>
-                  {errors?.demorurl}
-                </div>
-              }
-              readOnly={isReadOnly}
-              value={values.demorurl}
-              // onChange={handleChange}
-            />
-          </div>
+          )}
         </div>
 
         <div className="mt-5 float-right">
-          <Button
-            type="submit"
-            color="purple"
-            //   isProcessing={loading}
-            onClick={() => setActiveTimeLine(2)}
-          >
+          <Button type="submit" color="purple">
             Next
           </Button>
         </div>
@@ -251,6 +358,10 @@ export const CourseOptions = ({
   setprerequisites,
   isReadOnly,
 }) => {
+  // ### react-router-dom
+  const { courseId } = useParams();
+
+  // ### functions
   const AddNewBenefitFunction = () => {
     let update = [...benefits];
     let newBenefit = { title: "" };
@@ -282,6 +393,22 @@ export const CourseOptions = ({
     let update = [...prerequisites];
     update[index]["title"] = e.target.value;
     setprerequisites(update);
+  };
+
+  const addHandlerFunction = () => {
+    let isEmpty = benefits.some((item) => item.title === "");
+    if (isEmpty) {
+      toast.error("please enter the benefits which are blank");
+      return;
+    }
+
+    isEmpty = prerequisites.some((item) => item.title === "");
+    if (isEmpty) {
+      toast.error("please enter the prerequisites which are blank");
+      return;
+    }
+
+    setActiveTimeLine(courseId ? 3 : 4);
   };
   return (
     <div className="space-y-3 px-5">
@@ -352,7 +479,7 @@ export const CourseOptions = ({
         <Button color="warning" onClick={() => setActiveTimeLine(1)}>
           Prev
         </Button>
-        <Button color="purple" onClick={() => setActiveTimeLine(3)}>
+        <Button color="purple" onClick={addHandlerFunction}>
           Next
         </Button>
       </div>
@@ -540,22 +667,26 @@ export const CoursePreview = ({
   benefits,
   prerequisites,
 }) => {
+  const { courseId } = useParams();
+
   return (
     <div className="bg-black p-5 mt-2">
       <h1 className="text-2xl font-bold text-center mb-4">Course Preview:</h1>
       <div className="flex flex-col space-y-5 justify-center rounded-lg">
-        <div className="w-11/12 h-[65vh]">
-          <ReactPlayer
-            className="rounded-md"
-            url={courseInfo?.demorurl}
-            controls={true}
-            loop={false}
-            thumbnail={true}
-            imgSrc={courseInfo?.thumbnail}
-            width={"100%"}
-            height={"100%"}
-          />
-        </div>
+        {courseInfo?.demorurl && (
+          <div className="w-11/12 h-[65vh]">
+            <ReactPlayer
+              className="rounded-md"
+              url={courseInfo?.demorurl}
+              controls={true}
+              loop={false}
+              thumbnail={true}
+              imgSrc={courseInfo?.thumbnail}
+              width={"100%"}
+              height={"100%"}
+            />
+          </div>
+        )}
         <div>
           <h3 className="font-bold text-2xl">
             {courseInfo?.price} ₹{" "}
@@ -582,16 +713,19 @@ export const CoursePreview = ({
           <pre>{courseInfo?.description}</pre>{" "}
         </div>
 
-        <div className="flex gap-3">
-          <TextInput placeholder="Discount Code..." className=" w-5/12" />
-          <Button pill>Apply</Button>
-        </div>
+        {courseInfo?.rating && (
+          <>
+            <div className="flex gap-3">
+              <TextInput placeholder="Discount Code..." className=" w-5/12" />
+              <Button pill>Apply</Button>
+            </div>
+            <h1 className="text-3xl font-bold mb-2 mt-3">{courseInfo?.name}</h1>
+            <RatingComponent rating={courseInfo?.rating} />
+          </>
+        )}
+      </div>
 
-        <div>
-          <h1 className="text-3xl font-bold mb-2 mt-3">{courseInfo?.name}</h1>
-          <RatingComponent rating={courseInfo?.rating} />
-        </div>
-
+      <div>
         <div>
           <h2 className="font-semibold text-2xl mb-2">
             What are the benefits for students in this course?
@@ -627,7 +761,10 @@ export const CoursePreview = ({
         </div>
       </div>
       <div className="mt-5">
-        <Button color="warning" onClick={() => setActiveTimeLine(3)}>
+        <Button
+          color="warning"
+          onClick={() => setActiveTimeLine(courseId ? 3 : 2)}
+        >
           Prev
         </Button>
       </div>

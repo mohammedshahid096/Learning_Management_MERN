@@ -17,7 +17,7 @@ const AdminAllUsers = () => {
 
   // ### redux
   const dispatch = useDispatch();
-  const { users } = useSelector((state) => state.AdminCourseState);
+  const { users } = useSelector((state) => state.AdminUserState);
 
   const fetchUsersList = () => {
     dispatch(AdminGetUsersList());

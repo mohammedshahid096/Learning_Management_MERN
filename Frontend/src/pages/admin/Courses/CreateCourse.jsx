@@ -9,12 +9,19 @@ import {
 } from "../../../components/admin/courses/AddCourseComp";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { GetSingleCourseDetail } from "../../../Redux/actions/course.action";
+import {
+  GetCategoriesList,
+  GetSingleCourseDetail,
+} from "../../../Redux/actions/course.action";
 import { Button } from "flowbite-react";
 const CreateCourse = () => {
+  // ### react router dom
+  const { courseId } = useParams();
+
   // ### usestates
   const [ActiveTimeLine, setActiveTimeLine] = useState(1);
   const [courseInfo, setcourseInfo] = useState({
+    playlistid: "",
     name: "",
     description: "",
     price: "",
@@ -26,20 +33,26 @@ const CreateCourse = () => {
   });
   const [benefits, setbenefits] = useState([{ title: "" }]);
   const [prerequisites, setprerequisites] = useState([{ title: "" }]);
-  const [isReadOnly, setisReadOnly] = useState(true);
-
-  // ### react router dom
-  const { courseId } = useParams();
+  const [selectedCategories, setselectedCategories] = useState([]);
+  const [isReadOnly, setisReadOnly] = useState(courseId ? true : false);
 
   // ### redux
   const dispatch = useDispatch();
-  const { SingleCourse } = useSelector((state) => state.AdminCourseState);
+  const { SingleCourse, categories } = useSelector(
+    (state) => state.AdminCourseState
+  );
 
   const fetchSingleCourseDetail = () => {
     dispatch(GetSingleCourseDetail(courseId));
   };
+
+  const fetchCategoryList = () => {
+    dispatch(GetCategoriesList(false));
+  };
+
   const updateStateFunction = () => {
     setcourseInfo({
+      playlistid: "",
       name: SingleCourse?.courseDetail?.name,
       description: SingleCourse?.courseDetail?.description,
       price: SingleCourse?.courseDetail?.price,
@@ -68,26 +81,35 @@ const CreateCourse = () => {
     if (SingleCourse) {
       updateStateFunction();
     }
-  }, [courseId, SingleCourse?.courseDetail?._id]);
+    if (!categories) {
+      fetchCategoryList();
+    }
+  }, [courseId, SingleCourse?.courseDetail?._id, categories]);
 
   return (
     <AdminLayout>
       <div className="flex w-full h-full gap-3 max-md:flex-col-reverse">
         <div className="w-10/12 max-md:w-full">
           <div>
-            {!isReadOnly ? (
-              <Button color="red" onClick={() => setisReadOnly(true)}>
-                Cancel Edit
-              </Button>
-            ) : (
-              <Button onClick={() => setisReadOnly(false)}>Edit Course</Button>
-            )}
+            {courseId &&
+              (!isReadOnly ? (
+                <Button color="red" onClick={() => setisReadOnly(true)}>
+                  Cancel Edit
+                </Button>
+              ) : (
+                <Button onClick={() => setisReadOnly(false)}>
+                  Edit Course
+                </Button>
+              ))}
           </div>
           {ActiveTimeLine === 1 && (
             <CourseInformation
               courseInfo={courseInfo}
               setcourseInfo={setcourseInfo}
               setActiveTimeLine={setActiveTimeLine}
+              categories={categories}
+              selectedCategories={selectedCategories}
+              setselectedCategories={setselectedCategories}
               isReadOnly={isReadOnly}
             />
           )}

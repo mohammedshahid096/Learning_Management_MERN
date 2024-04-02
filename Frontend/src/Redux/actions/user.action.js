@@ -1,7 +1,7 @@
 import { URLConstant } from "../../config/URLConstant";
 import axiosInstance from "../../config/axiosInstance";
-import { ADMIN_ALL_COURSE_LIST_REQUEST } from "../constants/course.contant";
 import {
+  ADMIN_ALL_USERS_REQUEST,
   ADMIN_ALL_USERS_FAIL,
   ADMIN_ALL_USERS_SUCCESS,
   USER_CLEAR_ERRORS_2,
@@ -12,7 +12,7 @@ export const AdminGetUsersList =
   async (dispatch) => {
     try {
       if (loading) {
-        dispatch({ type: ADMIN_ALL_COURSE_LIST_REQUEST });
+        dispatch({ type: ADMIN_ALL_USERS_REQUEST });
       }
       const config = {
         withCredentials: true,
