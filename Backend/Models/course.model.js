@@ -6,6 +6,10 @@ const ModelSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    playlistid: {
+      type: String,
+      required: true,
+    },
     description: {
       type: String,
       required: true,
@@ -52,6 +56,12 @@ const ModelSchema = new mongoose.Schema(
           type: String,
           required: true,
         },
+      },
+    ],
+    categories: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "categories",
       },
     ],
     rating: {

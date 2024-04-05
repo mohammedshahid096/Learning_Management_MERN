@@ -12,29 +12,33 @@ import {
   GET_SINGLE_COURSE_SUCCESS,
 } from "../constants/course.contant";
 
-export const AdminGetCourseList = () => async (dispatch) => {
-  try {
-    dispatch({ type: ADMIN_ALL_COURSE_LIST_REQUEST });
-    const config = {
-      withCredentials: true,
-    };
+export const AdminGetCourseList =
+  (request = true) =>
+  async (dispatch) => {
+    try {
+      if (request) {
+        dispatch({ type: ADMIN_ALL_COURSE_LIST_REQUEST });
+      }
+      const config = {
+        withCredentials: true,
+      };
 
-    const { data } = await axiosInstance.get(
-      `${URLConstant}/course/courses/list`,
-      config
-    );
+      const { data } = await axiosInstance.get(
+        `${URLConstant}/course/courses/list`,
+        config
+      );
 
-    dispatch({
-      type: ADMIN_ALL_COURSE_LIST_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: ADMIN_ALL_COURSE_LIST_FAIL,
-      payload: error?.response?.data || error,
-    });
-  }
-};
+      dispatch({
+        type: ADMIN_ALL_COURSE_LIST_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ADMIN_ALL_COURSE_LIST_FAIL,
+        payload: error?.response?.data || error,
+      });
+    }
+  };
 
 export const GetCategoriesList =
   (request = true) =>

@@ -12,8 +12,12 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   GetCategoriesList,
   GetSingleCourseDetail,
+  AdminGetCourseList,
 } from "../../../Redux/actions/course.action";
 import { Button } from "flowbite-react";
+import { CreateCourseApi, UpdateCourseApi } from "../../../Apis/course.api";
+import toast from "react-hot-toast";
+
 const CreateCourse = () => {
   // ### react router dom
   const { courseId } = useParams();
@@ -35,6 +39,7 @@ const CreateCourse = () => {
   const [prerequisites, setprerequisites] = useState([{ title: "" }]);
   const [selectedCategories, setselectedCategories] = useState([]);
   const [isReadOnly, setisReadOnly] = useState(courseId ? true : false);
+  const [actionLoading, setactionLoading] = useState(false);
 
   // ### redux
   const dispatch = useDispatch();
@@ -42,6 +47,7 @@ const CreateCourse = () => {
     (state) => state.AdminCourseState
   );
 
+  // ### functions
   const fetchSingleCourseDetail = () => {
     dispatch(GetSingleCourseDetail(courseId));
   };
@@ -52,7 +58,7 @@ const CreateCourse = () => {
 
   const updateStateFunction = () => {
     setcourseInfo({
-      playlistid: "",
+      playlistid: SingleCourse?.courseDetail?.playlistid,
       name: SingleCourse?.courseDetail?.name,
       description: SingleCourse?.courseDetail?.description,
       price: SingleCourse?.courseDetail?.price,
@@ -72,8 +78,59 @@ const CreateCourse = () => {
       (item) => ({ title: item.title })
     );
     setprerequisites(updatePrerequsites);
+    let updateCategories = SingleCourse?.courseDetail?.categories.map(
+      (item) => ({ value: item._id, label: item.name })
+    );
+    setselectedCategories(updateCategories);
   };
 
+  const createNewCoureSubmitHandler = async () => {
+    setactionLoading(true);
+    const details = {
+      playlistid: courseInfo?.playlistid,
+      price: courseInfo?.price,
+      estimatedprice: courseInfo?.estimatedPrice,
+      tags: courseInfo?.tags,
+      level: courseInfo?.level,
+      benefits: benefits.map((item) => ({ title: item?.title })),
+      prerequsites: prerequisites.map((item) => ({ title: item?.title })),
+    };
+    const response = await CreateCourseApi(details);
+    if (response.success) {
+      toast.success("successfully a new course is added");
+      dispatch(AdminGetCourseList(false));
+    } else {
+      toast.error(response.message);
+    }
+    setactionLoading(false);
+  };
+
+  const updateCourseSubmitHandler = async () => {
+    setactionLoading(true);
+    const details = {
+      name: courseInfo?.name,
+      description: courseInfo?.description,
+      price: courseInfo?.price,
+      estimatedprice: courseInfo?.estimatedPrice,
+      tags: courseInfo?.tags,
+      level: courseInfo?.level,
+      demourl: courseInfo?.demorurl,
+      categories: selectedCategories.map((item) => item.value),
+      benefits: benefits.map((item) => ({ title: item?.title })),
+      prerequsites: prerequisites.map((item) => ({ title: item?.title })),
+    };
+    const response = await UpdateCourseApi(courseId, details);
+    if (response.success) {
+      toast.success("successfully a new course is added");
+      setisReadOnly(true);
+      fetchSingleCourseDetail();
+    } else {
+      toast.error(response.message);
+    }
+    setactionLoading(false);
+  };
+
+  // ### useeffects
   useEffect(() => {
     if (courseId && SingleCourse?.courseDetail?._id !== courseId) {
       fetchSingleCourseDetail();
@@ -92,6 +149,7 @@ const CreateCourse = () => {
         <div className="w-10/12 max-md:w-full">
           <div>
             {courseId &&
+              ActiveTimeLine !== 3 &&
               (!isReadOnly ? (
                 <Button color="red" onClick={() => setisReadOnly(true)}>
                   Cancel Edit
@@ -131,10 +189,16 @@ const CreateCourse = () => {
           )}
           {ActiveTimeLine === 4 && (
             <CoursePreview
+              isReadOnly={isReadOnly}
               setActiveTimeLine={setActiveTimeLine}
               courseInfo={courseInfo}
               benefits={benefits}
               prerequisites={prerequisites}
+              categories={categories}
+              selectedCategories={selectedCategories}
+              createNewCoureSubmitHandler={createNewCoureSubmitHandler}
+              updateCourseSubmitHandler={updateCourseSubmitHandler}
+              actionLoading={actionLoading}
             />
           )}
         </div>

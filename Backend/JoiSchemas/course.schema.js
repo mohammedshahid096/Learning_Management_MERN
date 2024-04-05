@@ -18,6 +18,7 @@ module.exports.AddCourseValidator = (body) => {
         title: Joi.string().required(),
       })
     ),
+    categories: Joi.array().required(),
     rating: Joi.number().default(0),
     purchase: Joi.number().default(0),
   });
@@ -45,8 +46,19 @@ module.exports.EditCourseValidator = (body) => {
         title: Joi.string(),
       })
     ),
+    categories: Joi.array(),
     rating: Joi.number(),
     purchase: Joi.number(),
+  });
+
+  return schema.validate(body);
+};
+
+module.exports.EditCourseDataValidator = (body) => {
+  const schema = Joi.object({
+    title: Joi.string(),
+    description: Joi.string(),
+    videoUrl: Joi.string(),
   });
 
   return schema.validate(body);

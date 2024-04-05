@@ -53,7 +53,8 @@ const Loader = () => {
   );
 };
 
-const AllCoursesComponent = () => {
+const AllCoursesComponent = ({ setselectedCourseid }) => {
+  // ### redux
   const { loading, courses } = useSelector((state) => state.AdminCourseState);
 
   const columns = [
@@ -130,7 +131,7 @@ const AllCoursesComponent = () => {
       cell: (row) => (
         <span
           className=" cursor-pointer hover:text-red-500"
-          // onClick={() => setselectedUser({ id: row.id, name: row.name })}
+          onClick={() => setselectedCourseid(row.id)}
         >
           <MdDeleteOutline size={20} />
         </span>

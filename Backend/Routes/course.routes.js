@@ -7,6 +7,8 @@ const {
   AllCoursesWithout,
   GetUserSingleCourse,
   AllCoursesList,
+  DeleteCourseController,
+  UpdateCoureDataController,
 } = require("../Controllers/course.controller");
 const CourseRoutes = express.Router();
 
@@ -19,7 +21,14 @@ CourseRoutes.route("/uploadCourse").post(
 // ### single course related without purchase
 CourseRoutes.route("/single/:courseid")
   .get(Authentication, GetSpecificCompleteCourse)
-  .put(Authentication, Authorization("admin"), EditCourseController);
+  .put(Authentication, Authorization("admin"), EditCourseController)
+  .delete(Authentication, Authorization("admin"), DeleteCourseController);
+
+CourseRoutes.route("/coursedata/single/:coursedataID").put(
+  Authentication,
+  Authorization("admin"),
+  UpdateCoureDataController
+);
 
 CourseRoutes.route("/courses/list").get(
   Authentication,

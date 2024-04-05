@@ -8,6 +8,7 @@ module.exports.successConstant = {
 
   // ### course
   COURSE_UPDATED_SUCCESS: "Successfully Updated the Course",
+  COURSE_DELETED_SUCCESS: "Successfully Course is Deleted",
 
   // ### category
   CATEGORY_CREATED_SUCCESS: "Successfully categroy is added",

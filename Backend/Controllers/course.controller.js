@@ -2,6 +2,7 @@ const httpErrors = require("http-errors");
 const {
   AddCourseValidator,
   EditCourseValidator,
+  EditCourseDataValidator,
 } = require("../JoiSchemas/course.schema");
 const coursesModel = require("../Models/course.model");
 const youtubesearch = require("youtube-search-api");
@@ -70,6 +71,7 @@ module.exports.UploadCourseController = async (req, res, next) => {
   }
 };
 
+// editing a course
 module.exports.EditCourseController = async (req, res, next) => {
   try {
     const { courseid } = req.params;
@@ -88,6 +90,55 @@ module.exports.EditCourseController = async (req, res, next) => {
       statusCode: 200,
       message: successConstant.COURSE_UPDATED_SUCCESS,
       data: updateData,
+    });
+  } catch (error) {
+    next(httpErrors.InternalServerError(error.message));
+  }
+};
+
+// Deleting the  entire  course
+module.exports.DeleteCourseController = async (req, res, next) => {
+  try {
+    const { courseid } = req.params;
+    const isExist = await coursesModel.findByIdAndDelete(courseid);
+    if (!isExist) {
+      return next(httpErrors.NotFound(errorConstant.COURSE_NOT_FOUND));
+    }
+    await courseDataModel.deleteMany({ courseid });
+    await redis.del(courseid);
+
+    res.status(200).json({
+      success: true,
+      statusCode: 200,
+      message: successConstant.COURSE_DELETED_SUCCESS,
+    });
+  } catch (error) {
+    next(httpErrors.InternalServerError(error.message));
+  }
+};
+
+// updating the coursedata details
+module.exports.UpdateCoureDataController = async (req, res, next) => {
+  try {
+    const { coursedataID } = req.params;
+    const { error } = EditCourseDataValidator(req.body);
+    if (error) {
+      return next(httpErrors.BadRequest(error.details[0].message));
+    }
+    let updateData = await courseDataModel.findByIdAndUpdate(
+      coursedataID,
+      req.body
+    );
+    if (!updateData) {
+      return next(httpErrors.NotFound(errorConstant.COURSE_NOT_FOUND));
+    }
+
+    await redis.del(updateData.courseid.toString());
+    await redis.del("allCourses");
+    res.status(200).json({
+      success: true,
+      statusCode: 200,
+      message: successConstant.COURSE_UPDATED_SUCCESS,
     });
   } catch (error) {
     next(httpErrors.InternalServerError(error.message));

@@ -20,7 +20,7 @@ import { useSelector } from "react-redux";
 import ReactPlayer from "react-player/youtube";
 import RatingComponent from "../../../utils/RatingComponent";
 import MultiSelect from "react-select";
-
+import { UpdateCourseDataApi } from "../../../Apis/course.api";
 export const CourseInformation = ({
   courseInfo,
   setcourseInfo,
@@ -98,8 +98,11 @@ export const CourseInformation = ({
     enableReinitialize: true,
     validationSchema: courseId ? validateSchemaUpdate : validateSchemaCreate,
     onSubmit: () => {
+      if (selectedCategories.length === 0) {
+        toast.error("please select atleast one category");
+        return;
+      }
       if (courseId) {
-        alert("jejj");
         updateCourse();
       } else {
         createNewCourse();
@@ -123,7 +126,7 @@ export const CourseInformation = ({
             helperText={
               <div
                 className={
-                  touched.demorurl && errors.playlistid
+                  touched.playlistid && errors.playlistid
                     ? "block mb-1"
                     : "hidden"
                 }
@@ -132,7 +135,7 @@ export const CourseInformation = ({
                 {errors?.playlistid}
               </div>
             }
-            readOnly={isReadOnly}
+            readOnly={courseId ? true : isReadOnly}
             value={values.playlistid}
             onChange={handleChange}
           />
@@ -184,6 +187,7 @@ export const CourseInformation = ({
                     {errors?.description}
                   </div>
                 }
+                onChange={handleChange}
                 value={values?.description}
                 readOnly={isReadOnly}
                 rows={6}
@@ -224,6 +228,7 @@ export const CourseInformation = ({
             </div>
             <TextInput
               id="estimatedPrice"
+              type="number"
               placeholder="Enter Couse Estimated Price"
               color={
                 touched?.estimatedPrice && errors?.estimatedPrice
@@ -283,6 +288,7 @@ export const CourseInformation = ({
             value={selectedCategories}
             isMulti={true}
             onChange={(options) => setselectedCategories(options)}
+            isDisabled={isReadOnly}
             options={
               categories?.map((item) => ({
                 value: item?._id,
@@ -488,12 +494,30 @@ export const CourseOptions = ({
 };
 
 const SinglCourseDataComponent = ({ data }) => {
+  // ### usestates
   const [isReadOnly, setisReadOnly] = useState(true);
+  const [loading, setloading] = useState(false);
 
+  // ### functions
   const validateSchema = Yup.object().shape({
-    name: Yup.string().required("please enter your name!").min(6),
+    title: Yup.string().required("please enter video title").min(6),
+    description: Yup.string().required("please enter the video description"),
+    videoUrl: Yup.string().required("please enter the video Id"),
   });
 
+  const updateSubmitHandler = async () => {
+    setloading(true);
+    let response = await UpdateCourseDataApi(data._id, values);
+    if (response.success) {
+      toast.success(response.message);
+      setisReadOnly(true);
+    } else {
+      toast.error(response.message);
+    }
+    setloading(false);
+  };
+
+  // ### formik
   const formik = useFormik({
     initialValues: {
       title: data?.title || "",
@@ -502,9 +526,8 @@ const SinglCourseDataComponent = ({ data }) => {
     },
     // enableReinitialize: true,
     validationSchema: validateSchema,
-    onSubmit: (values) => {
-      // resetForm();
-      //   sumbitFunction(values);
+    onSubmit: () => {
+      updateSubmitHandler();
     },
   });
 
@@ -532,7 +555,7 @@ const SinglCourseDataComponent = ({ data }) => {
             }
             readOnly={isReadOnly}
             value={values.title}
-            // onChange={handleChange}
+            onChange={handleChange}
           />
         </div>
 
@@ -553,7 +576,7 @@ const SinglCourseDataComponent = ({ data }) => {
               }
               readOnly={isReadOnly}
               value={values.videoUrl}
-              // onChange={handleChange}
+              onChange={handleChange}
             />
           </div>
 
@@ -564,7 +587,7 @@ const SinglCourseDataComponent = ({ data }) => {
             <TextInput
               id="videoDuration"
               placeholder="Enter Video URL"
-              readOnly={isReadOnly}
+              readOnly={true}
               value={
                 data?.length?.accessibility?.accessibilityData?.label || ""
               }
@@ -596,13 +619,14 @@ const SinglCourseDataComponent = ({ data }) => {
             }
             value={values?.description}
             readOnly={isReadOnly}
+            onChange={handleChange}
             rows={6}
           />
         </div>
 
         <div>
           <div className="mb-2 block">
-            <Label htmlFor="description" value="Video Description" />
+            <Label htmlFor="thumbnail" value="Video Thumbnail" />
           </div>
           <Card
             className="p-3"
@@ -610,15 +634,25 @@ const SinglCourseDataComponent = ({ data }) => {
             imgSrc={data?.videothumbnail?.url}
           />
         </div>
-
-        <div className="mt-2">
-          <Button
-            // type="submit"
-            color="green"
-            //   isProcessing={loading}
-          >
-            Update
-          </Button>
+        <div className="mt-4">
+          {isReadOnly ? (
+            <Button color="warning" onClick={() => setisReadOnly(false)}>
+              Edit
+            </Button>
+          ) : (
+            <div className="flex gap-3">
+              <Button
+                color="failure"
+                onClick={() => setisReadOnly(true)}
+                disabled={loading}
+              >
+                Cancel
+              </Button>
+              <Button type="submit" color="green" isProcessing={loading}>
+                Update
+              </Button>
+            </div>
+          )}
         </div>
       </form>
     </div>
@@ -662,10 +696,16 @@ export const CourseContent = ({ setActiveTimeLine }) => {
 };
 
 export const CoursePreview = ({
+  isReadOnly,
   setActiveTimeLine,
   courseInfo,
   benefits,
   prerequisites,
+  categories,
+  selectedCategories,
+  createNewCoureSubmitHandler,
+  updateCourseSubmitHandler,
+  actionLoading,
 }) => {
   const { courseId } = useParams();
 
@@ -710,7 +750,9 @@ export const CoursePreview = ({
 
         <div>
           {" "}
-          <pre>{courseInfo?.description}</pre>{" "}
+          <pre className=" whitespace-break-spaces">
+            {courseInfo?.description}
+          </pre>{" "}
         </div>
 
         {courseInfo?.rating && (
@@ -723,6 +765,22 @@ export const CoursePreview = ({
             <RatingComponent rating={courseInfo?.rating} />
           </>
         )}
+      </div>
+
+      <div className="my-2">
+        <MultiSelect
+          className="text-gray-500 [&>*:nth-child(odd)]:bg-black"
+          isSearchable={false}
+          value={selectedCategories}
+          isMulti={true}
+          isDisabled={true}
+          options={
+            categories?.map((item) => ({
+              value: item?._id,
+              label: item?.name,
+            })) || []
+          }
+        />
       </div>
 
       <div>
@@ -760,13 +818,35 @@ export const CoursePreview = ({
           </List>
         </div>
       </div>
-      <div className="mt-5">
+      <div className="mt-5 flex justify-between">
         <Button
           color="warning"
           onClick={() => setActiveTimeLine(courseId ? 3 : 2)}
+          disabled={actionLoading}
         >
           Prev
         </Button>
+
+        {!courseId && (
+          <Button
+            color="success"
+            onClick={createNewCoureSubmitHandler}
+            disabled={actionLoading}
+            isProcessing={actionLoading}
+          >
+            Create
+          </Button>
+        )}
+        {courseId && !isReadOnly && (
+          <Button
+            color="success"
+            onClick={updateCourseSubmitHandler}
+            disabled={actionLoading}
+            isProcessing={actionLoading}
+          >
+            Update
+          </Button>
+        )}
       </div>
     </div>
   );

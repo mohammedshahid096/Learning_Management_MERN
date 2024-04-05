@@ -7,7 +7,7 @@ const courseDataModel = require("../Models/coursedata.model");
  * @return {Object} Course details
  */
 module.exports.GetSingleCourseService = async (courseid) => {
-  let data = await coursesModel.findById(courseid);
+  let data = await coursesModel.findById(courseid).populate("categories");
   return data;
 };
 

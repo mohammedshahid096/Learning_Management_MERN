@@ -47,7 +47,7 @@ const AdminNavbar = () => {
             <Sidebar.Item icon={HiInbox}>Inbox</Sidebar.Item>
           </Sidebar.Collapse>
 
-          <Sidebar.Collapse label="Context">
+          <Sidebar.Collapse label="Courses" open>
             <Sidebar.Item
               icon={AiOutlineVideoCameraAdd}
               onClick={() => navigate("/admin/course/create")}
