@@ -1,13 +1,28 @@
 import React from "react";
 import bannerImage from "../assets/images/Learning-amico.png";
 import "../styles/hero.css";
+import { motion } from "framer-motion";
 
+const variants = {
+  repeat: {
+    rotate: [30, 120, 0, -120, 0],
+    scale: [1, 0.7, 1, 0.7, 1],
+    transition: {
+      duration: 3,
+      repeat: Infinity,
+      repeatDelay: 2,
+      ease: "easeOut",
+    },
+  },
+};
 const Hero = () => {
   return (
     <div className="flex max-sm:flex-col justify-around items-center mt-9 gap-15">
       {/* Left side with learning image */}
       <div className="w-[75vh] h-[75vh] flex justify-center items-center hero_animation px-4 rounded-full">
-        <img
+        <motion.img
+          animate="repeat"
+          variants={variants}
           src={bannerImage}
           alt="bannerlogo"
           className="w-[80%] h-full object-contain"

@@ -6,8 +6,13 @@ import { GetCategoriesList } from "../../../Redux/actions/course.action";
 import { format } from "timeago.js";
 import { MdModeEdit, MdDeleteOutline } from "react-icons/md";
 import { IoAdd } from "react-icons/io5";
+import { HiOutlineExclamationCircle } from "react-icons/hi";
 import CustomModal from "../../../utils/CustomModal";
-import { AddCategoryApi, UpdateCategoryApi } from "../../../Apis/category.api";
+import {
+  AddCategoryApi,
+  DeleteCategoryApi,
+  UpdateCategoryApi,
+} from "../../../Apis/category.api";
 import toast from "react-hot-toast";
 
 const Categories = () => {
@@ -16,6 +21,8 @@ const Categories = () => {
   const [categoryName, setcategoryName] = useState("");
   const [selectedCategory, setselectedCategory] = useState(null);
   const [actionLoading, setactionLoading] = useState(false);
+  const [deleteModal, setdeleteModal] = useState(false);
+  const [deleteCategoryId, setdeleteCategoryId] = useState(null);
 
   // ### redux
   const dispatch = useDispatch();
@@ -23,10 +30,12 @@ const Categories = () => {
     (state) => state.AdminCourseState
   );
 
+  // ### functions
   const fetchCategoryList = () => {
     dispatch(GetCategoriesList());
   };
 
+  // # function : adding a new category
   const addNewCategoryHandler = async () => {
     setactionLoading(true);
     const response = await AddCategoryApi({ name: categoryName });
@@ -40,6 +49,7 @@ const Categories = () => {
     setactionLoading(false);
   };
 
+  // # function : updating the category
   const updateCategoryHandler = async () => {
     setactionLoading(true);
     const response = await UpdateCategoryApi(selectedCategory, {
@@ -55,6 +65,21 @@ const Categories = () => {
     setactionLoading(false);
   };
 
+  // # function : delete the category
+  const deleteCategoryHandler = async () => {
+    setactionLoading(true);
+    const response = await DeleteCategoryApi(deleteCategoryId);
+    if (response.success) {
+      toast.success(response?.message);
+      dispatch(GetCategoriesList(false));
+      setdeleteModal(false);
+    } else {
+      toast.error(response.message);
+    }
+    setactionLoading(false);
+  };
+
+  // ### useEffects
   useEffect(() => {
     if (!categories) {
       fetchCategoryList();
@@ -66,7 +91,10 @@ const Categories = () => {
       setselectedCategory(null);
       setcategoryName(null);
     }
-  }, [addModal]);
+    if (!deleteModal) {
+      setdeleteCategoryId(null);
+    }
+  }, [addModal, deleteModal]);
 
   return (
     <AdminLayout>
@@ -122,7 +150,13 @@ const Categories = () => {
                         >
                           <MdModeEdit size={20} />
                         </span>
-                        <span className=" cursor-pointer hover:text-red-400">
+                        <span
+                          className=" cursor-pointer hover:text-red-400"
+                          onClick={() => {
+                            setdeleteCategoryId(category?._id);
+                            setdeleteModal(true);
+                          }}
+                        >
                           <MdDeleteOutline size={20} />
                         </span>
                       </div>
@@ -134,6 +168,7 @@ const Categories = () => {
         </div>
       )}
 
+      {/* edit and add*/}
       <CustomModal
         openModal={addModal}
         setopenModal={setaddModal}
@@ -166,6 +201,38 @@ const Categories = () => {
               }
             >
               Submit
+            </Button>
+          </div>
+        </div>
+      </CustomModal>
+
+      {/* delete */}
+      <CustomModal
+        openModal={deleteModal}
+        setopenModal={setdeleteModal}
+        title={"Delete Category"}
+      >
+        <div className="text-center">
+          <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+          <h3 className="mb-3 text-lg font-normal text-gray-500 dark:text-gray-400">
+            Are you sure you want to delete this Category?
+          </h3>
+          <h2 className="font-bold mb-5">{deleteCategoryId}</h2>
+          <div className="flex justify-center gap-4">
+            <Button
+              color="failure"
+              disabled={actionLoading}
+              isProcessing={actionLoading}
+              onClick={deleteCategoryHandler}
+            >
+              {"Yes, I'm sure"}
+            </Button>
+            <Button
+              color="gray"
+              onClick={() => setdeleteModal(false)}
+              disabled={actionLoading}
+            >
+              No, cancel
             </Button>
           </div>
         </div>

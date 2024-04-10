@@ -5,6 +5,7 @@ const {
   GetAllCategories,
   GetSingleCategory,
   UpdateCategory,
+  DeleteCategory,
 } = require("../Controllers/category.controller");
 
 const CategoriesRoutes = express.Router();
@@ -19,6 +20,7 @@ CategoriesRoutes.route("/all").get(Authentication, GetAllCategories);
 
 CategoriesRoutes.route("/single/:categoryId")
   .get(Authentication, GetSingleCategory)
-  .put(Authentication, Authorization("admin"), UpdateCategory);
+  .put(Authentication, Authorization("admin"), UpdateCategory)
+  .delete(Authentication, Authorization("admin"), DeleteCategory);
 
 module.exports = CategoriesRoutes;

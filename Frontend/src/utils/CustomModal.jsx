@@ -1,7 +1,5 @@
-"use client";
-
 import { Modal } from "flowbite-react";
-import {} from "react";
+import { PropTypes } from "prop-types";
 
 function CustomModal({ openModal, setopenModal, title, children }) {
   //   console.log(childern);
@@ -16,5 +14,9 @@ function CustomModal({ openModal, setopenModal, title, children }) {
     </Modal>
   );
 }
-
+CustomModal.PropTypes = {
+  openModal: PropTypes.boolean,
+  setopenModal: PropTypes.boolean,
+  title: PropTypes.string,
+};
 export default CustomModal;

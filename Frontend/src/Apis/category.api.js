@@ -48,7 +48,7 @@ export const DeleteCategoryApi = async (userid) => {
     };
 
     const { data } = await axiosInstance.delete(
-      `${URLConstant}/category/delete/${userid}`,
+      `${URLConstant}/category/single/${userid}`,
       config
     );
     return data;

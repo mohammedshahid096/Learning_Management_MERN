@@ -1,5 +1,6 @@
 const httpErrors = require("http-errors");
 const categoryModel = require("../Models/category.model");
+const coursesModel = require("../Models/course.model");
 const { errorConstant, successConstant } = require("../Utils/constants");
 // const { redis } = require("../Config/redis.config");
 const { AddCategoryValidation } = require("../JoiSchemas/category.schema");
@@ -86,7 +87,17 @@ module.exports.DeleteCategory = async (req, res, next) => {
   try {
     const { categoryId } = req.params;
 
-    //   condition here to delete
+    const isExist = await coursesModel
+      .find({ categories: categoryId })
+      .select("name");
+
+    if (isExist.length > 0) {
+      return next(
+        httpErrors.BadRequest(
+          `please remove category from course : ${isExist[0]["name"]}`
+        )
+      );
+    }
 
     const data = await categoryModel.findByIdAndDelete(categoryId);
     if (!data) {
