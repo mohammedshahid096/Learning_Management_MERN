@@ -8,6 +8,7 @@ const ReviewRoutes = require("./review.routes");
 const OrderRoutes = require("./order.routes");
 const NotificationRoutes = require("./notification.routes");
 const CategoriesRoutes = require("./category.routes");
+const DashboardRoutes = require("./dashboard.routes");
 
 // # User routes
 IndexRoutes.use("/user", UserRoutes);
@@ -29,6 +30,9 @@ IndexRoutes.use("/order", OrderRoutes);
 
 // # Notification Routes
 IndexRoutes.use("/notification", NotificationRoutes);
+
+// # Dashboard Routes
+IndexRoutes.use("/dashboard", DashboardRoutes);
 
 IndexRoutes.use("/test", TestRouter);
 

@@ -19,6 +19,7 @@
     "js-cookie": "^3.0.5",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
+    "react-apexcharts": "^1.4.1",
     "react-data-table-component": "^7.6.2",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
