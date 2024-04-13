@@ -19,18 +19,20 @@ const Hero = () => {
   return (
     <div className="flex max-sm:flex-col justify-around items-center mt-9 gap-15">
       {/* Left side with learning image */}
-      <div className="w-[75vh] h-[75vh] flex justify-center items-center hero_animation px-4 rounded-full">
-        <motion.img
-          animate="repeat"
-          variants={variants}
-          src={bannerImage}
-          alt="bannerlogo"
-          className="w-[80%] h-full object-contain"
-        />
+      <div className="animate__animated animate__backInLeft">
+        <div className="w-[75vh] h-[75vh] max-sm:w-full max-sm:h-full flex justify-center items-center hero_animation px-4 rounded-full ">
+          <motion.img
+            animate="repeat"
+            variants={variants}
+            src={bannerImage}
+            alt="bannerlogo"
+            className="w-[80%] h-full object-contain"
+          />
+        </div>
       </div>
 
       {/* Right side with title and search input */}
-      <div className=" flex flex-col justify-center items-center max-md:mt-5">
+      <div className=" flex flex-col justify-center items-center max-sm:p-4 max-md:mt-5 animate__animated animate__backInRight">
         <h1 className="text-4xl font-bold mb-4 leading-10 tracking-wider">
           Improve Your Online <br />
           Learning Experience <br />

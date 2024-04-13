@@ -1,6 +1,5 @@
 import React from "react";
 import AdminNavbar from "../../components/admin/AdminNavbar";
-import { Card } from "flowbite-react";
 
 const AdminLayout = ({ children }) => {
   return (

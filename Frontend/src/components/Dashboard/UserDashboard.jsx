@@ -2,36 +2,14 @@ import { Card } from "flowbite-react";
 import React from "react";
 import ApexChart from "react-apexcharts";
 
-export const UserDashboardYearWise = ({ className, width = undefined }) => {
-  const data = [
-    {
-      count: 6,
-      month: 1,
-      month_name: "January",
-    },
-    {
-      count: 2,
-      month: 2,
-      month_name: "February",
-    },
-    {
-      count: 8,
-      month: 3,
-      month_name: "March",
-    },
-    {
-      count: 2,
-      month: 3,
-      month_name: "March",
-    },
-    {
-      count: 6,
-      month: 3,
-      month_name: "March",
-    },
+export const UserDashboardYearWise = ({
+  className,
+  width = undefined,
+  data = null,
+}) => {
+  const series = [
+    { name: "Months", data: data && data.map((item) => item.count) },
   ];
-
-  const series = [{ name: "Months", data: data.map((item) => item.count) }];
   const options = {
     chart: {
       type: "bar",
@@ -60,7 +38,7 @@ export const UserDashboardYearWise = ({ className, width = undefined }) => {
       },
     },
     xaxis: {
-      categories: data.map((item) => item.month_name),
+      categories: data && data.map((item) => item.month_name),
       title: {
         text: "No.of.Users",
       },
@@ -96,19 +74,14 @@ export const UserDashboardYearWise = ({ className, width = undefined }) => {
   );
 };
 
-export const UserDashboardRole = ({ className, width = undefined }) => {
-  const data = [
-    {
-      _id: "admin",
-      count: 4,
-    },
-    {
-      _id: "user",
-      count: 6,
-    },
+export const UserDashboardRole = ({
+  className,
+  width = undefined,
+  data = null,
+}) => {
+  const series = [
+    { name: "Role", data: data && data.map((item) => item.count) },
   ];
-
-  const series = [{ name: "Role", data: data.map((item) => item.count) }];
   const options = {
     chart: {
       type: "bar",
@@ -138,7 +111,7 @@ export const UserDashboardRole = ({ className, width = undefined }) => {
       },
     },
     xaxis: {
-      categories: data.map((item) => item._id),
+      categories: data && data.map((item) => item._id),
       title: {
         text: "No.of.Users",
       },
@@ -162,7 +135,7 @@ export const UserDashboardRole = ({ className, width = undefined }) => {
     },
   };
   return (
-    <Card className={`p-3 ${className}`}>
+    <Card className={`p-3 text-black ${className}`}>
       <h4 className=" font-bold text-center text-white">User Role Based</h4>
       <ApexChart
         options={options}
@@ -175,13 +148,12 @@ export const UserDashboardRole = ({ className, width = undefined }) => {
   );
 };
 
-export const UserDashboardSocialDonut = ({ className, width = undefined }) => {
-  const data = {
-    SocailAccounts: 1,
-    NonSocialAccounts: 9,
-  };
-
-  const series = [data?.SocailAccounts, data?.NonSocialAccounts];
+export const UserDashboardSocialDonut = ({
+  className,
+  width = undefined,
+  data = null,
+}) => {
+  const series = data && Object.values(data);
   const options = {
     chart: {
       height: 200,

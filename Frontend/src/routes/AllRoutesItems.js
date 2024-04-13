@@ -4,6 +4,8 @@ import AdminHome from "../pages/admin/AdminHome";
 import AdminAllCourses from "../pages/admin/Courses/AdminAllCourses";
 import Categories from "../pages/admin/Courses/Categories";
 import CreateCourse from "../pages/admin/Courses/CreateCourse";
+import CourseDashboardPage from "../pages/admin/Dashboard/CourseDashboardPage";
+import UserDashboardPage from "../pages/admin/Dashboard/UserDashboardPage";
 import AdminAllUsers from "../pages/admin/users/AdminAllUsers";
 import AdminTeam from "../pages/admin/users/AdminTeam";
 const AllUSers = ["admin", "user"];
@@ -63,6 +65,20 @@ const AllRoutesItems = [
     num: 9,
     path: "/admin/category",
     element: Categories,
+    protected: true,
+    Access: ["admin"],
+  },
+  {
+    num: 10,
+    path: "/admin/dashboard/user",
+    element: UserDashboardPage,
+    protected: true,
+    Access: ["admin"],
+  },
+  {
+    num: 11,
+    path: "/admin/dashboard/course",
+    element: CourseDashboardPage,
     protected: true,
     Access: ["admin"],
   },

@@ -4,6 +4,7 @@ import { AuthReducer } from "./reducers/Auth.reducer";
 import { AdminCourseReducer } from "./reducers/Course.reducer";
 import { getAccessCookie } from "../config/cookie";
 import { AdminUserReducer } from "./reducers/user.reducer.js";
+import { DashboardUserReducer } from "./reducers/Dashboard.reducer.js";
 
 const middleware = (getDefaultMiddleware) =>
   getDefaultMiddleware().concat(thunk);
@@ -19,6 +20,7 @@ const reducer = {
   AuthState: AuthReducer,
   AdminCourseState: AdminCourseReducer,
   AdminUserState: AdminUserReducer,
+  DashboardState: DashboardUserReducer,
 };
 
 const store = configureStore({

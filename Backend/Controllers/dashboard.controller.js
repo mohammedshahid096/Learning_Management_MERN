@@ -1,9 +1,6 @@
 const userModel = require("../Models/user.model");
+const coursesModel = require("../Models/course.model");
 const httpErrors = require("http-errors");
-// const {
-//     errorConstant,
-//     successConstant,
-//   } = require("../Utils/constants");
 
 // users analysis
 module.exports.AdminUsersDashboardController = async (req, res, next) => {
@@ -115,7 +112,49 @@ module.exports.AdminUsersDashboardController = async (req, res, next) => {
       data: {
         YearTotalAnalysis,
         RoleAnalysis,
-        SocailBased: SocailBased[0],
+        SocialBased: SocailBased[0],
+      },
+    });
+  } catch (error) {
+    next(httpErrors.InternalServerError(error.message));
+  }
+};
+
+// course analysis
+module.exports.AdminCourseDashboardController = async (req, res, next) => {
+  try {
+    const aggregation1 = [
+      {
+        $group: {
+          _id: "$level",
+          count: { $sum: 1 },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          level: "$_id",
+          count: 1,
+        },
+      },
+    ];
+
+    const data1 = coursesModel.aggregate(aggregation1);
+    const data2 = coursesModel
+      .find()
+      .select("name purchase rating")
+      .sort({ purchase: -1 })
+      .limit(5);
+    const [LevelWiseAnalysis, PurchaseAnalysis] = await Promise.all([
+      data1,
+      data2,
+    ]);
+    res.status(200).json({
+      success: true,
+      statusCode: 200,
+      data: {
+        LevelWiseAnalysis,
+        PurchaseAnalysis,
       },
     });
   } catch (error) {

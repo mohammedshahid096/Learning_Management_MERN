@@ -3,7 +3,12 @@
 import { Avatar, Sidebar } from "flowbite-react";
 import { HiChartPie, HiInbox } from "react-icons/hi";
 import { AiOutlineVideoCameraAdd } from "react-icons/ai";
-import { MdOutlineOndemandVideo, MdOutlineCategory } from "react-icons/md";
+import {
+  MdOutlineOndemandVideo,
+  MdOutlineCategory,
+  MdOutlineAnalytics,
+} from "react-icons/md";
+import { GrAnalytics } from "react-icons/gr";
 import { FaUsersCog } from "react-icons/fa";
 import { FaUsers } from "react-icons/fa";
 import { useSelector } from "react-redux";
@@ -74,6 +79,21 @@ const AdminNavbar = () => {
               onClick={() => navigate("/admin/user/team")}
             >
               Team Members
+            </Sidebar.Item>
+          </Sidebar.Collapse>
+
+          <Sidebar.Collapse label="Analytics" open>
+            <Sidebar.Item
+              icon={MdOutlineAnalytics}
+              onClick={() => navigate("/admin/dashboard/user")}
+            >
+              User Analytics
+            </Sidebar.Item>
+            <Sidebar.Item
+              icon={GrAnalytics}
+              onClick={() => navigate("/admin/dashboard/course")}
+            >
+              Course Analytics
             </Sidebar.Item>
           </Sidebar.Collapse>
         </Sidebar.ItemGroup>

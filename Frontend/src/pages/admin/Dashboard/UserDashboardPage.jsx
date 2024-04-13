@@ -1,22 +1,15 @@
 import React from "react";
-import AdminLayout from "./AdminLayout";
 import {
   UserDashboardRole,
   UserDashboardSocialDonut,
   UserDashboardYearWise,
-} from "../../components/Dashboard/UserDashboard";
-import CustomLoader from "../../utils/Loader";
+} from "../../../components/Dashboard/UserDashboard";
+import CustomLoader from "../../../utils/Loader";
 import { Card } from "flowbite-react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  AdminCourseAnalysisAction,
-  AdminUserAnalysisAction,
-} from "../../Redux/actions/dashboard.action";
 import { useEffect } from "react";
-import {
-  CourseLevelAnalysis,
-  CourseTop5Purchase,
-} from "../../components/Dashboard/CourseDashboard";
+import AdminLayout from "../AdminLayout";
+import { AdminUserAnalysisAction } from "../../../Redux/actions/dashboard.action";
 
 const Skeleton = () => {
   return (
@@ -64,8 +57,8 @@ const Skeleton = () => {
   );
 };
 
-const AdminHome = () => {
-  const { loading, UserAnalytics, CourseAnalytics } = useSelector(
+const UserDashboardPage = () => {
+  const { loading, UserAnalytics } = useSelector(
     (state) => state.DashboardState
   );
   const dispatch = useDispatch();
@@ -74,19 +67,12 @@ const AdminHome = () => {
     dispatch(AdminUserAnalysisAction());
   };
 
-  const fetchCourseAnalysis = () => {
-    dispatch(AdminCourseAnalysisAction());
-  };
-
   useEffect(() => {
     if (!UserAnalytics) {
       fetchUserAnalysis();
-      fetchCourseAnalysis();
     }
-    if (!CourseAnalytics) {
-      fetchCourseAnalysis();
-    }
-  }, [UserAnalytics, CourseAnalytics]);
+  }, [UserAnalytics]);
+
   return (
     <AdminLayout>
       {loading ? (
@@ -95,32 +81,16 @@ const AdminHome = () => {
         <>
           <div>
             <h1 className="text-center font-bold text-3xl mb-3">
-              Dashboard Analytics
+              User Analytics
             </h1>
           </div>
-          <div className="flex max-md:flex-col gap-4 mb-4">
-            <UserDashboardRole
-              className="w-4/6 max-md:w-full"
-              data={UserAnalytics?.RoleAnalysis}
-            />
+          <div className="flex flex-col gap-4 mb-4">
+            <UserDashboardRole data={UserAnalytics?.RoleAnalysis} />
             <UserDashboardSocialDonut
-              className="w-2/6  max-md:w-full"
               data={UserAnalytics?.SocialBased}
               loading={loading}
             />
-          </div>
-          <UserDashboardYearWise data={UserAnalytics?.YearTotalAnalysis} />
-          <br />
-
-          <div className="flex max-md:flex-col gap-4 mb-4">
-            <CourseTop5Purchase
-              className="w-3/6 max-md:w-full flex-1"
-              data={CourseAnalytics?.PurchaseAnalysis}
-            />
-            <CourseLevelAnalysis
-              className="w-3/6 max-md:w-full"
-              data={CourseAnalytics?.LevelWiseAnalysis}
-            />
+            <UserDashboardYearWise data={UserAnalytics?.YearTotalAnalysis} />
           </div>
         </>
       )}
@@ -129,4 +99,4 @@ const AdminHome = () => {
   );
 };
 
-export default AdminHome;
+export default UserDashboardPage;

@@ -12,6 +12,7 @@
   "dependencies": {
     "@auth0/auth0-react": "^2.2.4",
     "@reduxjs/toolkit": "^2.2.1",
+    "animate.css": "^4.1.1",
     "axios": "^1.6.7",
     "flowbite-react": "^0.7.2",
     "formik": "^2.4.5",
