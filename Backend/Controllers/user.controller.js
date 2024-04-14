@@ -419,6 +419,24 @@ module.exports.UpdateUserRoleController = async (req, res, next) => {
   }
 };
 
+module.exports.AdimGetSingleUserDetail = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const data = await userModel.findById(id).populate("courses", "name");
+    if (!data) {
+      return next(httpErrors.NotFound(errorConstant.USER_NOT_FOUND));
+    }
+
+    res.status(200).json({
+      success: true,
+      statusCode: 200,
+      data,
+    });
+  } catch (error) {
+    next(httpErrors.InternalServerError(error.message));
+  }
+};
+
 // deleting a user by user
 module.exports.DeleteUserController = async (req, res, next) => {
   try {

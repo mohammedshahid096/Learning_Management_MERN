@@ -4,7 +4,7 @@ import AdminNavbar from "../../components/admin/AdminNavbar";
 const AdminLayout = ({ children }) => {
   return (
     <div className="flex gap-3 min-h-[90vh] max-md:flex-col ">
-      <div className="w-1/5 max-md:w-full">
+      <div className="w-1/5  max-md:w-full">
         <AdminNavbar />
       </div>
 

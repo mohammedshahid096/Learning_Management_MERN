@@ -199,3 +199,47 @@ export const UserDashboardSocialDonut = ({
     </Card>
   );
 };
+
+export const UserDashboardYearWiseLineChart = ({
+  className,
+  width = undefined,
+  data = null,
+}) => {
+  const series = [
+    {
+      name: "Months",
+      data: data && data.map((item) => item.count),
+    },
+  ];
+
+  const options = {
+    chart: {
+      type: "line",
+      zoom: {
+        enabled: false,
+      },
+    },
+    dataLabels: {
+      enabled: true,
+    },
+    stroke: {
+      curve: "smooth",
+    },
+    xaxis: {
+      categories: data && data.map((item) => item.month_name),
+    },
+  };
+
+  return (
+    <Card className={`p-3 text-black ${className}`}>
+      <h4 className=" font-bold text-center text-white">Users Line Chart </h4>
+      <ApexChart
+        options={options}
+        series={series || []}
+        type="line"
+        width={width}
+        height={350}
+      />
+    </Card>
+  );
+};

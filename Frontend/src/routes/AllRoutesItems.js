@@ -8,6 +8,7 @@ import CourseDashboardPage from "../pages/admin/Dashboard/CourseDashboardPage";
 import UserDashboardPage from "../pages/admin/Dashboard/UserDashboardPage";
 import AdminAllUsers from "../pages/admin/users/AdminAllUsers";
 import AdminTeam from "../pages/admin/users/AdminTeam";
+import UserDetailPage from "../pages/admin/users/UserDetailPage";
 const AllUSers = ["admin", "user"];
 
 const AllRoutesItems = [
@@ -79,6 +80,13 @@ const AllRoutesItems = [
     num: 11,
     path: "/admin/dashboard/course",
     element: CourseDashboardPage,
+    protected: true,
+    Access: ["admin"],
+  },
+  {
+    num: 12,
+    path: "/admin/user/:userId",
+    element: UserDetailPage,
     protected: true,
     Access: ["admin"],
   },

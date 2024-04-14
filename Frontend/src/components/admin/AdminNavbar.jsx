@@ -42,7 +42,7 @@ const AdminNavbar = () => {
           <Sidebar.Item onClick={() => navigate("/admin")} icon={HiChartPie}>
             Dashboard
           </Sidebar.Item>
-          <Sidebar.Collapse label="Data">
+          <Sidebar.Collapse label="Data" open>
             <Sidebar.Item
               icon={FaUsers}
               onClick={() => navigate("/admin/user/all")}
@@ -73,7 +73,7 @@ const AdminNavbar = () => {
             </Sidebar.Item>
           </Sidebar.Collapse>
 
-          <Sidebar.Collapse label="Collabration">
+          <Sidebar.Collapse label="Collabration" open>
             <Sidebar.Item
               icon={FaUsersCog}
               onClick={() => navigate("/admin/user/team")}

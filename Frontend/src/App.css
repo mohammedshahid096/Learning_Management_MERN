@@ -6,6 +6,11 @@
   display: none;
 }
 
+#wantScroll::-webkit-scrollbar,
+#wantScroll *::-webkit-scrollbar {
+  display: "";
+}
+
 :root {
   --foreground-rgb: rgb(0, 0, 0);
   --background-start-rgb: 214, 219, 220;

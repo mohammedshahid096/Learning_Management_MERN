@@ -36,3 +36,19 @@ export const DeleteUserApi = async (userid) => {
     return error?.response?.data || error.message;
   }
 };
+
+export const GetUserAdminApi = async (userid) => {
+  try {
+    const config = {
+      withCredentials: true,
+    };
+
+    const { data } = await axiosInstance.get(
+      `${URLConstant}/user/users/${userid}`,
+      config
+    );
+    return data;
+  } catch (error) {
+    return error?.response?.data || error;
+  }
+};

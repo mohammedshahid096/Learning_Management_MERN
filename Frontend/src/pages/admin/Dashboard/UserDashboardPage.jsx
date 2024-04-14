@@ -3,6 +3,7 @@ import {
   UserDashboardRole,
   UserDashboardSocialDonut,
   UserDashboardYearWise,
+  UserDashboardYearWiseLineChart,
 } from "../../../components/Dashboard/UserDashboard";
 import CustomLoader from "../../../utils/Loader";
 import { Card } from "flowbite-react";
@@ -91,6 +92,9 @@ const UserDashboardPage = () => {
               loading={loading}
             />
             <UserDashboardYearWise data={UserAnalytics?.YearTotalAnalysis} />
+            <UserDashboardYearWiseLineChart
+              data={UserAnalytics?.YearTotalAnalysis}
+            />
           </div>
         </>
       )}

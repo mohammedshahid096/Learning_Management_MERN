@@ -5,6 +5,8 @@ import { Spinner } from "flowbite-react";
 import { useSelector } from "react-redux";
 import { format } from "timeago.js";
 import { MdDeleteOutline, MdOutlineMail } from "react-icons/md";
+import { FaEye } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const customStyles = {
   table: {
@@ -53,7 +55,11 @@ const Loader = () => {
 };
 
 const AllUsersComponent = ({ setselectedUser }) => {
+  // # Redux State
   const { loading, users } = useSelector((state) => state.AdminUserState);
+
+  // # react router dom
+  const navigate = useNavigate();
 
   const columns = [
     {
@@ -111,16 +117,24 @@ const AllUsersComponent = ({ setselectedUser }) => {
       center: true,
     },
     {
-      name: "Delete",
+      name: "Action",
       center: true,
       grow: 0,
       cell: (row) => (
-        <span
-          className=" cursor-pointer hover:text-red-500"
-          onClick={() => setselectedUser({ id: row.id, name: row.name })}
-        >
-          <MdDeleteOutline size={20} />
-        </span>
+        <div className="flex gap-2">
+          <span
+            className=" cursor-pointer hover:text-red-500"
+            onClick={() => setselectedUser({ id: row.id, name: row.name })}
+          >
+            <MdDeleteOutline size={20} />
+          </span>
+          <span
+            className=" cursor-pointer hover:text-yellow-200"
+            onClick={() => navigate(`/admin/user/${row.id}`)}
+          >
+            <FaEye size={20} />
+          </span>
+        </div>
       ),
     },
     {
