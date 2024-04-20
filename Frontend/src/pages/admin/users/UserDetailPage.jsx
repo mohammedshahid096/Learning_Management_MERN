@@ -2,20 +2,27 @@ import React, { useEffect, useState } from "react";
 import AdminLayout from "../AdminLayout";
 import { useParams } from "react-router-dom";
 import { Button, Card, Table, Label, Select, TextInput } from "flowbite-react";
-import { GetUserAdminApi } from "../../../Apis/user.api";
+import {
+  Add_or_DeleteCourseUserAdminApi,
+  GetUserAdminApi,
+} from "../../../Apis/user.api";
 import toast from "react-hot-toast";
 import CustomLoader from "../../../utils/Loader";
 import moment from "moment";
 import { TiTick, TiCancel } from "react-icons/ti";
+import { MdDeleteForever } from "react-icons/md";
+import { HiOutlineExclamationCircle } from "react-icons/hi";
 import CustomModal from "../../../utils/CustomModal";
 import { useDispatch, useSelector } from "react-redux";
 import { AdminGetCourseList } from "../../../Redux/actions/course.action";
+import { format } from "timeago.js";
 
 const AddCourseToUser = ({
   addModalOpen,
   setaddModalOpen,
   userId,
   userDetail,
+  setuserDetail,
 }) => {
   // redux
   const dispatch = useDispatch();
@@ -30,6 +37,23 @@ const AddCourseToUser = ({
     dispatch(AdminGetCourseList());
   };
 
+  const updateSubmitHandler = async () => {
+    setloading(true);
+    const response = await Add_or_DeleteCourseUserAdminApi(
+      userId,
+      selectedCourse,
+      true
+    );
+    if (response.success) {
+      toast.success(response.message);
+      setselectedCourse(null);
+      setaddModalOpen(false);
+      setuserDetail(response.data);
+    } else {
+      toast.error(response.message);
+    }
+    setloading(false);
+  };
   useEffect(() => {
     if (!courses) {
       fetchCoursesList();
@@ -93,9 +117,72 @@ const AddCourseToUser = ({
             pill
             disabled={selectedCourse === null || loading ? true : false}
             isProcessing={loading}
-            // onClick={updateUserHandler}
+            onClick={updateSubmitHandler}
           >
             Submit
+          </Button>
+        </div>
+      </div>
+    </CustomModal>
+  );
+};
+
+const DeleteCoursFromUser = ({
+  userId,
+  setuserDetail,
+  selectedDelete,
+  setselectedDelete,
+}) => {
+  // usestate
+  const [loading, setloading] = useState(false);
+
+  // functions
+  const updateSubmitHandler = async () => {
+    setloading(true);
+    const response = await Add_or_DeleteCourseUserAdminApi(
+      userId,
+      selectedDelete,
+      false
+    );
+    if (response.success) {
+      toast.success(response.message);
+      setselectedDelete(null);
+      setuserDetail(response.data);
+    } else {
+      toast.error(response.message);
+    }
+    setloading(false);
+  };
+
+  return (
+    <CustomModal
+      openModal={selectedDelete ? true : false}
+      setopenModal={setselectedDelete}
+      title="Delete Course to User"
+    >
+      <div className="text-center">
+        <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+        <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+          Are you sure you want to delete this Course?
+        </h3>
+        <h4 className="text-center font-bold mb-3">{selectedDelete}</h4>
+
+        <div className="flex justify-between gap-4">
+          <Button
+            color="failure"
+            isProcessing={loading}
+            disabled={loading}
+            onClick={updateSubmitHandler}
+          >
+            {"Yes, I'm sure"}
+          </Button>
+          <Button
+            color="gray"
+            onClick={() => {
+              setselectedDelete(null);
+            }}
+          >
+            No, cancel
           </Button>
         </div>
       </div>
@@ -111,6 +198,7 @@ const UserDetailPage = () => {
   const [user, setuser] = useState(null);
   const [loading, setloading] = useState(false);
   const [addModalOpen, setaddModalOpen] = useState(false);
+  const [selectedDelete, setselectedDelete] = useState(null);
 
   // # functions
   const fetchUserDetail = async () => {
@@ -138,8 +226,8 @@ const UserDetailPage = () => {
             Add Course
           </Button>
         </div>
-        <div className="grid grid-cols-2 max-md:block gap-3 ">
-          <Card>
+        <div className="grid grid-cols-2 max-md:grid-cols-1 gap-3 ">
+          <Card className="break-words">
             <div className="flex items-center mb-4">
               <div className="w-1/3 font-semibold">Name:</div>
               <div className="w-2/3">{user?.name}</div>
@@ -165,22 +253,27 @@ const UserDetailPage = () => {
             <div className="flex items-center mb-4">
               <div className="w-1/3 font-semibold">Created On:</div>
               <div className="w-2/3">
-                {user && moment(user?.createdAt).format("DD-MM-YYYY")}
-              </div>
-            </div>
-
-            <div className="flex items-center mb-4">
-              <div className="w-1/3 font-semibold">Profile Image:</div>
-              <div className="w-2/3">
-                <img
-                  src={user?.profile.url}
-                  alt="Profile"
-                  className="h-24 w-24 rounded-full"
-                />
+                {user && moment(user?.createdAt).format("DD-MM-YYYY")} (
+                {format(user.createdAt)})
               </div>
             </div>
           </Card>
 
+          <Card>
+            <div className="flex flex-col gap-5 items-center mb-4">
+              <div className="font-semibold">Profile Image:</div>
+              <div className="">
+                <img
+                  src={user?.profile.url}
+                  alt="Profile"
+                  className="h-40 w-40 rounded-full"
+                />
+              </div>
+            </div>
+          </Card>
+        </div>
+
+        <div>
           <Card>
             <div className="overflow-auto" id="wantScroll">
               <div className="font-semibold mb-2">Courses:</div>
@@ -189,6 +282,7 @@ const UserDetailPage = () => {
                   <Table.HeadCell>S.NO</Table.HeadCell>
                   <Table.HeadCell>ID</Table.HeadCell>
                   <Table.HeadCell>Product name</Table.HeadCell>
+                  <Table.HeadCell>Delete</Table.HeadCell>
                 </Table.Head>
                 <Table.Body className="divide-y">
                   {user &&
@@ -197,6 +291,17 @@ const UserDetailPage = () => {
                         <Table.Cell>{index + 1}</Table.Cell>
                         <Table.Cell>{course._id}</Table.Cell>
                         <Table.Cell>{course.name}</Table.Cell>
+                        <Table.Cell>
+                          {" "}
+                          <span
+                            className="cursor-pointer  hover:text-red-500"
+                            onClick={() => {
+                              setselectedDelete(course._id);
+                            }}
+                          >
+                            <MdDeleteForever size={20} />
+                          </span>{" "}
+                        </Table.Cell>
                       </Table.Row>
                     ))}
                 </Table.Body>
@@ -211,6 +316,13 @@ const UserDetailPage = () => {
         setaddModalOpen={setaddModalOpen}
         userId={userId}
         userDetail={user}
+        setuserDetail={setuser}
+      />
+      <DeleteCoursFromUser
+        userId={userId}
+        setuserDetail={setuser}
+        selectedDelete={selectedDelete}
+        setselectedDelete={setselectedDelete}
       />
       <CustomLoader loading={loading} />
     </AdminLayout>

@@ -12,8 +12,8 @@ DashboardRoutes.route("/admin/users").get(
   AdminUsersDashboardController
 );
 DashboardRoutes.route("/admin/courses").get(
-  // Authentication,
-  // Authorization("admin"),
+  Authentication,
+  Authorization("admin"),
   AdminCourseDashboardController
 );
 

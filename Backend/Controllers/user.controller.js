@@ -7,8 +7,10 @@ const {
   UpdateAccountValidation,
   UpdatePasswordValidation,
   UpdateUserRoleValidation,
+  AddCourseByAdminValidation,
 } = require("../JoiSchemas/user.schema");
 const userModel = require("../Models/user.model");
+const coursesModel = require("../Models/course.model");
 const {
   errorConstant,
   SendMailConstant,
@@ -419,6 +421,7 @@ module.exports.UpdateUserRoleController = async (req, res, next) => {
   }
 };
 
+// getting a single user detail
 module.exports.AdimGetSingleUserDetail = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -430,6 +433,74 @@ module.exports.AdimGetSingleUserDetail = async (req, res, next) => {
     res.status(200).json({
       success: true,
       statusCode: 200,
+      data,
+    });
+  } catch (error) {
+    next(httpErrors.InternalServerError(error.message));
+  }
+};
+
+// adding a course to a user
+module.exports.AdminAddUserCourseController = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { error } = AddCourseByAdminValidation(req.body);
+    if (error) {
+      return next(httpErrors.BadRequest(error.details[0].message));
+    }
+
+    const data = await userModel
+      .findByIdAndUpdate(
+        id,
+        { $push: { courses: req.body.courseid } },
+        { new: true }
+      )
+      .populate("courses", "name");
+
+    if (!data) {
+      return next(httpErrors.NotFound(errorConstant.USER_NOT_FOUND));
+    }
+    await coursesModel.findByIdAndUpdate(req.body.courseid, {
+      $inc: { purchase: 1 },
+    });
+    res.status(200).json({
+      success: true,
+      statusCode: 200,
+      message: successConstant.USER_UPDATED + "i.e. Add Course",
+      data,
+    });
+  } catch (error) {
+    next(httpErrors.InternalServerError(error.message));
+  }
+};
+
+// remove a course to a user
+module.exports.AdminDeleteUserController = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { error } = AddCourseByAdminValidation(req.body);
+    if (error) {
+      return next(httpErrors.BadRequest(error.details[0].message));
+    }
+
+    const data = await userModel
+      .findByIdAndUpdate(
+        id,
+        { $pull: { courses: req.body.courseid } },
+        { new: true }
+      )
+      .populate("courses", "name");
+
+    if (!data) {
+      return next(httpErrors.NotFound(errorConstant.USER_NOT_FOUND));
+    }
+    await coursesModel.findByIdAndUpdate(req.body.courseid, {
+      $inc: { purchase: -1 },
+    });
+    res.status(200).json({
+      success: true,
+      statusCode: 200,
+      message: successConstant.USER_UPDATED + " i.e. remove course",
       data,
     });
   } catch (error) {

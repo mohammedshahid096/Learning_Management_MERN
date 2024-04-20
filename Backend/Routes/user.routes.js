@@ -14,6 +14,8 @@ const {
   UpdateUserRoleController,
   DeleteUserController,
   AdimGetSingleUserDetail,
+  AdminAddUserCourseController,
+  AdminDeleteUserController,
 } = require("../Controllers/user.controller");
 const { Authentication, Authorization } = require("../Middlewares/Auth");
 const { UserProfileUpload } = require("../Middlewares/Multer");
@@ -57,16 +59,17 @@ UserRoutes.route("/users/all").get(
   UsersListController
 );
 
-UserRoutes.route("/users/:id").get(
-  Authentication,
-  Authorization("admin"),
-  AdimGetSingleUserDetail
-);
+UserRoutes.route("/users/:id")
+  .get(Authentication, Authorization("admin"), AdimGetSingleUserDetail)
+  .patch(Authentication, Authorization("admin"), AdminAddUserCourseController)
+  .delete(Authentication, Authorization("admin"), AdminDeleteUserController);
+
 UserRoutes.route("/role/:userid").patch(
   Authentication,
   Authorization("admin"),
   UpdateUserRoleController
 );
+
 UserRoutes.route("/delete/:userid").delete(
   Authentication,
   Authorization("admin"),

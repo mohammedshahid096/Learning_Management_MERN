@@ -74,3 +74,11 @@ module.exports.UpdateUserRoleValidation = (body) => {
   });
   return schema.validate(body);
 };
+
+// adding the course by admin
+module.exports.AddCourseByAdminValidation = (body) => {
+  const schema = Joi.object({
+    courseid: Joi.string().required(),
+  });
+  return schema.validate(body);
+};
