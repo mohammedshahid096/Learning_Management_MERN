@@ -85,6 +85,14 @@ module.exports.GetAllCoursesService = async () => {
       },
     },
     {
+      $lookup: {
+        from: "categories",
+        localField: "course.categories",
+        foreignField: "_id",
+        as: "categories",
+      },
+    },
+    {
       $addFields: {
         coursesData: {
           $sortArray: {
@@ -92,6 +100,11 @@ module.exports.GetAllCoursesService = async () => {
             sortBy: { sequence: 1 },
           },
         },
+      },
+    },
+    {
+      $sort: {
+        "course.createdAt": -1,
       },
     },
   ];

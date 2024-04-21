@@ -195,17 +195,17 @@ module.exports.GetSpecificCompleteCourse = async (req, res, next) => {
 // All Courses without
 module.exports.AllCoursesWithout = async (req, res, next) => {
   try {
-    let isCacheExist = await redis.get("allCourses");
-    if (isCacheExist) {
-      isCacheExist = JSON.parse(isCacheExist);
-      return res.status(200).json({
-        success: true,
-        statusCode: 200,
-        data: isCacheExist,
-      });
-    }
+    // let isCacheExist = await redis.get("allCourses");
+    // if (isCacheExist) {
+    //   isCacheExist = JSON.parse(isCacheExist);
+    //   return res.status(200).json({
+    //     success: true,
+    //     statusCode: 200,
+    //     data: isCacheExist,
+    //   });
+    // }
     const data = await GetAllCoursesService();
-    await redis.set("allCourses", JSON.stringify(data));
+    // await redis.set("allCourses", JSON.stringify(data));
     res.status(200).json({
       success: true,
       statusCode: 200,

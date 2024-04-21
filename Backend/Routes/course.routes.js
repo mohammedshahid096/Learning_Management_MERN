@@ -36,7 +36,7 @@ CourseRoutes.route("/courses/list").get(
   AllCoursesList
 );
 
-CourseRoutes.route("/all").get(Authentication, AllCoursesWithout);
+CourseRoutes.route("/all").get(AllCoursesWithout);
 
 // ### Purchased Courses
 CourseRoutes.route("/course-single-content/:courseid").get(

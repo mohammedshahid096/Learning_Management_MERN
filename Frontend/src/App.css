@@ -50,4 +50,7 @@ input::-webkit-outer-spin-button {
   .fullScreen {
     @apply min-h-screen w-screen;
   }
+  .cardMobileStyle {
+    @apply flex justify-center px-4;
+  }
 }

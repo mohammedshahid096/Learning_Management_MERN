@@ -2,12 +2,16 @@ import {
   ADMIN_ALL_COURSE_LIST_FAIL,
   ADMIN_ALL_COURSE_LIST_REQUEST,
   ADMIN_ALL_COURSE_LIST_SUCCESS,
+  ALL_COURSE_LIST_FAIL,
+  ALL_COURSE_LIST_REQUEST,
+  ALL_COURSE_LIST_SUCCESS,
   CLEAR_COURSE_ERRORS,
   GET_ALL_CATEGORIES_REQUEST,
   GET_ALL_CATEGORIES_SUCCESS,
   GET_SINGLE_COURSE_FAIL,
   GET_SINGLE_COURSE_REQUEST,
   GET_SINGLE_COURSE_SUCCESS,
+  HOME_CLEAR_COURSE_ERRORS,
 } from "../constants/course.contant";
 
 export const AdminCourseReducer = (
@@ -56,6 +60,41 @@ export const AdminCourseReducer = (
       };
 
     case CLEAR_COURSE_ERRORS:
+      return {
+        ...state,
+        statusCode: null,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const HomeCourseReducer = (state = { courses: null }, action) => {
+  switch (action.type) {
+    case ALL_COURSE_LIST_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case ALL_COURSE_LIST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        courses: action.payload.data,
+      };
+
+    case ALL_COURSE_LIST_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.message,
+        statusCode: action.payload.statusCode,
+      };
+
+    case HOME_CLEAR_COURSE_ERRORS:
       return {
         ...state,
         statusCode: null,

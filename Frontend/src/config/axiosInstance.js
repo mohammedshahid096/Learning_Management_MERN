@@ -40,8 +40,11 @@ axiosInstance.interceptors.request.use(async (res) => {
     return res;
   } catch (error) {
     if (error.response.data.statusCode === 401) {
-      window.location.href = "/";
       removeAccessCookie();
+      let currentPath = window.location.pathname;
+      if (currentPath !== "/") {
+        window.location.href = "/";
+      }
     } else {
       return Promise.reject(error);
     }

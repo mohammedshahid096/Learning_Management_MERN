@@ -253,8 +253,7 @@ const UserDetailPage = () => {
             <div className="flex items-center mb-4">
               <div className="w-1/3 font-semibold">Created On:</div>
               <div className="w-2/3">
-                {user && moment(user?.createdAt).format("DD-MM-YYYY")} (
-                {format(user.createdAt)})
+                {user && moment(user?.createdAt).format("DD-MM-YYYY")}
               </div>
             </div>
           </Card>

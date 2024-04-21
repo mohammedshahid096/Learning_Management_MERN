@@ -2,6 +2,7 @@ import React from "react";
 import bannerImage from "../assets/images/Learning-amico.png";
 import "../styles/hero.css";
 import { motion } from "framer-motion";
+import { Avatar } from "flowbite-react";
 
 const variants = {
   repeat: {
@@ -15,6 +16,15 @@ const variants = {
     },
   },
 };
+
+const StaticImages = [
+  "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=600",
+  "https://images.pexels.com/photos/2128807/pexels-photo-2128807.jpeg?auto=compress&cs=tinysrgb&w=600",
+  "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=600",
+  "https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&w=600",
+  "https://images.pexels.com/photos/1139743/pexels-photo-1139743.jpeg?auto=compress&cs=tinysrgb&w=600",
+  "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=600",
+];
 const Hero = () => {
   return (
     <div className="flex max-sm:flex-col justify-around items-center mt-9 gap-15">
@@ -49,6 +59,19 @@ const Hero = () => {
           //   onChange={handleSearchChange}
           className="border border-gray-400 px-4 py-2 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full dark:bg-gray-800 bg-black text-white"
         />
+
+        <div className="mt-8 flex items-center gap-4 max-sm:flex-col">
+          <Avatar.Group>
+            {StaticImages.map((item) => (
+              <Avatar key={item} img={item} rounded stacked />
+            ))}
+            <Avatar.Counter total={99} href="#" />
+          </Avatar.Group>
+          <div className="font-semibold">
+            people Already Trusted <br /> our{" "}
+            <span className=" text-green-600">View Course</span>
+          </div>
+        </div>
       </div>
     </div>
   );
