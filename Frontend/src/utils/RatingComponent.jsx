@@ -1,6 +1,6 @@
 import { Rating } from "flowbite-react";
 import React from "react";
-import { PropTypes } from "prop-types";
+import PropTypes from "prop-types";
 
 const RatingComponent = ({ rating, NumberRating = true }) => {
   const Activestars = Array.from({ length: parseInt(rating) }, (_, i) => i);
@@ -24,9 +24,9 @@ const RatingComponent = ({ rating, NumberRating = true }) => {
   );
 };
 
-RatingComponent.PropTypes = {
-  rating: PropTypes.Number,
-  NumberRating: PropTypes.Boolean,
+RatingComponent.propTypes = {
+  rating: PropTypes.number,
+  NumberRating: PropTypes.bool,
 };
 
 export default RatingComponent;

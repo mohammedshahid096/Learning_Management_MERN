@@ -1,3 +1,4 @@
+import FaqPage from "../pages/FaqPage";
 import Home from "../pages/Home";
 import Profile from "../pages/Profile";
 import AdminHome from "../pages/admin/AdminHome";
@@ -20,6 +21,14 @@ const AllRoutesItems = [
     protected: true,
     Access: AllUSers,
   },
+  {
+    num: 2.3,
+    path: "/faq",
+    element: FaqPage,
+    protected: false,
+    Access: AllUSers,
+  },
+
   {
     num: 3,
     path: "/admin",

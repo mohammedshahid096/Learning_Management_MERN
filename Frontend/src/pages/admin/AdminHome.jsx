@@ -17,6 +17,7 @@ import {
   CourseLevelAnalysis,
   CourseTop5Purchase,
 } from "../../components/Dashboard/CourseDashboard";
+import MetaData from "../../utils/MetaData";
 
 const Skeleton = () => {
   return (
@@ -89,6 +90,7 @@ const AdminHome = () => {
   }, [UserAnalytics, CourseAnalytics]);
   return (
     <AdminLayout>
+      <MetaData title="Admin- Dashboard" />
       {loading ? (
         <Skeleton />
       ) : (

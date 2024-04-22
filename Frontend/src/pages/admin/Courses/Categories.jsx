@@ -14,6 +14,7 @@ import {
   UpdateCategoryApi,
 } from "../../../Apis/category.api";
 import toast from "react-hot-toast";
+import MetaData from "../../../utils/MetaData";
 
 const Categories = () => {
   // ### usestates
@@ -98,6 +99,7 @@ const Categories = () => {
 
   return (
     <AdminLayout>
+      <MetaData title="Admin - Category" />
       <h1 className="text-center text-2xl font-bold pb-2 ">
         Categories List :
       </h1>

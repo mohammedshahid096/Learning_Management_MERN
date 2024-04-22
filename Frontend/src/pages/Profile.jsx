@@ -8,6 +8,7 @@ import { UserLogoutAction } from "../Redux/actions/auth.action";
 import { ChangeUserPassword, UserProfileData } from "../components/UserProfile";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Navigate } from "react-router-dom";
+import MetaData from "../utils/MetaData";
 
 const AllSideBars = {
   adminSideBars: [
@@ -55,6 +56,7 @@ const SideBar = ({ setactiveTab, activeTab }) => {
 
   return (
     <Sidebar aria-label="Default sidebar example" className="w-full">
+      <MetaData title={`${user?.name} Profile`} />
       <Sidebar.Items>
         <Sidebar.ItemGroup>
           {SidebarsItems.map((item) => (

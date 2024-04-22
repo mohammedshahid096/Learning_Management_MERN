@@ -17,6 +17,7 @@ import {
 import { Button } from "flowbite-react";
 import { CreateCourseApi, UpdateCourseApi } from "../../../Apis/course.api";
 import toast from "react-hot-toast";
+import MetaData from "../../../utils/MetaData";
 
 const CreateCourse = () => {
   // ### react router dom
@@ -145,6 +146,13 @@ const CreateCourse = () => {
 
   return (
     <AdminLayout>
+      <MetaData
+        title={
+          courseId
+            ? `Admin- ${SingleCourse?.courseDetail?.name}`
+            : "Admin- Create Course"
+        }
+      />
       <div className="flex w-full h-full gap-3 max-md:flex-col-reverse">
         <div className="w-10/12 max-md:w-full">
           <div>

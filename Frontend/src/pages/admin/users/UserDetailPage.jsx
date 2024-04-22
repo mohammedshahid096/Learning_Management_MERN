@@ -16,6 +16,7 @@ import CustomModal from "../../../utils/CustomModal";
 import { useDispatch, useSelector } from "react-redux";
 import { AdminGetCourseList } from "../../../Redux/actions/course.action";
 import { format } from "timeago.js";
+import MetaData from "../../../utils/MetaData";
 
 const AddCourseToUser = ({
   addModalOpen,
@@ -219,6 +220,7 @@ const UserDetailPage = () => {
 
   return (
     <AdminLayout>
+      <MetaData title={`Admin- ${user ? user.name : userId}`} />
       <Card className="mx-auto  shadow-md rounded-lg ">
         <div className="text-2xl font-bold  text-center">User Details</div>
         <div className="flex justify-end">

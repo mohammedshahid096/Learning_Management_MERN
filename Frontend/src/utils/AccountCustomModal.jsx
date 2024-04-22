@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Login, Register, VerifyAccount } from "../components/Login";
 import "../styles/login.css";
 import { useSelector } from "react-redux";
-import { PropTypes } from "prop-types";
+import PropTypes from "prop-types";
 
 function AccountCustomModal({ openModal, setOpenModal }) {
   // ### usestates
@@ -35,8 +35,8 @@ function AccountCustomModal({ openModal, setOpenModal }) {
   );
 }
 
-AccountCustomModal.PropTypes = {
-  openModal: PropTypes.boolean,
-  setOpenModal: PropTypes.boolean,
+AccountCustomModal.propTypes = {
+  openModal: PropTypes.bool,
+  setOpenModal: PropTypes.bool,
 };
 export default AccountCustomModal;

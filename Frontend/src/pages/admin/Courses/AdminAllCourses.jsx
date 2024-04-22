@@ -8,6 +8,7 @@ import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { Button } from "flowbite-react";
 import { DeleteCourseApi } from "../../../Apis/course.api";
 import toast from "react-hot-toast";
+import MetaData from "../../../utils/MetaData";
 const AdminAllCourses = () => {
   // ### usestates
   const [selectedCourseid, setselectedCourseid] = useState(null);
@@ -57,6 +58,7 @@ const AdminAllCourses = () => {
 
   return (
     <AdminLayout>
+      <MetaData title="Admin- All Courses" />
       <h1 className="text-center text-2xl font-bold pb-2 ">Course List</h1>
       <AllCoursesComponent setselectedCourseid={setselectedCourseid} />
 

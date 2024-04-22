@@ -7,6 +7,7 @@ import { Button, TextInput, Label, Select } from "flowbite-react";
 import CustomModal from "../../../utils/CustomModal";
 import { UpdateUserRoleApi } from "../../../Apis/user.api";
 import toast from "react-hot-toast";
+import MetaData from "../../../utils/MetaData";
 
 const AdminTeam = () => {
   // usestates
@@ -47,6 +48,7 @@ const AdminTeam = () => {
   };
   return (
     <AdminLayout>
+      <MetaData title="Admin- Admin Team" />
       <div className="float-end">
         <Button color="green" onClick={() => setopenModal(true)}>
           Add New Member

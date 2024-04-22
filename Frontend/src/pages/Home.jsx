@@ -2,10 +2,12 @@ import React from "react";
 import Hero, { FrequentAskedQuestons, HomeReviews } from "../components/Hero";
 import HomeCourseList from "../components/HomeCourse/HomeCourseList";
 import bannerImage from "../assets/images/Programming-amico.png";
+import MetaData from "../utils/MetaData";
 
 const Home = () => {
   return (
     <main>
+      <MetaData title="Home Page" />
       <Hero />
 
       <br />

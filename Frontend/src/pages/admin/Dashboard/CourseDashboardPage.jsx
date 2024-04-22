@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import AdminLayout from "../AdminLayout";
 import { AdminCourseAnalysisAction } from "../../../Redux/actions/dashboard.action";
+import MetaData from "../../../utils/MetaData";
 
 const Skeleton = () => {
   return (
@@ -75,6 +76,7 @@ const CourseDashboardPage = () => {
 
   return (
     <AdminLayout>
+      <MetaData title="Admin- Course Analytics" />
       {loading ? (
         <Skeleton />
       ) : (

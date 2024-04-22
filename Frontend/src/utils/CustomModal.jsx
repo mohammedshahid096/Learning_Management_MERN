@@ -1,8 +1,7 @@
 import { Modal } from "flowbite-react";
-import { PropTypes } from "prop-types";
+import PropTypes from "prop-types";
 
 function CustomModal({ openModal, setopenModal, title, children }) {
-  //   console.log(childern);
   return (
     <Modal show={openModal} onClose={() => setopenModal(false)} size={"md"}>
       <Modal.Header className="bg-white dark:bg-slate-900">
@@ -14,9 +13,9 @@ function CustomModal({ openModal, setopenModal, title, children }) {
     </Modal>
   );
 }
-CustomModal.PropTypes = {
-  openModal: PropTypes.boolean,
-  setopenModal: PropTypes.boolean,
+CustomModal.propTypes = {
+  openModal: PropTypes.bool,
+  setopenModal: PropTypes.bool,
   title: PropTypes.string,
 };
 export default CustomModal;

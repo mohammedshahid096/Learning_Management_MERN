@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import AdminLayout from "../AdminLayout";
 import { AdminUserAnalysisAction } from "../../../Redux/actions/dashboard.action";
+import MetaData from "../../../utils/MetaData";
 
 const Skeleton = () => {
   return (
@@ -76,6 +77,7 @@ const UserDashboardPage = () => {
 
   return (
     <AdminLayout>
+      <MetaData title="Admin- User Analytics" />
       {loading ? (
         <Skeleton />
       ) : (

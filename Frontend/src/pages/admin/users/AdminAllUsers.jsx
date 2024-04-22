@@ -8,6 +8,7 @@ import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { Button } from "flowbite-react";
 import { DeleteUserApi } from "../../../Apis/user.api";
 import toast from "react-hot-toast";
+import MetaData from "../../../utils/MetaData";
 
 const AdminAllUsers = () => {
   // ### usestate
@@ -51,6 +52,7 @@ const AdminAllUsers = () => {
 
   return (
     <AdminLayout>
+      <MetaData title="Admin- All Users" />
       <h1 className="text-center text-2xl font-bold pb-2 ">Users List</h1>
       <AllUsersComponent setselectedUser={setselectedUser} />
 
