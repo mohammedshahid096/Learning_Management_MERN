@@ -4,6 +4,8 @@ import RatingComponent from "../../utils/RatingComponent";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { HomeCourseListAction } from "../../Redux/actions/course.action";
+import { PiStudent } from "react-icons/pi";
+import { FaListUl } from "react-icons/fa";
 
 const Skeleton = () => {
   return (
@@ -60,7 +62,7 @@ const HomeCourseList = () => {
     }
   }, []);
 
-  return !loading ? (
+  return loading ? (
     <Skeleton />
   ) : (
     <>
@@ -70,13 +72,17 @@ const HomeCourseList = () => {
           <div className="max-sm:cardMobileStyle">
             <Card
               key={singleCourse?._id}
-              className="w-[300px] h-[380px] overflow-auto"
+              className="w-[300px] h-[415px] overflow-auto"
               imgAlt={singleCourse?.course?.name}
               imgSrc={singleCourse?.course?.thumbnail?.url}
             >
               <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white text-center underline">
                 {singleCourse?.course?.name}
               </h5>
+              <div className="flex justify-between">
+                <p>Level :</p> <p>{singleCourse?.course?.level}</p>
+              </div>
+
               <div className="flex items-center justify-between">
                 <span className="text-3xl font-bold text-gray-900 dark:text-white">
                   <RatingComponent
@@ -85,16 +91,31 @@ const HomeCourseList = () => {
                   />
                 </span>
 
-                <p className="text-sm">
-                  Students{" "}
+                <p className="text-sm inline-flex gap-1 items-center">
+                  <PiStudent />
                   <span className=" text-slate-400 font-bold">
                     {singleCourse?.course?.purchase}
-                  </span>
+                  </span>{" "}
+                  Students
                 </p>
               </div>
+
               <div className="flex justify-between">
-                <p>Level :</p> <p>{singleCourse?.course?.level}</p>
+                <p>
+                  <span className=" line-through">
+                    {singleCourse?.course?.estimatedprice}₹{" "}
+                  </span>
+                  <sup> {singleCourse?.course?.price}₹</sup>{" "}
+                </p>{" "}
+                <p className="text-sm inline-flex gap-1 items-center">
+                  <FaListUl />
+                  <span className="text-slate-400 font-bold">
+                    {singleCourse?.coursesData?.length}
+                  </span>{" "}
+                  Lectures
+                </p>
               </div>
+
               <Button
                 color="green"
                 pill

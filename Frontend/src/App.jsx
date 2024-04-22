@@ -13,6 +13,7 @@ import {
 import { useAuth0 } from "@auth0/auth0-react";
 import AllRoutesItems from "./routes/AllRoutesItems";
 import { removeAccessCookie } from "./config/cookie";
+import Footer from "./components/Footer";
 
 function App() {
   // ### react redux
@@ -96,6 +97,7 @@ function App() {
           })}
         </Routes>
       </BrowserRouter>
+      <Footer />
 
       <Toaster />
     </div>

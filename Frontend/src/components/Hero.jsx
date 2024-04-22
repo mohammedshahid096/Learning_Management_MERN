@@ -2,7 +2,8 @@ import React from "react";
 import bannerImage from "../assets/images/Learning-amico.png";
 import "../styles/hero.css";
 import { motion } from "framer-motion";
-import { Avatar } from "flowbite-react";
+import { Avatar, Card, Accordion } from "flowbite-react";
+import RatingComponent from "../utils/RatingComponent";
 
 const variants = {
   repeat: {
@@ -25,6 +26,7 @@ const StaticImages = [
   "https://images.pexels.com/photos/1139743/pexels-photo-1139743.jpeg?auto=compress&cs=tinysrgb&w=600",
   "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=600",
 ];
+
 const Hero = () => {
   return (
     <div className="flex max-sm:flex-col justify-around items-center mt-9 gap-15">
@@ -74,6 +76,113 @@ const Hero = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+export const HomeReviews = () => {
+  const staticReviews = [
+    {
+      name: "John Doe",
+      avatar: "https://randomuser.me/api/portraits/men/75.jpg",
+      profession: "Software Engineer",
+      rating: 4,
+      comment:
+        "The learning course platform is amazing! I've learned so much in such a short time. Very happy to use platform",
+    },
+    {
+      name: "Jane Smith",
+      avatar: "https://randomuser.me/api/portraits/women/75.jpg",
+      profession: "Data Analyst",
+      rating: 5,
+      comment:
+        "I highly recommend this platform. The courses are well-structured and the instructors are very knowledgeable.",
+    },
+    {
+      name: "Alice Johnson",
+      avatar: "https://randomuser.me/api/portraits/men/70.jpg",
+      profession: "UI/UX Designer",
+      rating: 5,
+      comment:
+        "This platform has helped me improve my skills significantly. I'm so glad I found it.",
+    },
+    {
+      name: "Alice Johnson",
+      avatar: "https://randomuser.me/api/portraits/women/80.jpg",
+      profession: "UI/UX Designer",
+      rating: 4,
+      comment:
+        "This platform has helped me improve my skills significantly. I'm so glad I found it.",
+    },
+  ];
+  return (
+    <div className="grid grid-cols-2 gap-6 max-sm:grid-cols-1">
+      {staticReviews.map((item) => (
+        <Card className="w-full h-max dark:bg-gray-300 dark:bg-opacity-10 border border-gray-300 backdrop-blur shadow-md">
+          <div className="flex w-full justify-between">
+            <div className="flex items-center justify-center ">
+              <img
+                src={item.avatar}
+                alt={item.name}
+                className="w=[50px] h-[50px] rounded-full object-cover"
+              />
+              <div class="space-y-0.5 font-medium dark:text-white text-left rtl:text-right ms-3">
+                <div>{item.name}</div>
+                <div class="text-sm text-gray-500 dark:text-gray-400">
+                  {item.profession}
+                </div>
+              </div>
+            </div>
+            <RatingComponent rating={item.rating} NumberRating={false} />
+          </div>
+          <p className=" font-thin">{item.comment}</p>
+        </Card>
+      ))}
+    </div>
+  );
+};
+
+export const FrequentAskedQuestons = () => {
+  const staticFAQ = [
+    {
+      question: "What is a Learning Management System (LMS)?",
+      answer:
+        "An LMS is a software platform used to create, deliver, and manage online courses. It allows instructors to upload content, track student progress, and administer assessments.",
+    },
+    {
+      question: "How do I enroll in a course on the LMS?",
+      answer:
+        "Enrollment procedures can vary depending on the specific LMS. Usually, you'll find an enrollment button or link on the course description page. You might need to create an account on the LMS platform first.",
+    },
+    {
+      question: "How do I access course materials?",
+      answer:
+        "Once enrolled, course materials are typically accessed through the LMS dashboard. They can be organized in modules or folders, containing videos, documents, quizzes, and other learning resources.",
+    },
+    {
+      question: "How do I submit assignments and take tests?",
+      answer:
+        "The LMS will have dedicated sections for assignments and tests. Uploading documents, recording video responses, or answering multiple-choice questions often happens directly within the platform.",
+    },
+    {
+      question: "How can I communicate with the instructor and other students?",
+      answer:
+        "Many LMS platforms offer communication tools like discussion forums, chat rooms, or even video conferencing options. These allow you to ask questions, share insights, and collaborate with others in the course.",
+    },
+  ];
+  return (
+    <Accordion className="border-none">
+      {staticFAQ.map((singleFaq, index) => (
+        <Accordion.Panel key={"faq" + index + 1}>
+          <Accordion.Title>
+            <b className="text-purple-400">{index + 1}. </b>
+            {singleFaq.question}
+          </Accordion.Title>
+          <Accordion.Content>
+            <p>{singleFaq.answer}</p>
+          </Accordion.Content>
+        </Accordion.Panel>
+      ))}
+    </Accordion>
   );
 };
 

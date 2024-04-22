@@ -118,7 +118,7 @@ export const HomeCourseListAction =
     } catch (error) {
       dispatch({
         type: ALL_COURSE_LIST_FAIL,
-        payload: error?.response?.data || error,
+        payload: error?.response?.data || { message: error.messasge },
       });
     }
   };
