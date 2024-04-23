@@ -1,5 +1,6 @@
 import FaqPage from "../pages/FaqPage";
 import Home from "../pages/Home";
+import PageNotFound from "../pages/PageNotFound";
 import Profile from "../pages/Profile";
 import AdminHome from "../pages/admin/AdminHome";
 import AdminAllCourses from "../pages/admin/Courses/AdminAllCourses";
@@ -13,7 +14,8 @@ import UserDetailPage from "../pages/admin/users/UserDetailPage";
 const AllUSers = ["admin", "user"];
 
 const AllRoutesItems = [
-  { num: 1, path: "/", element: Home, protected: false, Access: [] },
+  { num: 1.1, path: "/", element: Home, protected: false, Access: [] },
+  { num: 1, path: "/*", element: PageNotFound, protected: false, Access: [] },
   {
     num: 2,
     path: "/profile",
@@ -26,7 +28,7 @@ const AllRoutesItems = [
     path: "/faq",
     element: FaqPage,
     protected: false,
-    Access: AllUSers,
+    Access: [],
   },
 
   {
