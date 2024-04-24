@@ -14,6 +14,10 @@ import {
   GET_SINGLE_COURSE_FAIL,
   GET_SINGLE_COURSE_REQUEST,
   GET_SINGLE_COURSE_SUCCESS,
+  HOME_CLEAR_COURSE_ERRORS,
+  HOME_SINGLE_COURSE_FAIL,
+  HOME_SINGLE_COURSE_REQUEST,
+  HOME_SINGLE_COURSE_SUCCESS,
 } from "../constants/course.contant";
 
 export const AdminGetCourseList =
@@ -122,3 +126,35 @@ export const HomeCourseListAction =
       });
     }
   };
+
+export const HomeSingleCourseAction =
+  (courseid, request = true) =>
+  async (dispatch) => {
+    try {
+      if (request) {
+        dispatch({ type: HOME_SINGLE_COURSE_REQUEST });
+      }
+      const config = {
+        withCredentials: true,
+      };
+
+      const { data } = await axios.get(
+        `${URLConstant}/course/single/${courseid}`,
+        config
+      );
+
+      dispatch({
+        type: HOME_SINGLE_COURSE_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: HOME_SINGLE_COURSE_FAIL,
+        payload: error?.response?.data || { message: error.messasge },
+      });
+    }
+  };
+
+export const ClearErrorHomeCourseState = () => (dispatch) => {
+  dispatch({ type: HOME_CLEAR_COURSE_ERRORS });
+};

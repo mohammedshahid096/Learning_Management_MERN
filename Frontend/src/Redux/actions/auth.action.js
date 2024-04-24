@@ -185,7 +185,10 @@ export const UserLogoutAction =
         withCredentials: true,
       };
 
-      const { data } = await axios.get(`${URLConstant}/user/logout`, config);
+      const { data } = await axiosInstance.get(
+        `${URLConstant}/user/logout`,
+        config
+      );
 
       removeAccessCookie();
 

@@ -21,6 +21,7 @@ import ReactPlayer from "react-player/youtube";
 import RatingComponent from "../../../utils/RatingComponent";
 import MultiSelect from "react-select";
 import { UpdateCourseDataApi } from "../../../Apis/course.api";
+
 export const CourseInformation = ({
   courseInfo,
   setcourseInfo,

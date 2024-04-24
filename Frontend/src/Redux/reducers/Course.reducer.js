@@ -12,6 +12,9 @@ import {
   GET_SINGLE_COURSE_REQUEST,
   GET_SINGLE_COURSE_SUCCESS,
   HOME_CLEAR_COURSE_ERRORS,
+  HOME_SINGLE_COURSE_FAIL,
+  HOME_SINGLE_COURSE_REQUEST,
+  HOME_SINGLE_COURSE_SUCCESS,
 } from "../constants/course.contant";
 
 export const AdminCourseReducer = (
@@ -71,9 +74,13 @@ export const AdminCourseReducer = (
   }
 };
 
-export const HomeCourseReducer = (state = { courses: null }, action) => {
+export const HomeCourseReducer = (
+  state = { courses: null, singleCourseDetails: null },
+  action
+) => {
   switch (action.type) {
     case ALL_COURSE_LIST_REQUEST:
+    case HOME_SINGLE_COURSE_REQUEST:
       return {
         ...state,
         loading: true,
@@ -85,8 +92,18 @@ export const HomeCourseReducer = (state = { courses: null }, action) => {
         loading: false,
         courses: action.payload.data,
       };
+    case HOME_SINGLE_COURSE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        singleCourseDetails: {
+          courseDetail: action.payload.courseDetail,
+          coursesData: action.payload.coursesData,
+        },
+      };
 
     case ALL_COURSE_LIST_FAIL:
+    case HOME_SINGLE_COURSE_FAIL:
       return {
         ...state,
         loading: false,

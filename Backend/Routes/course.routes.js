@@ -20,7 +20,7 @@ CourseRoutes.route("/uploadCourse").post(
 
 // ### single course related without purchase
 CourseRoutes.route("/single/:courseid")
-  .get(Authentication, GetSpecificCompleteCourse)
+  .get(GetSpecificCompleteCourse)
   .put(Authentication, Authorization("admin"), EditCourseController)
   .delete(Authentication, Authorization("admin"), DeleteCourseController);
 

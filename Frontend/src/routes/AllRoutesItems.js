@@ -1,3 +1,4 @@
+import CourseDetails from "../pages/Course/CourseDetails";
 import FaqPage from "../pages/FaqPage";
 import Home from "../pages/Home";
 import PageNotFound from "../pages/PageNotFound";
@@ -100,6 +101,13 @@ const AllRoutesItems = [
     element: UserDetailPage,
     protected: true,
     Access: ["admin"],
+  },
+  {
+    num: 13,
+    path: "/course/:courseId",
+    element: CourseDetails,
+    protected: false,
+    Access: [],
   },
 ];
 

@@ -119,7 +119,8 @@ const HomeCourseList = () => {
               <Button
                 color="green"
                 pill
-                onClick={() => navigate(`/course/${singleCourse?._id}`)}
+                // onClick={() => navigate(`/course/${singleCourse?._id}`)}
+                onClick={() => navigate(`/course/660bf37d75774afb59dced02`)}
               >
                 Course Details
               </Button>

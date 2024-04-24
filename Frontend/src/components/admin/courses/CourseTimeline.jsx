@@ -1,10 +1,5 @@
 import { Timeline } from "flowbite-react";
-import {
-  BsRecordCircleFill,
-  BsRecordCircle,
-  BsRecordFill,
-  BsRecord,
-} from "react-icons/bs";
+import { BsRecordCircleFill } from "react-icons/bs";
 
 const TimeLineItems = [
   { num: 1, title: "Course Information" },
