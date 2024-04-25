@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Button, Card, Spinner } from "flowbite-react";
+import { Button, Card, Tooltip } from "flowbite-react";
 import RatingComponent from "../../utils/RatingComponent";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -119,10 +119,13 @@ const HomeCourseList = () => {
               <Button
                 color="green"
                 pill
-                // onClick={() => navigate(`/course/${singleCourse?._id}`)}
-                onClick={() => navigate(`/course/660bf37d75774afb59dced02`)}
+                className="w-full"
+                onClick={() => navigate(`/course/${singleCourse?._id}`)}
+                // onClick={() => navigate(`/course/660bf37d75774afb59dced02`)}
               >
-                Course Details
+                <Tooltip content="Redirect to the course details page">
+                  Course Details
+                </Tooltip>
               </Button>
             </Card>
           </div>
