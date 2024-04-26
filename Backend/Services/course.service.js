@@ -25,7 +25,7 @@ module.exports.GetSingleAllCourseDataService = async (
   if (public) {
     data = await courseDataModel
       .find({ courseid })
-      .select("courseid title description sequence")
+      .select("title length sequence")
       .sort({ sequence: 1 });
   } else {
     data = await courseDataModel.find({ courseid }).sort({ sequence: 1 });
