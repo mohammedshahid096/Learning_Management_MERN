@@ -21,29 +21,33 @@ module.exports.CreateOrderController = async (req, res, next) => {
       return next(httpErrors.BadRequest(error.details[0].message));
     }
 
-    req.body.user = req.userid;
-    req.body.uuid = uuidv4();
-
     const isUser = await userModel.findById(req.userid);
-
     if (!isUser) {
       return next(httpErrors.NotFound(errorConstant.USER_NOT_FOUND));
     }
 
-    const isCourseExist = await coursesModel.findById(req.body.courseid);
-    if (!isCourseExist) {
+    let isOrderExist = await orderModel.findOne({
+      uuid: req.body.uuid,
+      "orderInfo.id": req.body.order_id,
+    });
+    if (!isOrderExist) {
       return next(httpErrors.NotFound(errorConstant.COURSE_NOT_FOUND));
     }
 
     const isCourseEnrolled = isUser.courses.some(
-      (item) => item.toString() === req.body.courseid
+      (item) => item.toString() === isOrderExist.courseid.toString()
     );
     if (isCourseEnrolled) {
       return next(httpErrors.BadRequest(errorConstant.COURSE_ALREADY_ENROLLED));
     }
 
-    const newOrder = new orderModel(req.body);
-    await newOrder.save();
+    isOrderExist = await orderModel
+      .findByIdAndUpdate(
+        isOrderExist._id,
+        { orderStatus: "completed" },
+        { new: true }
+      )
+      .populate("courseid", "name");
 
     await coursesModel.findByIdAndUpdate(req.body.courseid, {
       $inc: { purchase: 1 },
@@ -52,10 +56,10 @@ module.exports.CreateOrderController = async (req, res, next) => {
     let data = {
       user: { name: isUser.name },
       order: {
-        uuid: newOrder.uuid,
-        course: isCourseExist.name,
-        price: isCourseExist.price,
-        date: moment(newOrder.createdAt).format("D-MMM-yyyy"),
+        uuid: isOrderExist.uuid,
+        course: isOrderExist.name,
+        price: isOrderExist.paymentInfo.amount / 100,
+        date: moment(isOrderExist.updatedAt).format("D-MMM-yyyy"),
       },
     };
 
@@ -66,13 +70,13 @@ module.exports.CreateOrderController = async (req, res, next) => {
       data,
     });
 
-    isUser.courses.push(req.body.courseid);
+    isUser.courses.push(isOrderExist.courseid);
     await isUser.save();
 
     await notificationModel.create({
       user: req.userid,
       title: notificationConstant.NEW_ORDER,
-      message: `You have a new order from ${isCourseExist.name}`,
+      message: `You have a new order from ${isOrderExist.name}`,
     });
 
     res.status(201).json({

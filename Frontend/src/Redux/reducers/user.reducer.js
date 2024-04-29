@@ -4,6 +4,7 @@ import {
   ADMIN_ALL_USERS_SUCCESS,
   USER_CLEAR_ERRORS_2,
 } from "../constants/user.constant";
+import { createSlice } from "@reduxjs/toolkit";
 
 export const AdminUserReducer = (state = { users: null }, action) => {
   switch (action.type) {
@@ -39,3 +40,20 @@ export const AdminUserReducer = (state = { users: null }, action) => {
       return state;
   }
 };
+
+export const openAccountSlice = createSlice({
+  initialState: {
+    isAccountPopUpOpen: false,
+  },
+  name: "OPEN_USER_LOGIN_ACCOUNT",
+  reducers: {
+    openLoginAccount: (state) => {
+      state.isAccountPopUpOpen = true;
+    },
+    closeLoginAccount: (state) => {
+      state.isAccountPopUpOpen = false;
+    },
+  },
+});
+
+export const { openLoginAccount, closeLoginAccount } = openAccountSlice.actions;

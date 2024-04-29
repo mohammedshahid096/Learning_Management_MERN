@@ -53,4 +53,10 @@ input::-webkit-outer-spin-button {
   .cardMobileStyle {
     @apply flex justify-center px-4;
   }
+  .hoverCard {
+    @apply dark:hover:bg-teal-900 hover:bg-gray-200 hover:font-semibold hover:cursor-pointer;
+  }
+  .activehoverCard {
+    @apply dark:bg-teal-900 bg-gray-200 font-semibold cursor-pointer;
+  }
 }

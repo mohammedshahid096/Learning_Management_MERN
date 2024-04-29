@@ -1,4 +1,6 @@
+import CourseContentData from "../pages/Course/CourseContentData";
 import CourseDetails from "../pages/Course/CourseDetails";
+import CourseEnrolled from "../pages/Course/CourseEnrolled";
 import FaqPage from "../pages/FaqPage";
 import Home from "../pages/Home";
 import PageNotFound from "../pages/PageNotFound";
@@ -108,6 +110,20 @@ const AllRoutesItems = [
     element: CourseDetails,
     protected: false,
     Access: [],
+  },
+  {
+    num: 14,
+    path: "/course-access/:courseId",
+    element: CourseEnrolled,
+    protected: true,
+    Access: AllUSers,
+  },
+  {
+    num: 15,
+    path: "/course-access/:courseId/:courseContentId",
+    element: CourseContentData,
+    protected: true,
+    Access: AllUSers,
   },
 ];
 

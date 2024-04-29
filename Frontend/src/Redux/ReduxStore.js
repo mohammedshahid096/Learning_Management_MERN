@@ -6,7 +6,7 @@ import {
   HomeCourseReducer,
 } from "./reducers/Course.reducer";
 import { getAccessCookie } from "../config/cookie";
-import { AdminUserReducer } from "./reducers/user.reducer.js";
+import { AdminUserReducer, openAccountSlice } from "./reducers/user.reducer.js";
 import { DashboardUserReducer } from "./reducers/Dashboard.reducer.js";
 
 const middleware = (getDefaultMiddleware) =>
@@ -20,6 +20,7 @@ const initialState = {
 };
 
 const reducer = {
+  OpenAccountState: openAccountSlice.reducer,
   AuthState: AuthReducer,
   AdminCourseState: AdminCourseReducer,
   HomeCourseState: HomeCourseReducer,

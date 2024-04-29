@@ -68,3 +68,13 @@ module.exports.SendMailConstant = {
 module.exports.notificationConstant = {
   NEW_ORDER: "New Order",
 };
+
+module.exports.paymentConstant = {
+  // ## success
+  ORDER_CREATED_SUCCESS: "RazorPay order is created successfully",
+
+  // ## failure
+
+  ORDER_CREATED_FAIL: "RazorPay order is failed to created",
+  PAYMENT_SIGNATURE_FAIL: "Signature not Match! pls doo the payment",
+};

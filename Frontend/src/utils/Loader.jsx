@@ -10,7 +10,7 @@ const CustomLoader = ({ loading = false }) => {
   ) : null;
 };
 
-CustomLoader.PropTypes = {
+CustomLoader.propTypes = {
   loading: PropTypes.boolean,
 };
 export default CustomLoader;

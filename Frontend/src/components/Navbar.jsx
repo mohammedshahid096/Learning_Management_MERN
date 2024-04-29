@@ -4,9 +4,10 @@ import { FiSun, FiMoon } from "react-icons/fi";
 import { FaBars, FaUserCircle } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import AccountCustomModal from "../utils/AccountCustomModal";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Avatar } from "flowbite-react";
 import { motion } from "framer-motion";
+import { closeLoginAccount } from "../Redux/reducers/user.reducer";
 
 const NavItems = [
   {
@@ -80,12 +81,18 @@ const Navbar = () => {
   const location = useLocation();
 
   // ### react-redux
+  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.AuthState);
+  const { isAccountPopUpOpen } = useSelector((state) => state.OpenAccountState);
 
   // ### functions
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
   };
+
+  function closeOpenAccountState() {
+    dispatch(closeLoginAccount());
+  }
 
   // ### useeffects
   useEffect(() => {
@@ -95,6 +102,13 @@ const Navbar = () => {
       document.body.classList.remove("dark");
     }
   }, [isDarkMode]);
+
+  useEffect(() => {
+    if (isAccountPopUpOpen) {
+      setOpenModal(true);
+      closeOpenAccountState();
+    }
+  }, [isAccountPopUpOpen]);
 
   return (
     <>

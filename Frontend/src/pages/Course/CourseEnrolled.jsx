@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -12,11 +12,7 @@ import ReactPlayer from "react-player/youtube";
 import RatingComponent from "../../utils/RatingComponent";
 import { PiMonitorPlayBold } from "react-icons/pi";
 import CustomLoader from "../../utils/Loader";
-import { openLoginAccount } from "../../Redux/reducers/user.reducer";
-import { CreateRazorPayOrderAPI } from "../../Apis/payment.api";
-import { URLConstant } from "../../config/URLConstant";
-import { CreateCourseOrderAPI } from "../../Apis/order.api";
-
+import { HiOutlineArrowRight } from "react-icons/hi";
 const Skeleton = () => {
   return (
     <div role="status">
@@ -62,14 +58,10 @@ const Skeleton = () => {
   );
 };
 
-const CourseDetails = () => {
+const CourseEnrolled = () => {
   // # react-router-dom
   const { courseId } = useParams();
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  // usesstates
-  const [verifingCourse, setverifingCourse] = useState(false);
 
   // # react redux
   const dispatch = useDispatch();
@@ -91,11 +83,10 @@ const CourseDetails = () => {
 
   const fetchCourseDetails = () => {
     const isAlreadyEnroll = user?.courses.find((item) => item === courseId);
-    console.log(isAlreadyEnroll);
     if (isAlreadyEnroll) {
-      navigate(`/course-access/${courseId}`);
-    } else {
       dispatch(HomeSingleCourseAction(courseId));
+    } else {
+      navigate(`/course/${courseId}`);
     }
   };
 
@@ -106,62 +97,6 @@ const CourseDetails = () => {
         navigate("/courses");
       }, 500);
     }
-  };
-
-  const purchaseCourseHandler = async () => {
-    if (!user) {
-      dispatch(openLoginAccount());
-    } else {
-      const details = {
-        amount: singleCourseDetails?.courseDetail?.price,
-        courseid: courseId,
-      };
-      const response = await CreateRazorPayOrderAPI(details);
-      if (response.success) {
-        const options = {
-          key: import.meta.env.VITE_RAZOPAY_KEY, // Enter the Key ID generated from the Dashboard
-          amount: response.data.orderInfo.amount, // Amount is in currency subunits.
-          currency: "INR",
-          name: "Mohammed Shahid",
-          description: "Test Transaction",
-          image:
-            "https://w7.pngwing.com/pngs/527/663/png-transparent-logo-person-user-person-icon-rectangle-photography-computer-wallpaper-thumbnail.png",
-          order_id: response.data.orderInfo.id,
-          callback_url: `${URLConstant}/payment/verify`,
-          prefill: {
-            name: user?.name,
-            email: user?.email,
-            contact: "9000090000",
-          },
-          notes: {
-            address: "Razorpay Corporate Office",
-          },
-          theme: {
-            color: "#3399cc",
-          },
-        };
-
-        const razorPayInstance = new window.Razorpay(options);
-        razorPayInstance.open();
-      } else {
-        alert(response.message || response.message);
-      }
-    }
-  };
-
-  const addCoursePurchaseHandler = async () => {
-    const details = {
-      order_id: searchParams.get("order_id"),
-      uuid: searchParams.get("uuid"),
-    };
-    const response = await CreateCourseOrderAPI(details);
-    if (response.success) {
-      toast.success(response.message);
-      navigate(`/course-access/${courseId}`);
-    } else {
-      toast.error(response.message);
-    }
-    setverifingCourse(false);
   };
 
   // # useeffects
@@ -178,14 +113,6 @@ const CourseDetails = () => {
     }
   }, [error]);
 
-  useEffect(() => {
-    if (searchParams.get("order_id") && searchParams.get("uuid")) {
-      toast.success("payment is done successfully");
-      setverifingCourse(true);
-      addCoursePurchaseHandler();
-    }
-  }, [searchParams]);
-
   return loading ? (
     <>
       <Skeleton />
@@ -194,60 +121,50 @@ const CourseDetails = () => {
   ) : (
     <>
       <div className="p-10 flex gap-10 max-md:flex-col-reverse max-sm:p-0">
-        <div className=" w-3/5 max-md:w-full max-md:p-7">
-          <h2 className="text-xl font-bold">
+        <div className=" w-4/5 max-md:w-full max-md:p-7">
+          <h2 className="text-xl font-bold mb-3">
             {singleCourseDetails?.courseDetail?.name}
           </h2>
 
-          <div className="flex justify-between my-3">
+          <div className="w-full h-[75vh]">
+            <ReactPlayer
+              className="rounded-md"
+              url={singleCourseDetails?.courseDetail?.demoUrl}
+              controls={true}
+              loop={false}
+              thumbnail={true}
+              imgSrc={singleCourseDetails?.courseDetail?.thumbnail?.url}
+              width={"100%"}
+              height={"100%"}
+            />
+          </div>
+          <div className="flex justify-end mt-4">
+            <Button
+              color="purple"
+              size="md"
+              pill
+              onClick={() => {
+                navigate(`${singleCourseDetails?.coursesData[0]["_id"]}`);
+              }}
+            >
+              Let's Start!
+              <HiOutlineArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+          </div>
+
+          <br />
+          <div>
+            <h2 className="font-semibold text-2xl mb-2">Course Details</h2>
             <div>
-              <RatingComponent
-                rating={singleCourseDetails?.courseDetail?.rating}
-              />
+              {" "}
+              <span className=" font-poppins whitespace-break-spaces">
+                {singleCourseDetails?.courseDetail?.description}
+              </span>{" "}
             </div>
-            <div>{singleCourseDetails?.courseDetail?.purchase} Students</div>
           </div>
+        </div>
 
-          <br />
-          <div>
-            <h2 className="font-semibold text-2xl mb-2">
-              What you will learn from this course?
-            </h2>
-
-            <List unstyled>
-              {singleCourseDetails?.courseDetail?.benefits?.map((item) => (
-                <List.Item icon={HiCheckCircle}>
-                  {" "}
-                  <div className="flex gap-2 items-center mt-2">
-                    <HiCheckCircle /> {item.title}
-                  </div>
-                </List.Item>
-              ))}
-            </List>
-          </div>
-
-          <br />
-          <br />
-
-          <div>
-            <h2 className="font-semibold mb-2 text-2xl">
-              What are the prerequisites for starting this course?
-            </h2>
-
-            <List unstyled>
-              {singleCourseDetails?.courseDetail?.prerequsites?.map((item) => (
-                <List.Item icon={HiCheckCircle}>
-                  {" "}
-                  <div className="flex gap-2 items-center mt-2">
-                    <HiCheckCircle /> {item.title}
-                  </div>
-                </List.Item>
-              ))}
-            </List>
-          </div>
-
-          <br />
-
+        <div className="w-1/5 max-md:w-full">
           <div>
             <h2 className="font-semibold text-2xl mb-2">Course Overview</h2>
             <Accordion collapseAll className="border-non mt-5">
@@ -256,9 +173,12 @@ const CourseDetails = () => {
                   {" "}
                   {singleCourseDetails?.courseDetail?.name} Topics
                 </Accordion.Title>
-                <Accordion.Content>
+                <Accordion.Content className="max-h-[63vh] overflow-y-auto p-0 pt-2">
                   {singleCourseDetails?.coursesData?.map((item) => (
-                    <div key={item._id} className="flex gap-3 items-start mb-3">
+                    <div
+                      key={item._id}
+                      className="flex gap-3 items-start px-4 py-1 mb-3 hoverCard"
+                    >
                       <div className=" text-[#2acdc6]">
                         <PiMonitorPlayBold size={23} />
                       </div>
@@ -276,63 +196,10 @@ const CourseDetails = () => {
               </Accordion.Panel>
             </Accordion>
           </div>
-
-          <br />
-
-          <div>
-            <h2 className="font-semibold text-2xl mb-2">Course Details</h2>
-            <div>
-              {" "}
-              <span className=" font-poppins whitespace-break-spaces">
-                {singleCourseDetails?.courseDetail?.description}
-              </span>{" "}
-            </div>
-          </div>
-        </div>
-
-        <div className="w-2/5 max-md:w-full">
-          <div className="w-full h-72">
-            <ReactPlayer
-              className="rounded-md"
-              url={singleCourseDetails?.courseDetail?.demoUrl}
-              controls={true}
-              loop={false}
-              thumbnail={true}
-              imgSrc={singleCourseDetails?.courseDetail?.thumbnail?.url}
-              width={"100%"}
-              height={"100%"}
-            />
-          </div>
-          <br />
-          <div className="max-md:px-5">
-            <h3 className="font-bold text-2xl">
-              {singleCourseDetails?.courseDetail?.price} ₹{" "}
-              <sup className=" line-through">
-                {singleCourseDetails?.courseDetail?.estimatedprice}₹
-              </sup>{" "}
-              <span className=" text-red-600">
-                {parseInt(
-                  ((singleCourseDetails?.courseDetail?.estimatedprice -
-                    singleCourseDetails?.courseDetail?.price) /
-                    singleCourseDetails?.courseDetail?.estimatedprice) *
-                    100
-                )}
-                % Off
-              </span>
-            </h3>
-          </div>
-          <br />
-
-          <div className="max-md:px-5">
-            <Button color="failure" pill onClick={purchaseCourseHandler}>
-              Buy Now {singleCourseDetails?.courseDetail?.price} ₹
-            </Button>
-          </div>
         </div>
       </div>
-      <CustomLoader loading={verifingCourse} />
     </>
   );
 };
 
-export default CourseDetails;
+export default CourseEnrolled;

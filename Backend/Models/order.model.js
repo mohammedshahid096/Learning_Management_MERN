@@ -16,8 +16,27 @@ const ModelSchema = new mongoose.Schema(
       ref: "user",
       required: true,
     },
-    payment_info: {
+    orderStatus: {
+      type: String,
+      default: "initiated",
+      enum: [
+        "initiated",
+        "pending",
+        "failed",
+        "rejected",
+        "approved",
+        "completed",
+        "expires",
+        "cancelled",
+      ],
+    },
+    orderInfo: {
       type: Object,
+      default: null,
+    },
+    paymentInfo: {
+      type: Object,
+      default: null,
     },
   },
   { timestamps: true }
