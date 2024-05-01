@@ -9,6 +9,10 @@ const isCourseEnrolled = async (req, res, next) => {
       return next(httpErrors.BadRequest("please add the course id"));
     }
 
+    if (req.role === "admin" || req.role === "teacher") {
+      return next();
+    }
+
     let userData = await redis.get(req.userid);
     userData = JSON.parse(userData);
 

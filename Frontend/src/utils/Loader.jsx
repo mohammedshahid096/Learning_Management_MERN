@@ -1,6 +1,6 @@
 import React from "react";
 import "../styles/spinner.css";
-import { PropTypes } from "prop-types";
+import PropTypes from "prop-types";
 
 const CustomLoader = ({ loading = false }) => {
   return loading ? (
@@ -11,6 +11,6 @@ const CustomLoader = ({ loading = false }) => {
 };
 
 CustomLoader.propTypes = {
-  loading: PropTypes.boolean,
+  loading: PropTypes.bool,
 };
 export default CustomLoader;

@@ -13,6 +13,7 @@ import RatingComponent from "../../utils/RatingComponent";
 import { PiMonitorPlayBold } from "react-icons/pi";
 import CustomLoader from "../../utils/Loader";
 import { HiOutlineArrowRight } from "react-icons/hi";
+import MetaData from "../../utils/MetaData";
 const Skeleton = () => {
   return (
     <div role="status">
@@ -82,12 +83,7 @@ const CourseEnrolled = () => {
   }
 
   const fetchCourseDetails = () => {
-    const isAlreadyEnroll = user?.courses.find((item) => item === courseId);
-    if (isAlreadyEnroll) {
-      dispatch(HomeSingleCourseAction(courseId));
-    } else {
-      navigate(`/course/${courseId}`);
-    }
+    dispatch(HomeSingleCourseAction(courseId));
   };
 
   const clearErrorFunction = () => {
@@ -101,10 +97,20 @@ const CourseEnrolled = () => {
 
   // # useeffects
   useEffect(() => {
-    if (courseId !== singleCourseDetails?.courseDetail?._id) {
+    const isAlreadyEnroll =
+      user?.courses.find((item) => item === courseId) || null;
+
+    if (
+      (isAlreadyEnroll &&
+        courseId !== singleCourseDetails?.courseDetail?._id) ||
+      user?.role === "admin" ||
+      user?.role === "teacher"
+    ) {
       fetchCourseDetails();
+    } else if (!isAlreadyEnroll) {
+      navigate(`/course/${courseId}`);
     }
-  }, [courseId]);
+  }, [courseId, user]);
 
   useEffect(() => {
     if (error) {
@@ -120,13 +126,14 @@ const CourseEnrolled = () => {
     </>
   ) : (
     <>
-      <div className="p-10 flex gap-10 max-md:flex-col-reverse max-sm:p-0">
-        <div className=" w-4/5 max-md:w-full max-md:p-7">
-          <h2 className="text-xl font-bold mb-3">
+      <MetaData title={singleCourseDetails?.courseDetail?.name} />
+      <div className="p-10 flex gap-10 max-md:flex-col max-sm:p-0">
+        <div className=" w-4/5 max-md:w-full">
+          <h2 className="text-xl font-bold mb-3 max-md:px-5 max-md:py-2">
             {singleCourseDetails?.courseDetail?.name}
           </h2>
 
-          <div className="w-full h-[75vh]">
+          <div className="w-full h-[75vh] bg-black max-sm:h-[50vh]">
             <ReactPlayer
               className="rounded-md"
               url={singleCourseDetails?.courseDetail?.demoUrl}
@@ -138,7 +145,8 @@ const CourseEnrolled = () => {
               height={"100%"}
             />
           </div>
-          <div className="flex justify-end mt-4">
+
+          <div className="flex justify-end mt-4 max-md:px-5">
             <Button
               color="purple"
               size="md"
@@ -153,7 +161,7 @@ const CourseEnrolled = () => {
           </div>
 
           <br />
-          <div>
+          <div className="max-md:px-5">
             <h2 className="font-semibold text-2xl mb-2">Course Details</h2>
             <div>
               {" "}
@@ -164,16 +172,16 @@ const CourseEnrolled = () => {
           </div>
         </div>
 
-        <div className="w-1/5 max-md:w-full">
+        <div className="w-1/5 max-md:w-full max-md:p-5">
           <div>
-            <h2 className="font-semibold text-2xl mb-2">Course Overview</h2>
-            <Accordion collapseAll className="border-non mt-5">
+            <h2 className="font-semibold text-xl">Course Overview</h2>
+            <Accordion className="border-non mt-3">
               <Accordion.Panel>
                 <Accordion.Title>
                   {" "}
                   {singleCourseDetails?.courseDetail?.name} Topics
                 </Accordion.Title>
-                <Accordion.Content className="max-h-[63vh] overflow-y-auto p-0 pt-2">
+                <Accordion.Content className="max-h-[65vh] overflow-y-auto p-0 pt-2">
                   {singleCourseDetails?.coursesData?.map((item) => (
                     <div
                       key={item._id}

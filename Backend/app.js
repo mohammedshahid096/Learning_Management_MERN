@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser");
 const MongoDataBaseConn = require("./Config/mongodb.config");
 const CloudinaryConn = require("./Config/cloudinary.config");
 const IndexRoutes = require("./Routes/index.routes");
+const moment = require("moment");
 
 const app = express();
 // env config
@@ -52,6 +53,8 @@ app.use((err, req, res, next) => {
 
 // server listening
 app.listen(process.env.PORT || 8001, () => {
+  console.log(moment().format());
+
   console.log(
     "server is running on:  http://localhost:" + process.env.PORT || 8001
   );

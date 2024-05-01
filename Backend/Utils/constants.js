@@ -17,6 +17,7 @@ module.exports.successConstant = {
 
   // ### question
   QUESTION_ADDED: "Question is Added Successfully",
+  QUESTION_DELETED: "Question is Deleted Successfully",
   ANSWER_ADDED: "Answer is Added Successfully",
 
   // ### reply

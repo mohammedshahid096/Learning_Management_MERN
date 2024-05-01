@@ -5,6 +5,7 @@ const { errorConstant, successConstant } = require("../Utils/constants");
 const { redis } = require("../Config/redis.config");
 const questionModel = require("../Models/question.model");
 const { isMongooseIdValidation } = require("../JoiSchemas/common.schema");
+const moment = require("moment");
 
 // adding a question
 module.exports.AddQuestionController = async (req, res, next) => {
@@ -41,12 +42,31 @@ module.exports.AddQuestionController = async (req, res, next) => {
   }
 };
 
+// deleting a question
+module.exports.DeleteQuestionController = async (req, res, next) => {
+  try {
+    const { questionId } = req.params;
+
+    const data = await questionModel.findByIdAndDelete(questionId);
+    if (!data) {
+      return next(httpErrors.NotFound(errorConstant.QUESTION_NOT_FOUND));
+    }
+    res.status(200).json({
+      success: true,
+      statusCode: 200,
+      message: successConstant.QUESTION_DELETED,
+    });
+  } catch (error) {
+    next(httpErrors.InternalServerError(error.message));
+  }
+};
+
 // adding a anwser
 module.exports.AddAnswerController = async (req, res, next) => {
   try {
-    const { coursesDataid } = req.params;
+    const { questionId } = req.params;
 
-    const { error } = isMongooseIdValidation(coursesDataid);
+    const { error } = isMongooseIdValidation(questionId);
     if (error) {
       return next(httpErrors.BadRequest(error.details[0].message));
     }
@@ -56,10 +76,11 @@ module.exports.AddAnswerController = async (req, res, next) => {
     const addAnsData = {
       answerBy: req.userid,
       ans: answer,
+      answerOn: moment().format(),
     };
 
     const data = await questionModel.findByIdAndUpdate(
-      coursesDataid,
+      questionId,
       {
         $push: { answers: addAnsData },
       },

@@ -16,6 +16,7 @@ import { openLoginAccount } from "../../Redux/reducers/user.reducer";
 import { CreateRazorPayOrderAPI } from "../../Apis/payment.api";
 import { URLConstant } from "../../config/URLConstant";
 import { CreateCourseOrderAPI } from "../../Apis/order.api";
+import MetaData from "../../utils/MetaData";
 
 const Skeleton = () => {
   return (
@@ -90,13 +91,7 @@ const CourseDetails = () => {
   }
 
   const fetchCourseDetails = () => {
-    const isAlreadyEnroll = user?.courses.find((item) => item === courseId);
-    console.log(isAlreadyEnroll);
-    if (isAlreadyEnroll) {
-      navigate(`/course-access/${courseId}`);
-    } else {
-      dispatch(HomeSingleCourseAction(courseId));
-    }
+    dispatch(HomeSingleCourseAction(courseId));
   };
 
   const clearErrorFunction = () => {
@@ -111,6 +106,8 @@ const CourseDetails = () => {
   const purchaseCourseHandler = async () => {
     if (!user) {
       dispatch(openLoginAccount());
+    } else if (user?.courses.find((item) => item === courseId)) {
+      navigate(`/course-access/${courseId}`);
     } else {
       const details = {
         amount: singleCourseDetails?.courseDetail?.price,
@@ -144,7 +141,7 @@ const CourseDetails = () => {
         const razorPayInstance = new window.Razorpay(options);
         razorPayInstance.open();
       } else {
-        alert(response.message || response.message);
+        toast.error(response.message);
       }
     }
   };
@@ -157,6 +154,7 @@ const CourseDetails = () => {
     const response = await CreateCourseOrderAPI(details);
     if (response.success) {
       toast.success(response.message);
+      setSearchParams({});
       navigate(`/course-access/${courseId}`);
     } else {
       toast.error(response.message);
@@ -166,10 +164,15 @@ const CourseDetails = () => {
 
   // # useeffects
   useEffect(() => {
-    if (courseId !== singleCourseDetails?.courseDetail?._id) {
+    const isAlreadyEnroll =
+      user?.courses.find((item) => item === courseId) || null;
+
+    if (isAlreadyEnroll || user?.role === "admin" || user?.role === "teacher") {
+      navigate(`/course-access/${courseId}`);
+    } else if (courseId !== singleCourseDetails?.courseDetail?._id) {
       fetchCourseDetails();
     }
-  }, [courseId]);
+  }, [courseId, user]);
 
   useEffect(() => {
     if (error) {
@@ -193,6 +196,7 @@ const CourseDetails = () => {
     </>
   ) : (
     <>
+      <MetaData title={singleCourseDetails?.courseDetail?.name} />
       <div className="p-10 flex gap-10 max-md:flex-col-reverse max-sm:p-0">
         <div className=" w-3/5 max-md:w-full max-md:p-7">
           <h2 className="text-xl font-bold">
@@ -216,7 +220,7 @@ const CourseDetails = () => {
 
             <List unstyled>
               {singleCourseDetails?.courseDetail?.benefits?.map((item) => (
-                <List.Item icon={HiCheckCircle}>
+                <List.Item icon={HiCheckCircle} key={item._id}>
                   {" "}
                   <div className="flex gap-2 items-center mt-2">
                     <HiCheckCircle /> {item.title}
@@ -236,7 +240,7 @@ const CourseDetails = () => {
 
             <List unstyled>
               {singleCourseDetails?.courseDetail?.prerequsites?.map((item) => (
-                <List.Item icon={HiCheckCircle}>
+                <List.Item icon={HiCheckCircle} key={item._id}>
                   {" "}
                   <div className="flex gap-2 items-center mt-2">
                     <HiCheckCircle /> {item.title}

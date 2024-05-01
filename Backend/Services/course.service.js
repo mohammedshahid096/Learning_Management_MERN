@@ -33,6 +33,11 @@ module.exports.GetSingleAllCourseDataService = async (
   return data;
 };
 
+module.exports.GetSingleCourseDataService = async (contentid) => {
+  const data = await courseDataModel.findById(contentid);
+  return data;
+};
+
 /**
  * updating a  course
  * @param {String} id course mongodb object id

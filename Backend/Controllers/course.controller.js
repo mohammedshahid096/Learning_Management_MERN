@@ -13,9 +13,13 @@ const {
   UpdateCourseService,
   GetAllCoursesService,
   CoursesListService,
+  GetSingleCourseDataService,
 } = require("../Services/course.service");
 const { errorConstant, successConstant } = require("../Utils/constants");
 const { redis } = require("../Config/redis.config");
+const {
+  GetAllQuestionsService,
+} = require("../Services/Question_Review.service");
 
 // uploading a new course
 module.exports.UploadCourseController = async (req, res, next) => {
@@ -229,25 +233,30 @@ module.exports.AllCoursesList = async (req, res, next) => {
 // ------------ For Specific Course by user ----------
 module.exports.GetUserSingleCourse = async (req, res, next) => {
   try {
-    const { courseid } = req.params;
-    const courseExist = await GetSingleCourseService(courseid);
-    if (!courseExist) {
-      return next(httpErrors.NotFound(errorConstant.COURSE_NOT_FOUND));
-    }
+    const { courseid, contentid } = req.params;
+
     let userData = await redis.get(req.userid);
     userData = JSON.parse(userData);
 
     const isEnrolled = userData.courses.find((item) => item === courseid);
-    if (!isEnrolled) {
+    if (!isEnrolled && req.role === "user") {
       return next(httpErrors.NotFound(errorConstant.COURSE_NOT_ENROLLED));
     }
 
-    const coursesData = await GetSingleAllCourseDataService(courseid, false);
+    const coursesData = await GetSingleCourseDataService(contentid);
+    const questionData = await GetAllQuestionsService(contentid);
+
+    if (!questionData) {
+      return next(httpErrors.NotFound(errorConstant.COURSES_DATA_NOT_FOUND));
+    }
+
     res.status(200).json({
       success: true,
       statusCode: 200,
-      courseDetail: courseExist,
-      coursesData,
+      data: {
+        coursesData,
+        questionData,
+      },
     });
   } catch (error) {
     next(httpErrors.InternalServerError(error.message));

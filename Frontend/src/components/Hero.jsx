@@ -117,7 +117,10 @@ export const HomeReviews = () => {
   return (
     <div className="grid grid-cols-2 gap-6 max-sm:grid-cols-1">
       {staticReviews.map((item) => (
-        <Card className="w-full h-max dark:bg-gray-300 dark:bg-opacity-10 border border-gray-300 backdrop-blur shadow-md">
+        <Card
+          key={item.avatar}
+          className="w-full h-max dark:bg-gray-300 dark:bg-opacity-10 border border-gray-300 backdrop-blur shadow-md"
+        >
           <div className="flex w-full justify-between">
             <div className="flex items-center justify-center ">
               <img
@@ -125,9 +128,9 @@ export const HomeReviews = () => {
                 alt={item.name}
                 className="w=[50px] h-[50px] rounded-full object-cover"
               />
-              <div class="space-y-0.5 font-medium dark:text-white text-left rtl:text-right ms-3">
+              <div className="space-y-0.5 font-medium dark:text-white text-left rtl:text-right ms-3">
                 <div>{item.name}</div>
-                <div class="text-sm text-gray-500 dark:text-gray-400">
+                <div className="text-sm text-gray-500 dark:text-gray-400">
                   {item.profession}
                 </div>
               </div>

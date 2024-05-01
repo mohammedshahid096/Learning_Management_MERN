@@ -23,12 +23,16 @@ const ModelSchema = new mongoose.Schema(
     },
     answers: [
       {
-        awnserBy: {
+        answerBy: {
           type: mongoose.Schema.Types.ObjectId,
           ref: "user",
         },
         ans: {
           type: String,
+        },
+        answerOn: {
+          type: Date,
+          default: new Date(),
         },
       },
     ],

@@ -120,3 +120,19 @@ export const DeleteCourseApi = async (courseid) => {
     return error?.response?.data || error;
   }
 };
+
+export const GetContentCourseDataApi = async (courseid, contentid) => {
+  try {
+    const config = {
+      withCredentials: true,
+    };
+
+    const { data } = await axiosInstance.get(
+      `${URLConstant}/course/course-single-content/${courseid}/${contentid}`,
+      config
+    );
+    return data;
+  } catch (error) {
+    return error?.response?.data || error;
+  }
+};

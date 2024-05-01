@@ -39,7 +39,7 @@ CourseRoutes.route("/courses/list").get(
 CourseRoutes.route("/all").get(AllCoursesWithout);
 
 // ### Purchased Courses
-CourseRoutes.route("/course-single-content/:courseid").get(
+CourseRoutes.route("/course-single-content/:courseid/:contentid").get(
   Authentication,
   Authorization("user", "admin"),
   GetUserSingleCourse
