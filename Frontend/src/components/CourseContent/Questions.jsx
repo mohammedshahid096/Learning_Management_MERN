@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { ContentCourseDataStore } from "../../pages/Course/CourseContentData";
 import { useSelector } from "react-redux";
-import { Avatar, Button, Textarea, TextInput, Badge } from "flowbite-react";
+import { Avatar, Button, Textarea, TextInput } from "flowbite-react";
 import { format } from "timeago.js";
 import { FaRegMessage } from "react-icons/fa6";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
@@ -178,7 +178,6 @@ const AdminSingleQuestionsComponent = ({
   singleData,
   setdeleteModal,
   setselectedQuestionid,
-  selectedQuestionid,
 }) => {
   // # react router dom
   const { courseId, courseContentId } = useParams();

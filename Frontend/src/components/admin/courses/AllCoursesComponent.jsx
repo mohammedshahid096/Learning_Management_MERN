@@ -1,7 +1,7 @@
 import React from "react";
 import DataTable from "react-data-table-component";
 import "../../../styles/table.css";
-import { Spinner } from "flowbite-react";
+import { Spinner, ToggleSwitch } from "flowbite-react";
 import { useSelector } from "react-redux";
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
@@ -53,7 +53,11 @@ const Loader = () => {
   );
 };
 
-const AllCoursesComponent = ({ setselectedCourseid }) => {
+const AllCoursesComponent = ({
+  setselectedCourseid,
+  active_disableSubmitHandler,
+  activeLoading,
+}) => {
   // ### redux
   const { loading, courses } = useSelector((state) => state.AdminCourseState);
 
@@ -110,31 +114,42 @@ const AllCoursesComponent = ({ setselectedCourseid }) => {
       wrap: true,
       center: true,
     },
-
     {
-      name: "Edit",
+      name: "Active",
       center: true,
       grow: 0,
       cell: (row) => (
-        <Link
-          to={`/admin/course/${row.id}`}
-          className=" cursor-pointer hover:text-green-400"
-        >
-          <MdModeEdit size={20} />
-        </Link>
+        <span>
+          <ToggleSwitch
+            onChange={() => active_disableSubmitHandler(!row.isActive, row.id)}
+            checked={row?.isActive}
+            color="green"
+            sizing={"sm"}
+            disabled={activeLoading}
+          />
+        </span>
       ),
     },
+
     {
-      name: "Delete",
+      name: "Actions",
       center: true,
       grow: 0,
       cell: (row) => (
-        <span
-          className=" cursor-pointer hover:text-red-500"
-          onClick={() => setselectedCourseid(row.id)}
-        >
-          <MdDeleteOutline size={20} />
-        </span>
+        <div className="flex gap-3">
+          <Link
+            to={`/admin/course/${row.id}`}
+            className=" cursor-pointer hover:text-green-400"
+          >
+            <MdModeEdit size={20} />
+          </Link>
+          <span
+            className=" cursor-pointer hover:text-red-500"
+            onClick={() => setselectedCourseid(row.id)}
+          >
+            <MdDeleteOutline size={20} />
+          </span>
+        </div>
       ),
     },
   ];
@@ -153,6 +168,7 @@ const AllCoursesComponent = ({ setselectedCourseid }) => {
                 level: singleCourse?.level,
                 rating: singleCourse?.rating,
                 purchase: singleCourse?.purchase,
+                isActive: singleCourse?.isActive,
                 createdAt: format(singleCourse?.createdAt),
               }))) ||
             []

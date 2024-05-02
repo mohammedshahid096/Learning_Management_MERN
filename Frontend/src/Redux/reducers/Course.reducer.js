@@ -15,6 +15,7 @@ import {
   HOME_SINGLE_COURSE_FAIL,
   HOME_SINGLE_COURSE_REQUEST,
   HOME_SINGLE_COURSE_SUCCESS,
+  SINGLE_COURSE_REVIEWS,
 } from "../constants/course.contant";
 
 export const AdminCourseReducer = (
@@ -99,6 +100,15 @@ export const HomeCourseReducer = (
         singleCourseDetails: {
           courseDetail: action.payload.courseDetail,
           coursesData: action.payload.coursesData,
+        },
+      };
+    case SINGLE_COURSE_REVIEWS:
+      return {
+        ...state,
+        loading: false,
+        singleCourseDetails: {
+          ...state.singleCourseDetails,
+          courseReviews: action.payload.data,
         },
       };
 

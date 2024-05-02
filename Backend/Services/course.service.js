@@ -53,12 +53,17 @@ module.exports.UpdateCourseService = async (id, details) => {
 module.exports.CoursesListService = async () => {
   let data = await coursesModel
     .find()
-    .select("name rating purchase level createdAt");
+    .select("name rating purchase level isActive createdAt");
   return data;
 };
 
 module.exports.GetAllCoursesService = async () => {
   let aggregationPipeLine = [
+    {
+      $match: {
+        isActive: true,
+      },
+    },
     {
       $group: {
         _id: "$_id",

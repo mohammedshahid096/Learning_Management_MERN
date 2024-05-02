@@ -21,6 +21,7 @@ const ModelSchema = new mongoose.Schema(
     },
     reply: {
       type: String,
+      default: null,
     },
   },
   { timestamps: true }

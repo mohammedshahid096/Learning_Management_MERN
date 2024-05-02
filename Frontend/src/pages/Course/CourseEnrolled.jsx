@@ -98,7 +98,7 @@ const CourseEnrolled = () => {
   // # useeffects
   useEffect(() => {
     const isAlreadyEnroll =
-      user?.courses.find((item) => item === courseId) || null;
+      user?.courses?.find((item) => item === courseId) || null;
 
     if (
       (isAlreadyEnroll &&

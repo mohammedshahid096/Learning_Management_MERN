@@ -20,6 +20,9 @@ module.exports.successConstant = {
   QUESTION_DELETED: "Question is Deleted Successfully",
   ANSWER_ADDED: "Answer is Added Successfully",
 
+  // ### review
+  REVIEW_ADDED: "Review is Added Successfully",
+
   // ### reply
   REPLY_ADDED: "Reply is Added Successfully",
 
@@ -57,6 +60,7 @@ module.exports.errorConstant = {
 
   // ### review
   REIVEW_NOT_FOUND: "Review not found",
+  REVIEW_ALREADY_ADDED: "Review is already added, cannot add  one  more time",
 
   // ### notification
   NOTIFICATION_NOT_FOUND: "Notification Not Found",

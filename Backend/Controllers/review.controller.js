@@ -23,6 +23,15 @@ module.exports.AddReviewController = async (req, res, next) => {
       return next(httpErrors.NotFound(errorConstant.COURSE_NOT_FOUND));
     }
 
+    const isAlreadyAdded = await reviewModel.findOne({
+      user: req.userid,
+      courseid,
+    });
+
+    if (isAlreadyAdded) {
+      return next(httpErrors.BadRequest(errorConstant.REVIEW_ALREADY_ADDED));
+    }
+
     const { rating, review = "" } = req.body;
     const newReview = new reviewModel({
       courseid,
@@ -35,8 +44,7 @@ module.exports.AddReviewController = async (req, res, next) => {
     res.status(201).json({
       success: true,
       statusCode: 201,
-      message: successConstant.QUESTION_ADDED,
-      data: newReview,
+      message: successConstant.REVIEW_ADDED,
     });
   } catch (error) {
     next(httpErrors.InternalServerError(error.message));
@@ -64,6 +72,25 @@ module.exports.ReplyReviewController = async (req, res, next) => {
       success: true,
       statusCode: 201,
       message: successConstant.REPLY_ADDED,
+      data,
+    });
+  } catch (error) {
+    next(httpErrors.InternalServerError(error.message));
+  }
+};
+
+module.exports.AllReviewsController = async (req, res, next) => {
+  try {
+    const { courseid } = req.params;
+    const data = await reviewModel
+      .find({ courseid })
+      .sort({ createdAt: -1 })
+      .populate("user", "name profile role createdAt");
+
+    // await redis.del()
+    res.status(200).json({
+      success: true,
+      statusCode: 200,
       data,
     });
   } catch (error) {

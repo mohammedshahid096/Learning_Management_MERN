@@ -293,11 +293,13 @@ const CourseContentData = () => {
         </div>
       </div>
 
-      <ContentCourseDataStore.Provider
-        value={{ courseContentData, setcourseContentData }}
-      >
-        <ContentTab />
-      </ContentCourseDataStore.Provider>
+      <div className="p-10 w-4/5 max-md:w-full max-sm:p-0">
+        <ContentCourseDataStore.Provider
+          value={{ courseContentData, setcourseContentData }}
+        >
+          <ContentTab />
+        </ContentCourseDataStore.Provider>
+      </div>
     </>
   );
 };

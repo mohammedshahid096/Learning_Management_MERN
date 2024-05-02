@@ -4,6 +4,7 @@ import { HiAdjustments, HiClipboardList, HiUserCircle } from "react-icons/hi";
 import { MdDashboard } from "react-icons/md";
 import { ContentCourseDataStore } from "../../pages/Course/CourseContentData";
 import Questions from "./Questions";
+import Review from "./Review";
 
 const ContentTab = () => {
   const { courseContentData } = useContext(ContentCourseDataStore);
@@ -25,7 +26,7 @@ const ContentTab = () => {
           <Questions />
         </Tabs.Item>
         <Tabs.Item title="Review" icon={HiClipboardList}>
-          reviws
+          <Review />
         </Tabs.Item>
       </Tabs>
     </div>

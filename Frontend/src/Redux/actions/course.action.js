@@ -18,6 +18,7 @@ import {
   HOME_SINGLE_COURSE_FAIL,
   HOME_SINGLE_COURSE_REQUEST,
   HOME_SINGLE_COURSE_SUCCESS,
+  SINGLE_COURSE_REVIEWS,
 } from "../constants/course.contant";
 
 export const AdminGetCourseList =
@@ -143,9 +144,19 @@ export const HomeSingleCourseAction =
         config
       );
 
+      const { data: data2 } = await axios.get(
+        `${URLConstant}/review/all/${courseid}`,
+        config
+      );
+
       dispatch({
         type: HOME_SINGLE_COURSE_SUCCESS,
         payload: data,
+      });
+
+      dispatch({
+        type: SINGLE_COURSE_REVIEWS,
+        payload: data2,
       });
     } catch (error) {
       dispatch({
@@ -154,6 +165,26 @@ export const HomeSingleCourseAction =
       });
     }
   };
+
+export const ReviewRefreshAction = (courseid) => async (dispatch) => {
+  try {
+    const config = {
+      withCredentials: true,
+    };
+
+    const { data } = await axios.get(
+      `${URLConstant}/review/all/${courseid}`,
+      config
+    );
+
+    dispatch({
+      type: SINGLE_COURSE_REVIEWS,
+      payload: data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const ClearErrorHomeCourseState = () => (dispatch) => {
   dispatch({ type: HOME_CLEAR_COURSE_ERRORS });

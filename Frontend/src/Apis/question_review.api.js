@@ -59,3 +59,25 @@ export const AddAnswerApi = async (Details, questionId) => {
     return error?.response?.data || error;
   }
 };
+
+// #review
+
+export const AddReviewApi = async (Details, courseid) => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+    };
+
+    const { data } = await axiosInstance.post(
+      `${URLConstant}/review/add/${courseid}`,
+      Details,
+      config
+    );
+    return data;
+  } catch (error) {
+    return error?.response?.data || error;
+  }
+};

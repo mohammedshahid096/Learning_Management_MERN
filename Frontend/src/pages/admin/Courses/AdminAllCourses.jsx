@@ -6,14 +6,17 @@ import { AdminGetCourseList } from "../../../Redux/actions/course.action";
 import CustomModal from "../../../utils/CustomModal";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { Button } from "flowbite-react";
-import { DeleteCourseApi } from "../../../Apis/course.api";
+import { DeleteCourseApi, UpdateCourseApi } from "../../../Apis/course.api";
 import toast from "react-hot-toast";
 import MetaData from "../../../utils/MetaData";
+import CustomLoader from "../../../utils/Loader";
+
 const AdminAllCourses = () => {
   // ### usestates
   const [selectedCourseid, setselectedCourseid] = useState(null);
   const [deleteLoading, setdeleteLoading] = useState(false);
   const [deleteModal, setdeleteModal] = useState(false);
+  const [activeLoading, setactiveLoading] = useState(false);
 
   // ### redux
   const dispatch = useDispatch();
@@ -35,6 +38,19 @@ const AdminAllCourses = () => {
       toast.error(response.message);
     }
     setdeleteLoading(false);
+  };
+
+  const active_disableSubmitHandler = async (status, courseid) => {
+    setactiveLoading(true);
+    const response = await UpdateCourseApi(courseid, { isActive: status });
+    if (response.success) {
+      dispatch(AdminGetCourseList(false));
+      toast.success(response.message);
+      setdeleteModal(false);
+    } else {
+      toast.error(response.message);
+    }
+    setactiveLoading(false);
   };
 
   // useeffects
@@ -60,7 +76,11 @@ const AdminAllCourses = () => {
     <AdminLayout>
       <MetaData title="Admin- All Courses" />
       <h1 className="text-center text-2xl font-bold pb-2 ">Course List</h1>
-      <AllCoursesComponent setselectedCourseid={setselectedCourseid} />
+      <AllCoursesComponent
+        setselectedCourseid={setselectedCourseid}
+        active_disableSubmitHandler={active_disableSubmitHandler}
+        activeLoading={activeLoading}
+      />
 
       {/* delete popup */}
       <CustomModal
@@ -93,6 +113,8 @@ const AdminAllCourses = () => {
           </div>
         </div>
       </CustomModal>
+
+      <CustomLoader loading={activeLoading} />
     </AdminLayout>
   );
 };

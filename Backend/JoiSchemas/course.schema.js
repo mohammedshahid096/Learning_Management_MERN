@@ -49,6 +49,7 @@ module.exports.EditCourseValidator = (body) => {
     categories: Joi.array(),
     rating: Joi.number(),
     purchase: Joi.number(),
+    isActive: Joi.boolean(),
   });
 
   return schema.validate(body);
