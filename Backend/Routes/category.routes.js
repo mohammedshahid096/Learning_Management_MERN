@@ -16,7 +16,7 @@ CategoriesRoutes.route("/add").post(
   CreateNewCategory
 );
 
-CategoriesRoutes.route("/all").get(Authentication, GetAllCategories);
+CategoriesRoutes.route("/all").get(GetAllCategories);
 
 CategoriesRoutes.route("/single/:categoryId")
   .get(Authentication, GetSingleCategory)

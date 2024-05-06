@@ -60,7 +60,14 @@ module.exports.ReplyReviewController = async (req, res, next) => {
       return next(httpErrors.BadRequest(error.details[0].message));
     }
 
-    const data = await reviewModel.findByIdAndUpdate(reviewid, req.body, {
+    const AddReply = {
+      reply: {
+        replyBy: req.userid,
+        message: req.body.reply,
+      },
+    };
+
+    const data = await reviewModel.findByIdAndUpdate(reviewid, AddReply, {
       new: true,
     });
 
@@ -68,11 +75,10 @@ module.exports.ReplyReviewController = async (req, res, next) => {
       return next(httpErrors.NotFound(errorConstant.REIVEW_NOT_FOUND));
     }
 
-    res.status(201).json({
+    res.status(200).json({
       success: true,
-      statusCode: 201,
+      statusCode: 200,
       message: successConstant.REPLY_ADDED,
-      data,
     });
   } catch (error) {
     next(httpErrors.InternalServerError(error.message));
@@ -85,7 +91,8 @@ module.exports.AllReviewsController = async (req, res, next) => {
     const data = await reviewModel
       .find({ courseid })
       .sort({ createdAt: -1 })
-      .populate("user", "name profile role createdAt");
+      .populate("user", "name profile role createdAt")
+      .populate("reply.replyBy", "name role profile");
 
     // await redis.del()
     res.status(200).json({

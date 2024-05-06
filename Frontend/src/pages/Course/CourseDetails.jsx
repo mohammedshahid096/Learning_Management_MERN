@@ -6,7 +6,7 @@ import {
   HomeSingleCourseAction,
 } from "../../Redux/actions/course.action";
 import toast from "react-hot-toast";
-import { List, Accordion, Button, Card } from "flowbite-react";
+import { List, Accordion, Button, Card, Rating } from "flowbite-react";
 import { HiCheckCircle } from "react-icons/hi";
 import ReactPlayer from "react-player/youtube";
 import RatingComponent from "../../utils/RatingComponent";
@@ -71,6 +71,7 @@ const CourseDetails = () => {
 
   // usesstates
   const [verifingCourse, setverifingCourse] = useState(false);
+  const [ratingPercentage, setratingPercentage] = useState([]);
 
   // # react redux
   const dispatch = useDispatch();
@@ -189,6 +190,59 @@ const CourseDetails = () => {
     }
   }, [searchParams]);
 
+  useEffect(() => {
+    const ratingArray = singleCourseDetails?.courseReviews || [];
+    const totalRatings = ratingArray.length;
+
+    function CalculateRatingCounts(ratings) {
+      const RatingCounts = {
+        1: 0,
+        2: 0,
+        3: 0,
+        4: 0,
+        5: 0,
+      };
+      for (let i of ratings) {
+        console.log(i);
+        RatingCounts[i.rating] = RatingCounts[i.rating] + 1;
+      }
+
+      return RatingCounts;
+    }
+
+    function CalculateRatingPercentage(RatingCounts) {
+      const RatingPercentage = [];
+      for (let x in RatingCounts) {
+        const count = RatingCounts[x];
+        let percentage = (count / totalRatings) * 100;
+        if (!percentage) {
+          percentage = 0;
+        }
+        // RatingPercentage[x] = percentage.toFixed(2);
+        RatingPercentage.push({
+          percentage: Number(percentage.toFixed(2)),
+          rating: x,
+        });
+      }
+      return RatingPercentage;
+    }
+
+    if (singleCourseDetails?.courseReviews) {
+      const RatingCounts = CalculateRatingCounts(ratingArray);
+      console.log(RatingCounts);
+      const RatingPercentage = CalculateRatingPercentage(RatingCounts);
+      console.log(RatingPercentage);
+      RatingPercentage.reverse();
+      setratingPercentage(RatingPercentage);
+    }
+  }, [singleCourseDetails?.courseReviews]);
+  // component constant
+  const ratingDetail = ratingPercentage.map((item) => (
+    <Rating.Advanced percentFilled={item.percentage} className="mb-2">
+      {item.rating} star
+    </Rating.Advanced>
+  ));
+
   return loading ? (
     <>
       <Skeleton />
@@ -291,6 +345,18 @@ const CourseDetails = () => {
                 {singleCourseDetails?.courseDetail?.description}
               </span>{" "}
             </div>
+          </div>
+
+          <br />
+          <div>
+            <RatingComponent
+              rating={singleCourseDetails?.courseDetail?.rating}
+            />
+            <p className="mb-4 text-sm font-medium text-gray-500 dark:text-gray-400">
+              {singleCourseDetails?.courseReviews?.length} global ratings
+            </p>
+
+            {ratingDetail}
           </div>
         </div>
 

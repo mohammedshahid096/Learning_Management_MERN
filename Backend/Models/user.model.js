@@ -30,7 +30,7 @@ const ModelSchema = new mongoose.Schema(
     role: {
       type: String,
       default: "user",
-      enum: ["admin", "user"],
+      enum: ["admin", "teacher", "user"],
     },
     isVerified: {
       type: Boolean,

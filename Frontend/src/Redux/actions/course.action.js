@@ -60,10 +60,7 @@ export const GetCategoriesList =
         withCredentials: true,
       };
 
-      const { data } = await axiosInstance.get(
-        `${URLConstant}/category/all`,
-        config
-      );
+      const { data } = await axios.get(`${URLConstant}/category/all`, config);
 
       dispatch({
         type: GET_ALL_CATEGORIES_SUCCESS,

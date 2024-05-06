@@ -16,7 +16,7 @@ const NavItems = [
   },
   {
     title: "Courses",
-    url: "/courses",
+    url: "/search-courses",
   },
   {
     title: "About",
@@ -24,7 +24,7 @@ const NavItems = [
   },
   {
     title: "Policy",
-    url: "/policy",
+    url: "/privacy-policy",
   },
   {
     title: "FAQ",

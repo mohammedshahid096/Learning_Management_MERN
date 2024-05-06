@@ -6,6 +6,10 @@ import {
   ALL_COURSE_LIST_REQUEST,
   ALL_COURSE_LIST_SUCCESS,
   CLEAR_COURSE_ERRORS,
+  FILTER_COURSE_DATA_FAIL,
+  FILTER_COURSE_DATA_REQUEST,
+  FILTER_COURSE_DATA_RESET,
+  FILTER_COURSE_DATA_SUCCESS,
   GET_ALL_CATEGORIES_REQUEST,
   GET_ALL_CATEGORIES_SUCCESS,
   GET_SINGLE_COURSE_FAIL,
@@ -15,6 +19,9 @@ import {
   HOME_SINGLE_COURSE_FAIL,
   HOME_SINGLE_COURSE_REQUEST,
   HOME_SINGLE_COURSE_SUCCESS,
+  SEARCH_COURSE_PAGE_FAIL,
+  SEARCH_COURSE_PAGE_REQUEST,
+  SEARCH_COURSE_PAGE_SUCCESS,
   SINGLE_COURSE_REVIEWS,
 } from "../constants/course.contant";
 
@@ -82,6 +89,8 @@ export const HomeCourseReducer = (
   switch (action.type) {
     case ALL_COURSE_LIST_REQUEST:
     case HOME_SINGLE_COURSE_REQUEST:
+    case SEARCH_COURSE_PAGE_REQUEST:
+    case FILTER_COURSE_DATA_REQUEST:
       return {
         ...state,
         loading: true,
@@ -111,9 +120,28 @@ export const HomeCourseReducer = (
           courseReviews: action.payload.data,
         },
       };
+    case SEARCH_COURSE_PAGE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        searchPageData: action.payload.data,
+      };
+    case FILTER_COURSE_DATA_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        filterData: action.payload.data,
+      };
+    case FILTER_COURSE_DATA_RESET:
+      return {
+        ...state,
+        filterData: null,
+      };
 
     case ALL_COURSE_LIST_FAIL:
     case HOME_SINGLE_COURSE_FAIL:
+    case SEARCH_COURSE_PAGE_FAIL:
+    case FILTER_COURSE_DATA_FAIL:
       return {
         ...state,
         loading: false,

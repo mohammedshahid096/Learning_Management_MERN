@@ -2,14 +2,18 @@ import { Rating } from "flowbite-react";
 import React from "react";
 import PropTypes from "prop-types";
 
-const RatingComponent = ({ rating, NumberRating = true }) => {
+const RatingComponent = ({
+  rating,
+  NumberRating = true,
+  colorRating = undefined,
+}) => {
   const Activestars = Array.from({ length: parseInt(rating) }, (_, i) => i);
   const Nostars = Array.from({ length: 5 - parseInt(rating) }, (_, i) => i);
   return (
     <div>
       <Rating>
         {Activestars.map((_, index) => (
-          <Rating.Star key={index} />
+          <Rating.Star key={index} color={colorRating} />
         ))}
         {Nostars.map((_, index) => (
           <Rating.Star key={index + 10} filled={false} />
@@ -27,6 +31,7 @@ const RatingComponent = ({ rating, NumberRating = true }) => {
 RatingComponent.propTypes = {
   rating: PropTypes.number,
   NumberRating: PropTypes.bool,
+  colorRating: PropTypes.string,
 };
 
 export default RatingComponent;

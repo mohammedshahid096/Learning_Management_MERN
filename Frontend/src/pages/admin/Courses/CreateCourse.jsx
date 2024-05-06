@@ -7,7 +7,7 @@ import {
   CourseOptions,
   CoursePreview,
 } from "../../../components/admin/courses/AddCourseComp";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   GetCategoriesList,
@@ -18,10 +18,12 @@ import { Button } from "flowbite-react";
 import { CreateCourseApi, UpdateCourseApi } from "../../../Apis/course.api";
 import toast from "react-hot-toast";
 import MetaData from "../../../utils/MetaData";
+import CustomLoader from "../../../utils/Loader";
 
 const CreateCourse = () => {
   // ### react router dom
   const { courseId } = useParams();
+  const navigate = useNavigate();
 
   // ### usestates
   const [ActiveTimeLine, setActiveTimeLine] = useState(1);
@@ -95,12 +97,15 @@ const CreateCourse = () => {
       level: courseInfo?.level,
       benefits: benefits.map((item) => ({ title: item?.title })),
       prerequsites: prerequisites.map((item) => ({ title: item?.title })),
+      categories: selectedCategories.map((item) => item?.value),
     };
     const response = await CreateCourseApi(details);
     if (response.success) {
       toast.success("successfully a new course is added");
       dispatch(AdminGetCourseList(false));
+      navigate(`/course-access/${response?.data?.details?._id}`);
     } else {
+      console.log(response);
       toast.error(response.message);
     }
     setactionLoading(false);
@@ -153,6 +158,7 @@ const CreateCourse = () => {
             : "Admin- Create Course"
         }
       />
+      <CustomLoader loading={actionLoading} />
       <div className="flex w-full h-full gap-3 max-md:flex-col-reverse">
         <div className="w-10/12 max-md:w-full">
           <div>

@@ -1,9 +1,11 @@
 import CourseContentData from "../pages/Course/CourseContentData";
 import CourseDetails from "../pages/Course/CourseDetails";
 import CourseEnrolled from "../pages/Course/CourseEnrolled";
+import Courses from "../pages/Course/Courses";
 import FaqPage from "../pages/FaqPage";
 import Home from "../pages/Home";
 import PageNotFound from "../pages/PageNotFound";
+import PrivacyPolicy from "../pages/PrivacyPolicy";
 import Profile from "../pages/Profile";
 import AdminHome from "../pages/admin/AdminHome";
 import AdminAllCourses from "../pages/admin/Courses/AdminAllCourses";
@@ -124,6 +126,20 @@ const AllRoutesItems = [
     element: CourseContentData,
     protected: true,
     Access: AllUSers,
+  },
+  {
+    num: 16,
+    path: "/privacy-policy",
+    element: PrivacyPolicy,
+    protected: false,
+    Access: [],
+  },
+  {
+    num: 16,
+    path: "/search-courses",
+    element: Courses,
+    protected: false,
+    Access: [],
   },
 ];
 

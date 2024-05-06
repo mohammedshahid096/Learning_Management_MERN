@@ -5,8 +5,9 @@ const {
   EditCourseDataValidator,
 } = require("../JoiSchemas/course.schema");
 const coursesModel = require("../Models/course.model");
-const youtubesearch = require("youtube-search-api");
 const courseDataModel = require("../Models/coursedata.model");
+const categoryModel = require("../Models/category.model");
+const youtubesearch = require("youtube-search-api");
 const {
   GetSingleCourseService,
   GetSingleAllCourseDataService,
@@ -32,16 +33,18 @@ module.exports.UploadCourseController = async (req, res, next) => {
       req.body.playlistid
     );
     const { items, metadata } = playlistData;
-    req.body.name = metadata?.playlistMetadataRenderer?.title;
-    req.body.description = metadata?.playlistMetadataRenderer?.description;
+    req.body.name = metadata?.playlistMetadataRenderer?.title || "";
+    req.body.description =
+      metadata?.playlistMetadataRenderer?.description || "";
     req.body.thumbnail = { url: items[0].thumbnail.thumbnails[0].url };
     req.body.demoUrl = `https://www.youtube.com/watch?v=${items[0].id}`;
 
     const newCourse = new coursesModel(req.body);
     await newCourse.save();
+    console.log("total videos", items.length);
 
     let courseDataPromise = items.map(async (singleCourse, index) => {
-      let { description } = await youtubesearch.GetVideoDetails(
+      let { description = "" } = await youtubesearch.GetVideoDetails(
         singleCourse.id
       );
       let data = {
@@ -61,6 +64,7 @@ module.exports.UploadCourseController = async (req, res, next) => {
     });
 
     let courseData = await Promise.all(courseDataPromise);
+    // console.log(courseData.length);
 
     res.status(201).json({
       success: true,
@@ -220,6 +224,61 @@ module.exports.AllCoursesWithout = async (req, res, next) => {
 module.exports.AllCoursesList = async (req, res, next) => {
   try {
     const data = await CoursesListService();
+    res.status(200).json({
+      success: true,
+      statusCode: 200,
+      data,
+    });
+  } catch (error) {
+    next(httpErrors.InternalServerError(error.message));
+  }
+};
+
+module.exports.SearchedCoursesController = async (req, res, next) => {
+  try {
+    const { name, category, priceGte, priceLte, tag, level, rating } =
+      req.query;
+    const query = {};
+    let data = null;
+
+    if (category) {
+      const categoryArray = category.split(",");
+      let dataArray = await categoryModel
+        .find({
+          name: { $in: categoryArray },
+        })
+        .select("name");
+      const convertToId = dataArray.map((item) => item._id.toString());
+      query.categories = {
+        $in: convertToId,
+      };
+    }
+    if (name) {
+      query.name = { $regex: name, $options: "i" };
+    }
+    if (tag) {
+      query.tags = { $regex: tag, $options: "i" };
+    }
+    if (level) {
+      query.level = level;
+    }
+    if (rating) {
+      query.rating = { $gte: Number(rating) };
+    }
+    if (priceGte || priceLte) {
+      query.price = {
+        $gte: Number(priceGte) || 0,
+        $lte: Number(priceLte) || 1000000,
+      };
+    }
+    query.isActive = true;
+    console.log(query);
+    data = await coursesModel
+      .find(query)
+      .select(
+        "-benefits -prerequsites -description -demoUrl -categories -playlistid"
+      );
+
     res.status(200).json({
       success: true,
       statusCode: 200,

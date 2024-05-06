@@ -20,8 +20,13 @@ const ModelSchema = new mongoose.Schema(
       type: String,
     },
     reply: {
-      type: String,
-      default: null,
+      replyBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "user",
+      },
+      message: {
+        type: String,
+      },
     },
   },
   { timestamps: true }

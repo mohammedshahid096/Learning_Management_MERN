@@ -15,6 +15,7 @@ import {
 import toast from "react-hot-toast";
 import { GetContentCourseDataApi } from "../../Apis/course.api";
 import CustomModal from "../../utils/CustomModal";
+import { animate, motion } from "framer-motion";
 
 const SingleQuestionsComponent = ({ singleData }) => {
   // # react router dom
@@ -253,7 +254,7 @@ const AdminSingleQuestionsComponent = ({
                   </span>
                 )}
               </p>
-              <span className="cursor-pointer">
+              <div className="cursor-pointer ">
                 <MdDelete
                   color="red"
                   onClick={() => {
@@ -261,7 +262,7 @@ const AdminSingleQuestionsComponent = ({
                     setselectedQuestionid(singleData);
                   }}
                 />
-              </span>
+              </div>
             </div>
             <p className="truncate text-sm text-gray-500 font-bold dark:text-gray-400">
               {singleData?.question}
