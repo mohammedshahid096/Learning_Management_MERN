@@ -88,3 +88,37 @@ module.exports.CreateOrderController = async (req, res, next) => {
     next(httpErrors.InternalServerError(error.message));
   }
 };
+
+module.exports.UserMyOrderController = async (req, res, next) => {
+  try {
+    const data = await orderModel
+      .find({ user: req.userid })
+      .sort({ createdAt: -1 });
+    res.status(200).json({
+      success: true,
+      statusCode: 200,
+      data,
+    });
+  } catch (error) {
+    next(httpErrors.InternalServerError(error.message));
+  }
+};
+
+module.exports.AdminAllOrdersController = async (req, res, next) => {
+  try {
+    const { limit = 20, page = 1 } = req.query;
+    const skip_docs = (page - 1) * limit;
+    const data = await orderModel
+      .find()
+      .skip(skip_docs)
+      .limit(limit)
+      .sort({ createdAt: -1 });
+    res.status(200).json({
+      success: true,
+      statusCode: 200,
+      data,
+    });
+  } catch (error) {
+    next(httpErrors.InternalServerError(error.message));
+  }
+};

@@ -1,7 +1,15 @@
 import {
+  MY_USER_COURSES_LIST_FAIL,
+  MY_USER_COURSES_LIST_REQUEST,
+  MY_USER_COURSES_LIST_SUCCESS,
+} from "../constants/course.contant";
+import {
   ADMIN_ALL_USERS_FAIL,
   ADMIN_ALL_USERS_REQUEST,
   ADMIN_ALL_USERS_SUCCESS,
+  MY_USER_PURCHASE_FAIL,
+  MY_USER_PURCHASE_REQUEST,
+  MY_USER_PURCHASE_SUCCESS,
   USER_CLEAR_ERRORS_2,
 } from "../constants/user.constant";
 import { createSlice } from "@reduxjs/toolkit";
@@ -36,6 +44,44 @@ export const AdminUserReducer = (state = { users: null }, action) => {
         error: null,
       };
 
+    default:
+      return state;
+  }
+};
+
+export const UserPersonalReducer = (
+  state = { myCourses: null, purchases: null },
+  action
+) => {
+  switch (action.type) {
+    case MY_USER_COURSES_LIST_REQUEST:
+    case MY_USER_PURCHASE_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case MY_USER_COURSES_LIST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        myCourses: action.payload.data?.courses,
+      };
+    case MY_USER_PURCHASE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        purchases: action.payload.data,
+      };
+    case MY_USER_COURSES_LIST_FAIL:
+    case MY_USER_PURCHASE_FAIL:
+      return {
+        ...state,
+        ...state,
+        loading: false,
+        error: action.payload.message,
+        statusCode: action.payload.statusCode,
+      };
     default:
       return state;
   }

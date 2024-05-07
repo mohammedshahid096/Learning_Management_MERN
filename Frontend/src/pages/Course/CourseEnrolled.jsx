@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
-import { useParams, useNavigate, useSearchParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
   ClearErrorHomeCourseState,
   HomeSingleCourseAction,
 } from "../../Redux/actions/course.action";
 import toast from "react-hot-toast";
-import { List, Accordion, Button, Card } from "flowbite-react";
-import { HiCheckCircle } from "react-icons/hi";
+import { Breadcrumb, Accordion, Button, Card } from "flowbite-react";
+import { HiHome } from "react-icons/hi";
 import ReactPlayer from "react-player/youtube";
 import RatingComponent from "../../utils/RatingComponent";
 import { PiMonitorPlayBold } from "react-icons/pi";
@@ -127,7 +127,16 @@ const CourseEnrolled = () => {
   ) : (
     <>
       <MetaData title={singleCourseDetails?.courseDetail?.name} />
-      <div className="p-10 flex gap-10 max-md:flex-col max-sm:p-0">
+      <Breadcrumb
+        aria-label="course bread crumb"
+        className="bg-gray-50 px-5 py-3 dark:bg-gray-800"
+      >
+        <Breadcrumb.Item icon={HiHome}>Home</Breadcrumb.Item>
+        <Breadcrumb.Item>
+          {singleCourseDetails?.courseDetail?.name}
+        </Breadcrumb.Item>
+      </Breadcrumb>
+      <div className="p-5 flex gap-10 max-md:flex-col max-sm:p-0">
         <div className=" w-4/5 max-md:w-full">
           <h2 className="text-xl font-bold mb-3 max-md:px-5 max-md:py-2">
             {singleCourseDetails?.courseDetail?.name}

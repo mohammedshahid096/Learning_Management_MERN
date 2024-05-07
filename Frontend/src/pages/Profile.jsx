@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Sidebar } from "flowbite-react";
 import { HiArrowSmRight, HiChartPie, HiUser } from "react-icons/hi";
+import { FaDiscourse, FaList } from "react-icons/fa";
 import { TbPasswordUser } from "react-icons/tb";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { UserLogoutAction } from "../Redux/actions/auth.action";
-import { ChangeUserPassword, UserProfileData } from "../components/UserProfile";
+import {
+  ChangeUserPassword,
+  UserCoursesEnrolled,
+  UserProfileData,
+  UserPurchaseList,
+} from "../components/UserProfile";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Navigate } from "react-router-dom";
 import MetaData from "../utils/MetaData";
@@ -19,6 +25,8 @@ const AllSideBars = {
   userSideBars: [
     { name: "Profile", icon: HiUser, activeCount: 1 },
     { name: "Reset Password", icon: TbPasswordUser, activeCount: 2 },
+    { name: "My Courses", icon: FaDiscourse, activeCount: 4 },
+    { name: "Purchase", icon: FaList, activeCount: 5 },
   ],
 };
 
@@ -97,6 +105,8 @@ const Profile = () => {
         {activeTab === 1 && <UserProfileData />}
         {activeTab === 2 && <ChangeUserPassword />}
         {activeTab === 3 && <Navigate to={"/admin"} />}
+        {activeTab === 4 && <UserCoursesEnrolled />}
+        {activeTab === 5 && <UserPurchaseList />}
       </div>
     </div>
   );

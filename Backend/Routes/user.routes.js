@@ -16,9 +16,11 @@ const {
   AdimGetSingleUserDetail,
   AdminAddUserCourseController,
   AdminDeleteUserController,
+  userCoursesListController,
 } = require("../Controllers/user.controller");
 const { Authentication, Authorization } = require("../Middlewares/Auth");
 const { UserProfileUpload } = require("../Middlewares/Multer");
+const { UserMyOrderController } = require("../Controllers/order.controller");
 const UserRoutes = express.Router();
 
 // ### Register related routes
@@ -44,6 +46,17 @@ UserRoutes.route("/me/update-password").put(
   Authentication,
   Authorization("user", "admin"),
   UpdatePasswordController
+);
+
+UserRoutes.route("/me/courses").get(
+  Authentication,
+  Authorization("user"),
+  userCoursesListController
+);
+UserRoutes.route("/me/orders").get(
+  Authentication,
+  Authorization("user"),
+  UserMyOrderController
 );
 UserRoutes.route("/me/avatar").put(
   Authentication,

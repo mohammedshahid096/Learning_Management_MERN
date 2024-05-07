@@ -1,4 +1,4 @@
-import { Button, Card, Avatar, Label, TextInput } from "flowbite-react";
+import { Button, Card, Avatar, Label, TextInput, Table } from "flowbite-react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import toast from "react-hot-toast";
@@ -10,6 +10,11 @@ import {
 import { useState, useEffect } from "react";
 import axiosInstance from "../config/axiosInstance";
 import { URLConstant } from "../config/URLConstant";
+import {
+  userMyCoursesAction,
+  userMyPurchaseAction,
+} from "../Redux/actions/course.action";
+import CustomLoader from "../utils/Loader";
 
 export const UserProfileData = () => {
   const [isReadOnly, setisReadOnly] = useState(true);
@@ -334,6 +339,153 @@ export const ChangeUserPassword = () => {
             )}
         </form>
       </div>
+    </Card>
+  );
+};
+
+export const UserCoursesEnrolled = () => {
+  const dispatch = useDispatch();
+  const { error, loading, myCourses } = useSelector(
+    (state) => state.UserPersonalState
+  );
+
+  const fetchMyCoursesData = () => {
+    dispatch(userMyCoursesAction());
+  };
+
+  useEffect(() => {
+    if (!myCourses) {
+      fetchMyCoursesData();
+    }
+  }, [myCourses]);
+
+  // console.log(myCourses);
+  return (
+    <Card>
+      {loading ? (
+        <div className=" space-y-7">
+          {[1, 2].map((item) => (
+            <>
+              <div className="h-2.5 bg-gray-200  dark:bg-gray-500 w-4/5 rounded-md mb-1 m-auto"></div>
+              <div className="h-2.5 bg-gray-200  dark:bg-gray-500 w-full rounded-md mb-1"></div>
+              <div className="h-2.5 bg-gray-200  dark:bg-gray-500 w-2/5 rounded-md mb-1 m-auto"></div>
+              <div className="flex gap-2">
+                <div className="h-2.5 bg-gray-200  dark:bg-gray-500 w-2/5 rounded-md mb-1 m-auto"></div>
+                <div className="h-2.5 bg-gray-200  dark:bg-gray-500 w-2/5 rounded-md mb-1 m-auto"></div>
+              </div>
+              <div className="h-2.5 bg-gray-200  dark:bg-gray-500 w-full rounded-md mb-1"></div>
+            </>
+          ))}
+
+          <CustomLoader loading={true} />
+        </div>
+      ) : (
+        <>
+          <div>
+            <h1 className=" text-center text-3xl font-bold text-gray-400">
+              Courses Enrolled
+            </h1>
+          </div>
+          <div>
+            <Table>
+              <Table.Head>
+                <Table.HeadCell>index</Table.HeadCell>
+                <Table.HeadCell>id</Table.HeadCell>
+                <Table.HeadCell>name</Table.HeadCell>
+                <Table.HeadCell>level</Table.HeadCell>
+              </Table.Head>
+              <Table.Body>
+                {myCourses?.map((singleCourse, index) => (
+                  <Table.Row key={singleCourse?._id}>
+                    <Table.Cell className=" font-bold text-purple-600">
+                      {index + 1}.
+                    </Table.Cell>
+                    <Table.Cell>{singleCourse?._id}</Table.Cell>
+                    <Table.Cell>{singleCourse?.name}</Table.Cell>
+                    <Table.Cell>{singleCourse?.level}</Table.Cell>
+                  </Table.Row>
+                ))}
+              </Table.Body>
+            </Table>
+          </div>
+        </>
+      )}
+    </Card>
+  );
+};
+
+export const UserPurchaseList = () => {
+  const dispatch = useDispatch();
+  const { error, loading, purchases } = useSelector(
+    (state) => state.UserPersonalState
+  );
+
+  const fetchMyPurchasesOrdersData = () => {
+    dispatch(userMyPurchaseAction());
+  };
+
+  useEffect(() => {
+    if (!purchases) {
+      fetchMyPurchasesOrdersData();
+    }
+  }, [purchases]);
+  return (
+    <Card>
+      {loading ? (
+        <div className=" space-y-7">
+          {[1, 2].map((item) => (
+            <>
+              <div className="h-2.5 bg-gray-200  dark:bg-gray-500 w-4/5 rounded-md mb-1 m-auto"></div>
+              <div className="h-2.5 bg-gray-200  dark:bg-gray-500 w-full rounded-md mb-1"></div>
+              <div className="h-2.5 bg-gray-200  dark:bg-gray-500 w-2/5 rounded-md mb-1 m-auto"></div>
+              <div className="flex gap-2">
+                <div className="h-2.5 bg-gray-200  dark:bg-gray-500 w-2/5 rounded-md mb-1 m-auto"></div>
+                <div className="h-2.5 bg-gray-200  dark:bg-gray-500 w-2/5 rounded-md mb-1 m-auto"></div>
+              </div>
+              <div className="h-2.5 bg-gray-200  dark:bg-gray-500 w-full rounded-md mb-1"></div>
+            </>
+          ))}
+
+          <CustomLoader loading={true} />
+        </div>
+      ) : (
+        <>
+          <div>
+            <h1 className=" text-center text-3xl font-bold text-gray-400">
+              Transactions List
+            </h1>
+          </div>
+          <div>
+            <Table>
+              <Table.Head>
+                <Table.HeadCell>index</Table.HeadCell>
+                <Table.HeadCell>order_id</Table.HeadCell>
+                <Table.HeadCell>status</Table.HeadCell>
+                <Table.HeadCell>Payment id</Table.HeadCell>
+                <Table.HeadCell>Amount</Table.HeadCell>
+                <Table.HeadCell>method</Table.HeadCell>
+              </Table.Head>
+              <Table.Body>
+                {purchases?.map((singleOrder, index) => (
+                  <Table.Row key={singleOrder?._id}>
+                    <Table.Cell className=" font-bold text-purple-600">
+                      {index + 1}
+                    </Table.Cell>
+                    <Table.Cell>{singleOrder?.uuid}</Table.Cell>
+                    <Table.Cell>{singleOrder?.orderStatus}</Table.Cell>
+                    <Table.Cell>{singleOrder?.paymentInfo?.id}</Table.Cell>
+                    <Table.Cell>
+                      {singleOrder?.paymentInfo &&
+                        singleOrder.paymentInfo.amount / 100}
+                    </Table.Cell>
+                    <Table.Cell>{singleOrder?.paymentInfo?.method}</Table.Cell>
+                  </Table.Row>
+                ))}
+              </Table.Body>
+            </Table>
+          </div>
+        </>
+      )}
     </Card>
   );
 };

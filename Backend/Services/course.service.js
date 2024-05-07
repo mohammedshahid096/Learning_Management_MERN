@@ -53,7 +53,8 @@ module.exports.UpdateCourseService = async (id, details) => {
 module.exports.CoursesListService = async () => {
   let data = await coursesModel
     .find()
-    .select("name rating purchase level isActive createdAt");
+    .select("name rating purchase level isActive createdAt")
+    .sort({ createdAt: -1 });
   return data;
 };
 

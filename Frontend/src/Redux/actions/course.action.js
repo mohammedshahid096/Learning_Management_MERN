@@ -18,8 +18,16 @@ import {
   HOME_SINGLE_COURSE_FAIL,
   HOME_SINGLE_COURSE_REQUEST,
   HOME_SINGLE_COURSE_SUCCESS,
+  MY_USER_COURSES_LIST_FAIL,
+  MY_USER_COURSES_LIST_REQUEST,
+  MY_USER_COURSES_LIST_SUCCESS,
   SINGLE_COURSE_REVIEWS,
 } from "../constants/course.contant";
+import {
+  MY_USER_PURCHASE_FAIL,
+  MY_USER_PURCHASE_REQUEST,
+  MY_USER_PURCHASE_SUCCESS,
+} from "../constants/user.constant";
 
 export const AdminGetCourseList =
   (request = true) =>
@@ -180,6 +188,49 @@ export const ReviewRefreshAction = (courseid) => async (dispatch) => {
     });
   } catch (error) {
     console.log(error);
+  }
+};
+
+// ------------------------ user profile courses--------------------------------------------
+export const userMyCoursesAction = () => async (dispatch) => {
+  try {
+    dispatch({ type: MY_USER_COURSES_LIST_REQUEST });
+    const config = {
+      withCredentials: true,
+    };
+
+    const { data } = await axios.get(`${URLConstant}/user/me/courses`, config);
+
+    dispatch({
+      type: MY_USER_COURSES_LIST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: MY_USER_COURSES_LIST_FAIL,
+      payload: error?.response?.data || error,
+    });
+  }
+};
+
+export const userMyPurchaseAction = () => async (dispatch) => {
+  try {
+    dispatch({ type: MY_USER_PURCHASE_REQUEST });
+    const config = {
+      withCredentials: true,
+    };
+
+    const { data } = await axios.get(`${URLConstant}/user/me/orders`, config);
+
+    dispatch({
+      type: MY_USER_PURCHASE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: MY_USER_PURCHASE_FAIL,
+      payload: error?.response?.data || error,
+    });
   }
 };
 

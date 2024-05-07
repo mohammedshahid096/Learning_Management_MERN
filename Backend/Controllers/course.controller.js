@@ -221,6 +221,7 @@ module.exports.AllCoursesWithout = async (req, res, next) => {
   }
 };
 
+// courses lists for admin
 module.exports.AllCoursesList = async (req, res, next) => {
   try {
     const data = await CoursesListService();
@@ -234,6 +235,7 @@ module.exports.AllCoursesList = async (req, res, next) => {
   }
 };
 
+// search query related
 module.exports.SearchedCoursesController = async (req, res, next) => {
   try {
     const { name, category, priceGte, priceLte, tag, level, rating } =
@@ -272,12 +274,13 @@ module.exports.SearchedCoursesController = async (req, res, next) => {
       };
     }
     query.isActive = true;
-    console.log(query);
+    // console.log(query);
     data = await coursesModel
       .find(query)
       .select(
         "-benefits -prerequsites -description -demoUrl -categories -playlistid"
-      );
+      )
+      .sort({ createdAt: -1 });
 
     res.status(200).json({
       success: true,

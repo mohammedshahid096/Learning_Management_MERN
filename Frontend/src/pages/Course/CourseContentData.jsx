@@ -6,12 +6,12 @@ import {
   HomeSingleCourseAction,
 } from "../../Redux/actions/course.action";
 import toast from "react-hot-toast";
-import { Accordion, Button, Card } from "flowbite-react";
+import { Accordion, Button, Card, Breadcrumb } from "flowbite-react";
 import { HiOutlineArrowLeft } from "react-icons/hi";
 import ReactPlayer from "react-player/youtube";
 import { PiMonitorPlayBold } from "react-icons/pi";
 import CustomLoader from "../../utils/Loader";
-import { HiOutlineArrowRight } from "react-icons/hi";
+import { HiOutlineArrowRight, HiHome } from "react-icons/hi";
 import MetaData from "../../utils/MetaData";
 import { GetContentCourseDataApi } from "../../Apis/course.api";
 import ContentTab from "../../components/CourseContent/ContentTab";
@@ -203,20 +203,32 @@ const CourseContentData = () => {
       <MetaData
         title={`${singleCourseDetails?.courseDetail?.name}-${courseContentId}`}
       />
+      <Breadcrumb
+        aria-label="course bread crumb"
+        className="bg-gray-50 px-5 py-3 dark:bg-gray-800"
+      >
+        <Breadcrumb.Item icon={HiHome}>Home</Breadcrumb.Item>
+        <Breadcrumb.Item>
+          {singleCourseDetails?.courseDetail?.name}
+        </Breadcrumb.Item>
+        <Breadcrumb.Item>
+          {courseContentData?.coursesData?.title}
+        </Breadcrumb.Item>
+      </Breadcrumb>
       <div className="p-10 flex gap-10 max-md:flex-col max-sm:p-0">
         <div className=" w-4/5 max-md:w-full">
           <h2 className="text-xl font-bold mb-3 max-md:px-5 max-md:py-2">
-            {singleCourseDetails?.courseDetail?.name}
+            {courseContentData?.coursesData?.title}
           </h2>
 
           <div className="w-full h-[75vh] max-sm:h-[50vh] bg-black">
             <ReactPlayer
               className="rounded-md"
-              url={singleCourseDetails?.courseDetail?.demoUrl}
+              url={`https://www.youtube.com/watch?v=${courseContentData?.coursesData?.videoUrl}`}
               controls={true}
               loop={false}
               thumbnail={true}
-              imgSrc={singleCourseDetails?.courseDetail?.thumbnail?.url}
+              imgSrc={courseContentData?.coursesData?.videothumbnail?.url}
               width={"100%"}
               height={"100%"}
             />

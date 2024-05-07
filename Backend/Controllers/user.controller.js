@@ -256,6 +256,24 @@ module.exports.MyAccountController = async (req, res, next) => {
   }
 };
 
+// user courses
+module.exports.userCoursesListController = async (req, res, next) => {
+  try {
+    const data = await userModel
+      .findById(req.userid)
+      .select("courses")
+      .populate("courses", "name level");
+
+    res.status(200).json({
+      success: true,
+      statusCode: 200,
+      data,
+    });
+  } catch (error) {
+    next(httpErrors.InternalServerError(error.message));
+  }
+};
+
 // update the account
 module.exports.UpdateAccountController = async (req, res, next) => {
   try {
@@ -384,7 +402,7 @@ module.exports.UserAvatarController = async (req, res, next) => {
 // list of the users
 module.exports.UsersListController = async (req, res, next) => {
   try {
-    const data = await userModel.find();
+    const data = await userModel.find().sort({ createdAt: -1 });
     res.status(200).json({
       success: true,
       statusCode: 200,

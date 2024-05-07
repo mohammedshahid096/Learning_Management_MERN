@@ -2,7 +2,7 @@ import React from "react";
 import bannerImage from "../assets/images/Learning-amico.png";
 import "../styles/hero.css";
 import { motion } from "framer-motion";
-import { Avatar, Card, Accordion } from "flowbite-react";
+import { Avatar, Card, Accordion, Carousel } from "flowbite-react";
 import RatingComponent from "../utils/RatingComponent";
 
 const variants = {
@@ -186,6 +186,28 @@ export const FrequentAskedQuestons = () => {
         </Accordion.Panel>
       ))}
     </Accordion>
+  );
+};
+
+export const CarouselComponent = () => {
+  const imagesArray = [
+    "https://cdn.pixabay.com/photo/2018/09/04/10/27/never-stop-learning-3653430_640.jpg",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfuzYQG8XY1ixXpl2UQxQ7RZZ87KJ_YXjnbix2SfOujw&s",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhdrh5RtZ578gBJ6SuFVsKGLU2GE7f2yePmLrAMV0N6r7IXBrLHHI5S6A8Xz3QFiEC5Ac&usqp=CAU",
+  ];
+  return (
+    <div className=" w-11/12 m-auto sm:h-64 xl:h-80 2xl:h-96">
+      <Carousel pauseOnHover>
+        {imagesArray.map((item, index) => (
+          <img
+            src={item}
+            className=" object-cover"
+            alt={`carousel${index + 1}`}
+            key={`carousel${index + 1}`}
+          />
+        ))}
+      </Carousel>
+    </div>
   );
 };
 

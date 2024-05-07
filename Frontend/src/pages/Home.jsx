@@ -1,5 +1,9 @@
 import React from "react";
-import Hero, { FrequentAskedQuestons, HomeReviews } from "../components/Hero";
+import Hero, {
+  CarouselComponent,
+  FrequentAskedQuestons,
+  HomeReviews,
+} from "../components/Hero";
 import HomeCourseList from "../components/HomeCourse/HomeCourseList";
 import bannerImage from "../assets/images/Programming-amico.png";
 import MetaData from "../utils/MetaData";
@@ -12,6 +16,9 @@ const Home = () => {
 
       <br />
       <br />
+      {/* <CarouselComponent />
+      <br />
+      <br /> */}
       <div className=" text-center text-3xl font-bold leading-10 mt-5">
         <h3>
           Expand Your Career
