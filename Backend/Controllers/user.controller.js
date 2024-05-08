@@ -188,8 +188,8 @@ module.exports.UpdateAccessTokenController = async (req, res, next) => {
         Date.now() +
           parseInt(process.env.ACCESS_TOKEN_KEY_TIME_COOKIE) * 60 * 1000
       ), // for min
-      sameSite: "lax",
-      secure: false,
+      sameSite: "none",
+      secure: true,
       httpOnly: true,
       // maxAge: parseInt(process.env.COOKIE_MAX_TIME),
     };

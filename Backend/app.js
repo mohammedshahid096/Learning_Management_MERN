@@ -25,6 +25,7 @@ app.use(cookieParser());
 app.use(
   cors({
     origin: JSON.parse(process.env.ALLOW_ORIGINS_ACCESS),
+    // origin: "https://learning-management-mern.vercel.app",
     credentials: true,
   })
 );

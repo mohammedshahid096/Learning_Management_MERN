@@ -1,6 +1,6 @@
 const httpErrors = require("http-errors");
 const { errorConstant } = require("../Utils/constants");
-const { VerifyAccessToken, VerifyRefreshToken } = require("../Utils/jwt.token");
+const { VerifyAccessToken } = require("../Utils/jwt.token");
 const { redis } = require("../Config/redis.config");
 
 // for authentication
@@ -8,7 +8,6 @@ module.exports.Authentication = async (req, res, next) => {
   try {
     const { access_token, refresh_token } = req.cookies;
     if (!access_token) {
-      console.log(refresh_token);
       return next(httpErrors.Unauthorized(errorConstant.NOT_AUTHENTICATED));
     }
 
