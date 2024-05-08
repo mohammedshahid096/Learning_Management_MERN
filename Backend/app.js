@@ -5,7 +5,6 @@ const cookieParser = require("cookie-parser");
 const MongoDataBaseConn = require("./Config/mongodb.config");
 const CloudinaryConn = require("./Config/cloudinary.config");
 const IndexRoutes = require("./Routes/index.routes");
-const moment = require("moment");
 
 const app = express();
 // env config
@@ -22,9 +21,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // cors config
+
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: JSON.parse(process.env.ALLOW_ORIGINS_ACCESS),
     credentials: true,
   })
 );
@@ -53,8 +53,7 @@ app.use((err, req, res, next) => {
 
 // server listening
 app.listen(process.env.PORT || 8001, () => {
-  console.log(moment().format());
-
+  console.log(`MODE : ${process.env.DEVELOPMENT_MODE}`);
   console.log(
     "server is running on:  http://localhost:" + process.env.PORT || 8001
   );
