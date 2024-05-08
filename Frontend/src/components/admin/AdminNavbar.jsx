@@ -1,7 +1,7 @@
 "use client";
 
 import { Avatar, Sidebar } from "flowbite-react";
-import { HiChartPie, HiInbox } from "react-icons/hi";
+import { HiChartPie } from "react-icons/hi";
 import { AiOutlineVideoCameraAdd } from "react-icons/ai";
 import {
   MdOutlineOndemandVideo,
@@ -9,8 +9,8 @@ import {
   MdOutlineAnalytics,
 } from "react-icons/md";
 import { GrAnalytics } from "react-icons/gr";
-import { FaUsersCog } from "react-icons/fa";
-import { FaUsers } from "react-icons/fa";
+import { FaUsersCog, FaUsers } from "react-icons/fa";
+import { SiRazorpay } from "react-icons/si";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -49,7 +49,12 @@ const AdminNavbar = () => {
             >
               Users
             </Sidebar.Item>
-            <Sidebar.Item icon={HiInbox}>Inbox</Sidebar.Item>
+            <Sidebar.Item
+              icon={SiRazorpay}
+              onClick={() => navigate("/admin/orders/all")}
+            >
+              Orders
+            </Sidebar.Item>
           </Sidebar.Collapse>
 
           <Sidebar.Collapse label="Courses" open>

@@ -13,6 +13,7 @@ import Categories from "../pages/admin/Courses/Categories";
 import CreateCourse from "../pages/admin/Courses/CreateCourse";
 import CourseDashboardPage from "../pages/admin/Dashboard/CourseDashboardPage";
 import UserDashboardPage from "../pages/admin/Dashboard/UserDashboardPage";
+import { AllOrdersComponent } from "../pages/admin/orders/AllOrdersComponent";
 import AdminAllUsers from "../pages/admin/users/AdminAllUsers";
 import AdminTeam from "../pages/admin/users/AdminTeam";
 import UserDetailPage from "../pages/admin/users/UserDetailPage";
@@ -140,6 +141,13 @@ const AllRoutesItems = [
     element: Courses,
     protected: false,
     Access: [],
+  },
+  {
+    num: 17,
+    path: "/admin/orders/all",
+    element: AllOrdersComponent,
+    protected: true,
+    Access: ["admin"],
   },
 ];
 

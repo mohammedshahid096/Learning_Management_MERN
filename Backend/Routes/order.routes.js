@@ -12,7 +12,7 @@ OrderRoutes.route("/addnew").post(
   Authorization("admin", "user"),
   CreateOrderController
 );
-OrderRoutes.route("/admin/allorders").post(
+OrderRoutes.route("/admin/allorders").get(
   Authentication,
   Authorization("admin"),
   AdminAllOrdersController
