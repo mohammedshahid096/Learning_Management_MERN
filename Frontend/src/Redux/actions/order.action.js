@@ -7,7 +7,7 @@ import {
 } from "../constants/order.constant";
 
 export const AdminGetAllOrdersList =
-  (request = true) =>
+  (limit = 10, page = 1, request = true) =>
   async (dispatch) => {
     try {
       if (request) {
@@ -18,7 +18,7 @@ export const AdminGetAllOrdersList =
       };
 
       const { data } = await axiosInstance.get(
-        `${URLConstant}/order/admin/allorders`,
+        `${URLConstant}/order/admin/allorders?limit=${limit}&page=${page}`,
         config
       );
 

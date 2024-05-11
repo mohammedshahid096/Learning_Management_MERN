@@ -5,7 +5,7 @@ import {
   AdminCourseReducer,
   HomeCourseReducer,
 } from "./reducers/Course.reducer";
-import { getAccessCookie } from "../config/cookie";
+import { getAccessCookie, getUserTokenDataCookie } from "../config/cookie";
 import {
   AdminUserReducer,
   UserPersonalReducer,
@@ -16,10 +16,11 @@ import { DashboardUserReducer } from "./reducers/Dashboard.reducer.js";
 const middleware = (getDefaultMiddleware) =>
   getDefaultMiddleware().concat(thunk);
 
-const isLogin = getAccessCookie();
+const isLogin = getUserTokenDataCookie();
+
 const initialState = {
   AuthState: {
-    user: isLogin ? {} : null,
+    user: isLogin ? JSON.parse(isLogin) : null,
   },
 };
 

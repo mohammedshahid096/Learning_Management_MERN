@@ -12,7 +12,7 @@ import {
 } from "./Redux/actions/auth.action";
 import { useAuth0 } from "@auth0/auth0-react";
 import AllRoutesItems from "./routes/AllRoutesItems";
-import { removeAccessCookie } from "./config/cookie";
+import { getUserTokenDataCookie, removeAccessCookie } from "./config/cookie";
 import Footer from "./components/Footer";
 
 function App() {
@@ -32,6 +32,7 @@ function App() {
   };
 
   const fetchUserDetails = () => {
+    let isLogin = getUserTokenDataCookie();
     dispatch(UserDetailProfileAction());
   };
 
@@ -64,8 +65,6 @@ function App() {
       socailAuthSubmitHandler();
     }
   }, [isAuthenticated]);
-
-  // console.log(isAuthenticated);
 
   return (
     <div className="fullScreen app">

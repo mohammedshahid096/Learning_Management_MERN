@@ -119,17 +119,17 @@ const Navbar = () => {
             className=" dark:text-white text-black text-xl font-bold"
           >
             <motion.div
-              animate={{
-                x: [0, 10, 0],
-                scale: [1, 0.5, 1, 1.2, 0.8, 1],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                repeatDelay: 1,
-                damping: 3,
-                type: "tween",
-              }}
+            // animate={{
+            //   x: [0, 10, 0],
+            //   scale: [1, 0.5, 1, 1.2, 0.8, 1],
+            // }}
+            // transition={{
+            //   duration: 2,
+            //   repeat: Infinity,
+            //   repeatDelay: 1,
+            //   damping: 3,
+            //   type: "tween",
+            // }}
             >
               E-Learning
             </motion.div>

@@ -1,3 +1,4 @@
+import AboutPage from "../pages/AboutPage";
 import CourseContentData from "../pages/Course/CourseContentData";
 import CourseDetails from "../pages/Course/CourseDetails";
 import CourseEnrolled from "../pages/Course/CourseEnrolled";
@@ -14,6 +15,7 @@ import CreateCourse from "../pages/admin/Courses/CreateCourse";
 import CourseDashboardPage from "../pages/admin/Dashboard/CourseDashboardPage";
 import UserDashboardPage from "../pages/admin/Dashboard/UserDashboardPage";
 import { AllOrdersComponent } from "../pages/admin/orders/AllOrdersComponent";
+import OrderDetail from "../pages/admin/orders/OrderDetail";
 import AdminAllUsers from "../pages/admin/users/AdminAllUsers";
 import AdminTeam from "../pages/admin/users/AdminTeam";
 import UserDetailPage from "../pages/admin/users/UserDetailPage";
@@ -148,6 +150,20 @@ const AllRoutesItems = [
     element: AllOrdersComponent,
     protected: true,
     Access: ["admin"],
+  },
+  {
+    num: 18,
+    path: "/admin/orders/:orderid",
+    element: OrderDetail,
+    protected: true,
+    Access: ["admin"],
+  },
+  {
+    num: 19,
+    path: "/about",
+    element: AboutPage,
+    protected: false,
+    Access: [],
   },
 ];
 

@@ -28,6 +28,7 @@ const SendToken = require("../Middlewares/SendToken");
 const { redis } = require("../Config/redis.config");
 const { GetSingleUserService } = require("../Services/user.service");
 const cloudinary = require("cloudinary");
+const orderModel = require("../Models/order.model");
 
 // creating a user controller
 module.exports.CreateUserController = async (req, res, next) => {
@@ -150,6 +151,7 @@ module.exports.LogoutUserController = async (req, res, next) => {
     await redis.del(req.userid);
     res.clearCookie("access_token");
     res.clearCookie("refresh_token");
+    res.clearCookie("lms_user_token");
     res.status(200).json({
       success: true,
       statusCode: 200,
@@ -421,12 +423,21 @@ module.exports.UpdateUserRoleController = async (req, res, next) => {
     if (error) {
       return next(httpErrors.BadRequest(error.details[0].message));
     }
-    const data = await userModel.findByIdAndUpdate(userid, {
-      role: req.body.role,
-    });
+    const data = await userModel.findByIdAndUpdate(
+      userid,
+      {
+        role: req.body.role,
+      },
+      { new: true }
+    );
 
     if (!data) {
       return next(httpErrors.NotFound(errorConstant.USER_NOT_FOUND));
+    }
+
+    const isExistInMemory = await redis.get(userid);
+    if (isExistInMemory) {
+      redis.set(userid, JSON.stringify(data));
     }
 
     res.status(200).json({
@@ -444,6 +455,7 @@ module.exports.AdimGetSingleUserDetail = async (req, res, next) => {
   try {
     const { id } = req.params;
     const data = await userModel.findById(id).populate("courses", "name");
+    const orders = await orderModel.find({ user: id }).sort({ createdAt: -1 });
     if (!data) {
       return next(httpErrors.NotFound(errorConstant.USER_NOT_FOUND));
     }
@@ -452,6 +464,7 @@ module.exports.AdimGetSingleUserDetail = async (req, res, next) => {
       success: true,
       statusCode: 200,
       data,
+      orders,
     });
   } catch (error) {
     next(httpErrors.InternalServerError(error.message));
@@ -467,20 +480,32 @@ module.exports.AdminAddUserCourseController = async (req, res, next) => {
       return next(httpErrors.BadRequest(error.details[0].message));
     }
 
-    const data = await userModel
-      .findByIdAndUpdate(
-        id,
-        { $push: { courses: req.body.courseid } },
-        { new: true }
-      )
-      .populate("courses", "name");
+    const adddata = await userModel.findByIdAndUpdate(
+      id,
+      { $push: { courses: req.body.courseid } },
+      { new: true }
+    );
 
-    if (!data) {
+    if (!adddata) {
       return next(httpErrors.NotFound(errorConstant.USER_NOT_FOUND));
     }
+
+    const isExistInMemory = await redis.get(id);
+    if (isExistInMemory) {
+      await redis.set(id, JSON.stringify(adddata));
+    }
+
     await coursesModel.findByIdAndUpdate(req.body.courseid, {
       $inc: { purchase: 1 },
     });
+
+    const isExistCourseInMemory = await redis.get(req.body.courseid);
+    if (isExistCourseInMemory) {
+      await redis.del(req.body.courseid);
+    }
+
+    const data = await userModel.findById(id).populate("courses", "name");
+
     res.status(200).json({
       success: true,
       statusCode: 200,
@@ -501,20 +526,31 @@ module.exports.AdminDeleteUserController = async (req, res, next) => {
       return next(httpErrors.BadRequest(error.details[0].message));
     }
 
-    const data = await userModel
-      .findByIdAndUpdate(
-        id,
-        { $pull: { courses: req.body.courseid } },
-        { new: true }
-      )
-      .populate("courses", "name");
+    const deletedata = await userModel.findByIdAndUpdate(
+      id,
+      { $pull: { courses: req.body.courseid } },
+      { new: true }
+    );
 
-    if (!data) {
+    if (!deletedata) {
       return next(httpErrors.NotFound(errorConstant.USER_NOT_FOUND));
+    }
+
+    const isExistInMemory = await redis.get(id);
+    if (isExistInMemory) {
+      await redis.set(id, JSON.stringify(deletedata));
     }
     await coursesModel.findByIdAndUpdate(req.body.courseid, {
       $inc: { purchase: -1 },
     });
+
+    const isExistCourseInMemory = await redis.get(req.body.courseid);
+    if (isExistCourseInMemory) {
+      await redis.del(req.body.courseid);
+    }
+
+    const data = await userModel.findById(id).populate("courses", "name");
+
     res.status(200).json({
       success: true,
       statusCode: 200,
@@ -531,9 +567,15 @@ module.exports.DeleteUserController = async (req, res, next) => {
   try {
     const { userid } = req.params;
     const data = await userModel.findByIdAndDelete(userid);
+    await orderModel.deleteMany({ user: userid });
 
     if (!data) {
       return next(httpErrors.NotFound(errorConstant.USER_NOT_FOUND));
+    }
+
+    const isExistInMemory = await redis.get(userid);
+    if (isExistInMemory) {
+      await redis.del(userid);
     }
 
     res.status(200).json({

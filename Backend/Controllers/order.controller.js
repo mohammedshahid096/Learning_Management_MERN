@@ -72,6 +72,10 @@ module.exports.CreateOrderController = async (req, res, next) => {
 
     isUser.courses.push(isOrderExist.courseid);
     await isUser.save();
+    const isExistInMemory = await redis.get(req.userid);
+    if (isExistInMemory) {
+      await redis.set(req.userid, JSON.stringify(isUser));
+    }
 
     await notificationModel.create({
       user: req.userid,
@@ -110,9 +114,40 @@ module.exports.AdminAllOrdersController = async (req, res, next) => {
     const skip_docs = (page - 1) * limit;
     const data = await orderModel
       .find()
+      .select(
+        "uuid courseid user orderStatus paymentInfo.id paymentInfo.amount paymentInfo.order_id paymentInfo.method  createdAt"
+      )
       .skip(skip_docs)
       .limit(limit)
-      .sort({ createdAt: -1 });
+      .sort({ createdAt: -1 })
+      .populate("user", "name")
+      .populate("courseid", "name");
+
+    const totalOrders = await orderModel.countDocuments();
+    res.status(200).json({
+      success: true,
+      statusCode: 200,
+      data,
+      totalOrders,
+      page,
+    });
+  } catch (error) {
+    next(httpErrors.InternalServerError(error.message));
+  }
+};
+
+module.exports.AdminSingleOrderDetailedController = async (req, res, next) => {
+  try {
+    const { orderid } = req.params;
+    const data = await orderModel
+      .findById(orderid)
+      .populate("user", "name")
+      .populate("courseid", "name");
+
+    if (!data) {
+      return next(httpErrors.NotFound(errorConstant.ORDER_NOT_FOUND));
+    }
+
     res.status(200).json({
       success: true,
       statusCode: 200,

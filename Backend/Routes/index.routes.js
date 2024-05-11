@@ -10,6 +10,7 @@ const NotificationRoutes = require("./notification.routes");
 const CategoriesRoutes = require("./category.routes");
 const DashboardRoutes = require("./dashboard.routes");
 const PaymentRoutes = require("./payment.routes");
+const ImportantLinkRoutes = require("./implink.routes");
 
 // # User routes
 IndexRoutes.use("/user", UserRoutes);
@@ -37,6 +38,9 @@ IndexRoutes.use("/dashboard", DashboardRoutes);
 
 // # Payment Routes
 IndexRoutes.use("/payment", PaymentRoutes);
+
+// # links Routes
+IndexRoutes.use("/impurl", ImportantLinkRoutes);
 
 IndexRoutes.use("/test", TestRouter);
 

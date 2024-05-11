@@ -64,6 +64,9 @@ module.exports.errorConstant = {
 
   // ### notification
   NOTIFICATION_NOT_FOUND: "Notification Not Found",
+
+  // ### order
+  ORDER_NOT_FOUND: "Order not found with given id",
 };
 
 module.exports.SendMailConstant = {

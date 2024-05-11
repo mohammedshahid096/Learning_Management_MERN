@@ -1,13 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import AdminLayout from "../AdminLayout";
 import MetaData from "../../../utils/MetaData";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaEye } from "react-icons/fa";
 import { Spinner } from "flowbite-react";
 import DataTable from "react-data-table-component";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { AdminGetAllOrdersList } from "../../../Redux/actions/order.action";
+import moment from "moment";
+import { Pagination } from "flowbite-react";
 
 const Loader = () => {
   return (
@@ -56,19 +58,24 @@ const customStyles = {
 };
 
 export const AllOrdersComponent = () => {
+  // # react router dom
   const navigate = useNavigate();
 
+  // # redux
   const dispatch = useDispatch();
-  const { allOrders } = useSelector((state) => state.AdminUserState);
+  const { allOrders, loading, totalOrders, activePage } = useSelector(
+    (state) => state.AdminCourseState
+  );
 
-  const users = null;
-  const loading = false;
+  // # usestates
+  const [currentPage, setCurrentPage] = useState(activePage || 1);
+  const [totalPages, settotalPages] = useState(2);
 
   const columns = [
     {
       name: "S.No",
       // selector: (row) => row.index,
-      width: "5rem",
+      width: "3rem",
       wrap: true,
       center: true,
       cell: (row) => (
@@ -76,8 +83,24 @@ export const AllOrdersComponent = () => {
       ),
     },
     {
-      name: "ID",
-      selector: (row) => row.id,
+      name: "UUID",
+      selector: (row) => row.uuid,
+      sortable: true,
+      center: true,
+      wrap: true,
+      grow: 5,
+    },
+    {
+      name: "Order ID",
+      selector: (row) => row.orderid,
+      sortable: true,
+      center: true,
+      wrap: true,
+      grow: 3,
+    },
+    {
+      name: "Payment ID",
+      selector: (row) => row.paymentid,
       sortable: true,
       center: true,
       wrap: true,
@@ -91,73 +114,68 @@ export const AllOrdersComponent = () => {
       center: true,
     },
     {
-      name: "Email",
-      selector: (row) => row.email,
-      sortable: true,
-      wrap: true,
-      grow: 3,
-      center: true,
-    },
-    {
-      name: "Courses",
-      selector: (row) => row.courses,
+      name: "Course",
+      selector: (row) => row.course,
       sortable: true,
       wrap: true,
       center: true,
     },
     {
-      name: "Role",
-      selector: (row) => row.role,
+      name: "Amount",
+      selector: (row) => row.amount,
       sortable: true,
       wrap: true,
       center: true,
     },
     {
-      name: "Joined At",
+      name: "Status",
+      selector: (row) => row.orderStatus,
+      sortable: true,
+      wrap: true,
+      center: true,
+    },
+    {
+      name: "Purchase",
       selector: (row) => row.createdAt,
       sortable: true,
       wrap: true,
       center: true,
     },
+
     {
-      name: "Action",
+      name: "View",
+      selector: (row) => row.view,
+      sortable: true,
+      wrap: true,
       center: true,
-      grow: 0,
-      cell: (row) => (
-        <div className="flex gap-2">
-          <span
-            className=" cursor-pointer hover:text-yellow-200"
-            onClick={() => navigate(`/admin/user/${row.id}`)}
-          >
-            <FaEye size={20} />
-          </span>
-        </div>
-      ),
-    },
-    {
-      name: "Email",
-      center: true,
-      grow: 0,
-      cell: (row) => (
-        <a
-          href={`mailto:${row.email}`}
-          className=" cursor-pointer hover:text-green-400"
-        >
-          <MdOutlineMail size={20} />
-        </a>
-      ),
     },
   ];
 
-  const fetchAllOrdersHandler = () => {
-    dispatch(AdminGetAllOrdersList());
+  const limitPerPage = 10;
+
+  // functions
+  const onPageChange = (pagenumber) => {
+    setCurrentPage(pagenumber);
+    fetchAllOrdersHandler(limitPerPage, pagenumber, false);
+  };
+
+  const fetchAllOrdersHandler = (limit = 10, page, l = true) => {
+    dispatch(AdminGetAllOrdersList(limit, page, l));
   };
 
   useEffect(() => {
     if (!allOrders) {
-      fetchAllOrdersHandler();
+      fetchAllOrdersHandler(limitPerPage);
+    }
+    if (allOrders) {
+      settotalPages(Math.ceil(totalOrders / limitPerPage));
     }
   }, [allOrders]);
+
+  // useEffect(() => {
+  //   fetchAllOrdersHandler(limitPerPage, currentPage, false);
+  // }, [currentPage]);
+
   return (
     <AdminLayout>
       <MetaData title="Admin- All Orders" />
@@ -166,24 +184,46 @@ export const AllOrdersComponent = () => {
         <DataTable
           columns={columns}
           data={
-            (users &&
-              users.map((singleUser, index) => ({
+            (allOrders &&
+              allOrders.map((singleOrder, index) => ({
                 index: index + 1,
-                id: singleUser?._id,
-                name: singleUser?.name,
-                email: singleUser?.email,
-                role: singleUser?.role,
-                courses: singleUser?.courses.length,
-                createdAt: format(singleUser?.createdAt),
+                uuid: singleOrder?.uuid,
+                orderid: singleOrder?.paymentInfo?.order_id,
+                paymentid: singleOrder?.paymentInfo?.id,
+                name: singleOrder?.user?.name,
+                course: singleOrder?.courseid?.name,
+                amount:
+                  singleOrder?.paymentInfo &&
+                  singleOrder?.paymentInfo.amount / 100,
+                orderStatus: singleOrder?.orderStatus,
+                createdAt: moment(singleOrder?.createdAt).format("L LT"),
+                view: (
+                  <Link
+                    to={`/admin/orders/${singleOrder?._id}`}
+                    className="hover:text-green-500"
+                  >
+                    <FaEye />
+                  </Link>
+                ),
               }))) ||
             []
           }
-          pagination
+          // pagination
           fixedHeader
           progressPending={loading}
           customStyles={customStyles}
           progressComponent={<Loader />}
         />
+        {allOrders && (
+          <div className="flex overflow-x-auto sm:justify-center">
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={onPageChange}
+              showIcons
+            />
+          </div>
+        )}
       </div>
     </AdminLayout>
   );

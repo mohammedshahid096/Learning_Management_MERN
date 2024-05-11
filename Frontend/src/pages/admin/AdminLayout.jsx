@@ -8,7 +8,7 @@ const AdminLayout = ({ children }) => {
         <AdminNavbar />
       </div>
 
-      <div className="w-full flex rounded-lg border border-gray-200 bg-white shadow-md dark:border- dark:bg-gray-800">
+      <div className="w-4/5 max-md:w-full flex rounded-lg border border-gray-200 bg-white shadow-md dark:border- dark:bg-gray-800">
         <div className="p-5 w-full">{children}</div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AdminLayout from "../AdminLayout";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Button, Card, Table, Label, Select, TextInput } from "flowbite-react";
 import {
   Add_or_DeleteCourseUserAdminApi,
@@ -11,11 +11,11 @@ import CustomLoader from "../../../utils/Loader";
 import moment from "moment";
 import { TiTick, TiCancel } from "react-icons/ti";
 import { MdDeleteForever } from "react-icons/md";
+import { FaEye } from "react-icons/fa";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import CustomModal from "../../../utils/CustomModal";
 import { useDispatch, useSelector } from "react-redux";
 import { AdminGetCourseList } from "../../../Redux/actions/course.action";
-import { format } from "timeago.js";
 import MetaData from "../../../utils/MetaData";
 
 const AddCourseToUser = ({
@@ -197,6 +197,7 @@ const UserDetailPage = () => {
 
   // # use states
   const [user, setuser] = useState(null);
+  const [userOrders, setuserOrders] = useState(null);
   const [loading, setloading] = useState(false);
   const [addModalOpen, setaddModalOpen] = useState(false);
   const [selectedDelete, setselectedDelete] = useState(null);
@@ -207,6 +208,7 @@ const UserDetailPage = () => {
     const response = await GetUserAdminApi(userId);
     if (response.success) {
       setuser(response.data);
+      setuserOrders(response.orders);
     } else {
       toast.error(response.message);
     }
@@ -221,7 +223,7 @@ const UserDetailPage = () => {
   return (
     <AdminLayout>
       <MetaData title={`Admin- ${user ? user.name : userId}`} />
-      <Card className="mx-auto  shadow-md rounded-lg ">
+      <Card className="mx-auto  shadow-md rounded-lg w-full overflow-auto">
         <div className="text-2xl font-bold  text-center">User Details</div>
         <div className="flex justify-end">
           <Button color="success" onClick={() => setaddModalOpen(true)}>
@@ -302,6 +304,63 @@ const UserDetailPage = () => {
                           >
                             <MdDeleteForever size={20} />
                           </span>{" "}
+                        </Table.Cell>
+                      </Table.Row>
+                    ))}
+                </Table.Body>
+              </Table>
+            </div>
+          </Card>
+        </div>
+
+        <div>
+          <Card className="overflow-x-auto">
+            <div id="wantScroll">
+              <div className="font-semibold mb-2">Orders:</div>
+              <Table>
+                <Table.Head>
+                  <Table.HeadCell>S.NO</Table.HeadCell>
+                  <Table.HeadCell>UUID</Table.HeadCell>
+                  <Table.HeadCell>Course</Table.HeadCell>
+                  <Table.HeadCell>Status</Table.HeadCell>
+                  <Table.HeadCell>Order_ID</Table.HeadCell>
+                  <Table.HeadCell>payment_ID</Table.HeadCell>
+                  <Table.HeadCell>Amount</Table.HeadCell>
+                  <Table.HeadCell>Method</Table.HeadCell>
+                  <Table.HeadCell>Created At</Table.HeadCell>
+                  <Table.HeadCell>View</Table.HeadCell>
+                </Table.Head>
+                <Table.Body className="divide-y">
+                  {userOrders &&
+                    userOrders.map((singleOrder, index) => (
+                      <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                        <Table.Cell>{index + 1}</Table.Cell>
+                        <Table.Cell className="truncate">
+                          {singleOrder?.uuid}
+                        </Table.Cell>
+                        <Table.Cell>{singleOrder?.courseid}</Table.Cell>
+                        <Table.Cell>{singleOrder?.orderStatus}</Table.Cell>
+                        <Table.Cell>
+                          {singleOrder?.paymentInfo?.order_id}
+                        </Table.Cell>
+                        <Table.Cell>{singleOrder?.paymentInfo?.id}</Table.Cell>
+                        <Table.Cell>
+                          {singleOrder?.paymentInfo &&
+                            singleOrder.paymentInfo.amount / 100}
+                        </Table.Cell>
+                        <Table.Cell>
+                          {singleOrder?.paymentInfo?.method}
+                        </Table.Cell>
+                        <Table.Cell>
+                          {moment(singleOrder?.createdAt).format("D MMM YY")}
+                        </Table.Cell>
+                        <Table.Cell>
+                          <Link
+                            to={`/admin/orders/${singleOrder?._id}`}
+                            className=" hover:text-green-600"
+                          >
+                            <FaEye size={20} />
+                          </Link>
                         </Table.Cell>
                       </Table.Row>
                     ))}

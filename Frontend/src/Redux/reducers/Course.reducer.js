@@ -71,6 +71,8 @@ export const AdminCourseReducer = (
         ...state,
         loading: false,
         allOrders: action.payload.data,
+        totalOrders: action.payload.totalOrders,
+        activePage: Number(action.payload.page),
       };
     case ADMIN_ALL_COURSE_LIST_FAIL:
     case GET_SINGLE_COURSE_FAIL:

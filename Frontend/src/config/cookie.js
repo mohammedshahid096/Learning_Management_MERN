@@ -1,6 +1,12 @@
 import Cookies from "js-cookie";
 
 const ACCESS_KEY = "Valid_Access_Token";
+const USER_TOKEN_KEY = "lms_user_token";
+
+export const getUserTokenDataCookie = () => {
+  let data = Cookies.get(USER_TOKEN_KEY);
+  return data;
+};
 
 export const createAccessCookie = () => {
   Cookies.set(ACCESS_KEY, true, {

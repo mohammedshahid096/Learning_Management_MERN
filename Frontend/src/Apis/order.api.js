@@ -20,3 +20,19 @@ export const CreateCourseOrderAPI = async (Details) => {
     return error?.response?.data || error;
   }
 };
+
+export const GetSingleOrderDetailAPI = async (orderid) => {
+  try {
+    const config = {
+      withCredentials: true,
+    };
+
+    const { data } = await axiosInstance.get(
+      `${URLConstant}/order/admin/${orderid}`,
+      config
+    );
+    return data;
+  } catch (error) {
+    return error?.response?.data || error;
+  }
+};
