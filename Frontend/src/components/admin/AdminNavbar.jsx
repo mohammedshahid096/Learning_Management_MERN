@@ -9,7 +9,7 @@ import {
   MdOutlineAnalytics,
 } from "react-icons/md";
 import { GrAnalytics } from "react-icons/gr";
-import { FaUsersCog, FaUsers } from "react-icons/fa";
+import { FaUsersCog, FaUsers, FaLink } from "react-icons/fa";
 import { SiRazorpay } from "react-icons/si";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -54,6 +54,12 @@ const AdminNavbar = () => {
               onClick={() => navigate("/admin/orders/all")}
             >
               Orders
+            </Sidebar.Item>
+            <Sidebar.Item
+              icon={FaLink}
+              onClick={() => navigate("/admin/implinks")}
+            >
+              URLs
             </Sidebar.Item>
           </Sidebar.Collapse>
 

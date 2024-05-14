@@ -27,6 +27,10 @@ const NavItems = [
     url: "/privacy-policy",
   },
   {
+    title: "Website",
+    url: "/websites",
+  },
+  {
     title: "FAQ",
     url: "/faq",
   },
@@ -231,6 +235,7 @@ const Navbar = () => {
                     <div key={index + 1}>
                       <span>
                         <NavLink
+                          onClick={() => setopenSidebar(false)}
                           to={item.url}
                           className={
                             isActive

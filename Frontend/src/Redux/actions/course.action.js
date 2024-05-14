@@ -28,6 +28,11 @@ import {
   MY_USER_PURCHASE_REQUEST,
   MY_USER_PURCHASE_SUCCESS,
 } from "../constants/user.constant";
+import {
+  ADMIN_ALL_LINK_FAIL,
+  ADMIN_ALL_LINK_REQUEST,
+  ADMIN_ALL_LINK_SUCCESS,
+} from "../constants/implink.constant";
 
 export const AdminGetCourseList =
   (request = true) =>
@@ -237,3 +242,32 @@ export const userMyPurchaseAction = () => async (dispatch) => {
 export const ClearErrorHomeCourseState = () => (dispatch) => {
   dispatch({ type: HOME_CLEAR_COURSE_ERRORS });
 };
+
+// ------------------------ important links ----------------------------------------------
+export const adminAllLinksAction =
+  (limit = 10, page = 1, request = true) =>
+  async (dispatch) => {
+    try {
+      if (request) {
+        dispatch({ type: ADMIN_ALL_LINK_REQUEST });
+      }
+      const config = {
+        withCredentials: true,
+      };
+
+      const { data } = await axiosInstance.get(
+        `${URLConstant}/impurl/admin/all?limit=${limit}&page=${page}`,
+        config
+      );
+
+      dispatch({
+        type: ADMIN_ALL_LINK_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ADMIN_ALL_LINK_FAIL,
+        payload: error?.response?.data || error,
+      });
+    }
+  };

@@ -25,6 +25,11 @@ import {
   SINGLE_COURSE_REVIEWS,
 } from "../constants/course.contant";
 import {
+  ADMIN_ALL_LINK_FAIL,
+  ADMIN_ALL_LINK_REQUEST,
+  ADMIN_ALL_LINK_SUCCESS,
+} from "../constants/implink.constant";
+import {
   ADMIN_ALL_ORDERS_FAIL,
   ADMIN_ALL_ORDERS_REQUEST,
   ADMIN_ALL_ORDERS_SUCCESS,
@@ -39,6 +44,7 @@ export const AdminCourseReducer = (
     case GET_SINGLE_COURSE_REQUEST:
     case GET_ALL_CATEGORIES_REQUEST:
     case ADMIN_ALL_ORDERS_REQUEST:
+    case ADMIN_ALL_LINK_REQUEST:
       return {
         ...state,
         loading: true,
@@ -74,9 +80,18 @@ export const AdminCourseReducer = (
         totalOrders: action.payload.totalOrders,
         activePage: Number(action.payload.page),
       };
+    case ADMIN_ALL_LINK_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        allLinks: action.payload.data,
+        totalLinks: action.payload.totalLinks,
+        activePageLink: Number(action.payload.page),
+      };
     case ADMIN_ALL_COURSE_LIST_FAIL:
     case GET_SINGLE_COURSE_FAIL:
     case ADMIN_ALL_ORDERS_FAIL:
+    case ADMIN_ALL_LINK_FAIL:
       return {
         ...state,
         loading: false,

@@ -5,6 +5,7 @@ import CourseEnrolled from "../pages/Course/CourseEnrolled";
 import Courses from "../pages/Course/Courses";
 import FaqPage from "../pages/FaqPage";
 import Home from "../pages/Home";
+import ImpLinksPage from "../pages/ImpLinksPage";
 import PageNotFound from "../pages/PageNotFound";
 import PrivacyPolicy from "../pages/PrivacyPolicy";
 import Profile from "../pages/Profile";
@@ -14,6 +15,7 @@ import Categories from "../pages/admin/Courses/Categories";
 import CreateCourse from "../pages/admin/Courses/CreateCourse";
 import CourseDashboardPage from "../pages/admin/Dashboard/CourseDashboardPage";
 import UserDashboardPage from "../pages/admin/Dashboard/UserDashboardPage";
+import AllLinkPage from "../pages/admin/ImpLink/AllLinkPage";
 import { AllOrdersComponent } from "../pages/admin/orders/AllOrdersComponent";
 import OrderDetail from "../pages/admin/orders/OrderDetail";
 import AdminAllUsers from "../pages/admin/users/AdminAllUsers";
@@ -162,6 +164,20 @@ const AllRoutesItems = [
     num: 19,
     path: "/about",
     element: AboutPage,
+    protected: false,
+    Access: [],
+  },
+  {
+    num: 20,
+    path: "/admin/implinks",
+    element: AllLinkPage,
+    protected: true,
+    Access: ["admin"],
+  },
+  {
+    num: 21,
+    path: "/websites",
+    element: ImpLinksPage,
     protected: false,
     Access: [],
   },

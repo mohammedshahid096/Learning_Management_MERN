@@ -12,6 +12,7 @@ import {
   openAccountSlice,
 } from "./reducers/user.reducer.js";
 import { DashboardUserReducer } from "./reducers/Dashboard.reducer.js";
+import SearchImpLinkReducer from "./reducers/ImpLinks.reducer.js";
 
 const middleware = (getDefaultMiddleware) =>
   getDefaultMiddleware().concat(thunk);
@@ -32,6 +33,7 @@ const reducer = {
   HomeCourseState: HomeCourseReducer,
   AdminUserState: AdminUserReducer,
   DashboardState: DashboardUserReducer,
+  URLState: SearchImpLinkReducer,
 };
 
 const store = configureStore({

@@ -30,18 +30,28 @@ module.exports.CreateNewImpLink = async (req, res, next) => {
 
 module.exports.AdminImpLinksController = async (req, res, next) => {
   try {
-    const data = await impLinkModel.find().sort({ createdAt: -1 });
+    const { limit = 15, page = 1 } = req.query;
+    const skip_docs = (page - 1) * limit;
+    const data = await impLinkModel
+      .find()
+      .skip(skip_docs)
+      .limit(limit)
+      .sort({ createdAt: -1 });
+
+    const totalLinks = await impLinkModel.countDocuments();
     res.status(200).json({
       success: true,
       statusCode: 200,
       data,
+      totalLinks,
+      page,
     });
   } catch (error) {
     next(httpErrors.InternalServerError(error.message));
   }
 };
 
-module.exports.AdminImpLinksController = async (req, res, next) => {
+module.exports.AdminSingleImpLinkController = async (req, res, next) => {
   try {
     const { linkid } = req.params;
     const data = await impLinkModel.findByIdAndDelete(linkid);
@@ -55,6 +65,71 @@ module.exports.AdminImpLinksController = async (req, res, next) => {
       success: true,
       statusCode: 200,
       message: "successuflly the given link id is deleted",
+    });
+  } catch (error) {
+    next(httpErrors.InternalServerError(error.message));
+  }
+};
+
+module.exports.GetAllImpLinksController = async (req, res, next) => {
+  try {
+    const { limit = 15, page = 1, search = "", type = "all" } = req.query;
+    const query = {};
+    const query2 = {};
+
+    if (search) {
+      query.keywords = search;
+    }
+
+    if (type === "npm") {
+      query.isNpm = true;
+      query2.isNpm = true;
+    }
+
+    if (type === "website") {
+      query.isNpm = false;
+      query2.isNpm = false;
+    }
+
+    const skip_docs = (Number(page) - 1) * limit;
+    const data = await impLinkModel
+      .find(query)
+      .skip(skip_docs)
+      .limit(limit)
+      .sort({ createdAt: -1 });
+
+    const totalLinks = await impLinkModel.find(query2).count();
+    res.status(200).json({
+      success: true,
+      statusCode: 200,
+      data,
+      totalLinks,
+      page: Number(page),
+      dataLenght: data.length,
+      searchType: type,
+    });
+  } catch (error) {
+    next(httpErrors.InternalServerError(error.message));
+  }
+};
+
+module.exports.SearchImpLinksController = async (req, res, next) => {
+  try {
+    const { search } = req.query;
+    const data = await impLinkModel
+      .find({
+        $or: [
+          { title: { $regex: search, $options: "i" } },
+          { keywords: { $regex: search, $options: "i" } },
+        ],
+      })
+      .sort({ createdAt: -1 })
+      .select("title description provider icon");
+
+    res.status(200).json({
+      success: true,
+      statusCode: 200,
+      data,
     });
   } catch (error) {
     next(httpErrors.InternalServerError(error.message));
