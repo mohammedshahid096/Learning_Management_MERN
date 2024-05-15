@@ -16,6 +16,7 @@ import CreateCourse from "../pages/admin/Courses/CreateCourse";
 import CourseDashboardPage from "../pages/admin/Dashboard/CourseDashboardPage";
 import UserDashboardPage from "../pages/admin/Dashboard/UserDashboardPage";
 import AllLinkPage from "../pages/admin/ImpLink/AllLinkPage";
+import SingleImpLink from "../pages/admin/ImpLink/SingleImpLink";
 import { AllOrdersComponent } from "../pages/admin/orders/AllOrdersComponent";
 import OrderDetail from "../pages/admin/orders/OrderDetail";
 import AdminAllUsers from "../pages/admin/users/AdminAllUsers";
@@ -180,6 +181,13 @@ const AllRoutesItems = [
     element: ImpLinksPage,
     protected: false,
     Access: [],
+  },
+  {
+    num: 22,
+    path: "/admin/implinks/:linkId",
+    element: SingleImpLink,
+    protected: true,
+    Access: ["admin"],
   },
 ];
 

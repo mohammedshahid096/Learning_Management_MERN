@@ -14,6 +14,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import AllRoutesItems from "./routes/AllRoutesItems";
 import { getUserTokenDataCookie, removeAccessCookie } from "./config/cookie";
 import Footer from "./components/Footer";
+import { OnlineNavigator } from "./utils/OnlineNavigator";
 
 function App() {
   // ### react redux
@@ -95,10 +96,11 @@ function App() {
             }
           })}
         </Routes>
+        <Footer />
       </BrowserRouter>
-      <Footer />
 
       <Toaster />
+      {/* <OnlineNavigator /> */}
     </div>
   );
 }

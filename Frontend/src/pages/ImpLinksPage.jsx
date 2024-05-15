@@ -205,7 +205,6 @@ const ImpLinksPage = () => {
         item.title.toLowerCase().includes(searchKey.toLowerCase()) ||
         item.keywords.join(",").toLowerCase().includes(searchKey.toLowerCase())
     );
-    console.log(update);
     setsearchKeyDataUrl(update);
   };
 

@@ -52,7 +52,6 @@ export const Login = ({ setaccountType, setOpenModal }) => {
     initialValues: { email: "", password: "" },
     validationSchema: validateSchema,
     onSubmit: (values, { resetForm }) => {
-      console.log(values);
       // resetForm();
       sumbitFunction(values);
     },
@@ -73,8 +72,6 @@ export const Login = ({ setaccountType, setOpenModal }) => {
     }
   }, [error, user]);
 
-  console.log(AuthUser);
-  console.log(isAuthenticated);
   return (
     <div className="space-y-5">
       <form onSubmit={handleSubmit}>

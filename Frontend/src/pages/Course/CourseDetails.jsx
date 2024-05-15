@@ -203,7 +203,6 @@ const CourseDetails = () => {
         5: 0,
       };
       for (let i of ratings) {
-        console.log(i);
         RatingCounts[i.rating] = RatingCounts[i.rating] + 1;
       }
 
@@ -229,9 +228,7 @@ const CourseDetails = () => {
 
     if (singleCourseDetails?.courseReviews) {
       const RatingCounts = CalculateRatingCounts(ratingArray);
-      console.log(RatingCounts);
       const RatingPercentage = CalculateRatingPercentage(RatingCounts);
-      console.log(RatingPercentage);
       RatingPercentage.reverse();
       setratingPercentage(RatingPercentage);
     }

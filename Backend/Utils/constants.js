@@ -67,6 +67,9 @@ module.exports.errorConstant = {
 
   // ### order
   ORDER_NOT_FOUND: "Order not found with given id",
+
+  // ### Important Link
+  IMPORTANT_LINK_NOT_FOUND: "Iportant link is not found",
 };
 
 module.exports.SendMailConstant = {

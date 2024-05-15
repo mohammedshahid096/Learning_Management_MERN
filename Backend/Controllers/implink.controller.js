@@ -51,20 +51,41 @@ module.exports.AdminImpLinksController = async (req, res, next) => {
   }
 };
 
-module.exports.AdminSingleImpLinkController = async (req, res, next) => {
+module.exports.AdminSingleGetLinkController = async (req, res, next) => {
   try {
     const { linkid } = req.params;
-    const data = await impLinkModel.findByIdAndDelete(linkid);
+
+    const data = await impLinkModel.findById(linkid);
+
     if (!data) {
-      return next(
-        httpErrors.InternalServerError("link not found with the given id")
-      );
+      return next(httpErrors.NotFound(errorConstant.IMPORTANT_LINK_NOT_FOUND));
     }
 
     res.status(200).json({
       success: true,
       statusCode: 200,
-      message: "successuflly the given link id is deleted",
+      data,
+    });
+  } catch (error) {
+    next(httpErrors.InternalServerError(error.message));
+  }
+};
+module.exports.AdminUpdateLinkLinkController = async (req, res, next) => {
+  try {
+    const { linkid } = req.params;
+
+    const data = await impLinkModel.findByIdAndUpdate(linkid, req.body, {
+      new: true,
+    });
+
+    if (!data) {
+      return next(httpErrors.NotFound(errorConstant.IMPORTANT_LINK_NOT_FOUND));
+    }
+
+    res.status(200).json({
+      success: true,
+      statusCode: 200,
+      data,
     });
   } catch (error) {
     next(httpErrors.InternalServerError(error.message));

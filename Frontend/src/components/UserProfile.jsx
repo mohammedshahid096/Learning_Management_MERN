@@ -359,7 +359,6 @@ export const UserCoursesEnrolled = () => {
     }
   }, [myCourses]);
 
-  // console.log(myCourses);
   return (
     <Card>
       {loading ? (

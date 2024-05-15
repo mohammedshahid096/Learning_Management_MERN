@@ -146,7 +146,7 @@ const Navbar = () => {
                   <motion.li
                     whileHover={{
                       scale: 1.2,
-                      fontWeight: "bold",
+                      fontWeight: 700,
                     }}
                     transition={{ duration: 0.2 }}
                     key={index + 1}

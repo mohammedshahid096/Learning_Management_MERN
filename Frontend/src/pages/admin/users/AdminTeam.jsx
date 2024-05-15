@@ -25,7 +25,6 @@ const AdminTeam = () => {
 
   useEffect(() => {
     if (!users) {
-      console.log("chciin", users);
       fetchUsersList();
     }
   }, []);

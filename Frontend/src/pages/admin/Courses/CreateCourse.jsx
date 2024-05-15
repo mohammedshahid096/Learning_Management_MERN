@@ -105,7 +105,6 @@ const CreateCourse = () => {
       dispatch(AdminGetCourseList(false));
       navigate(`/course-access/${response?.data?.details?._id}`);
     } else {
-      console.log(response);
       toast.error(response.message);
     }
     setactionLoading(false);

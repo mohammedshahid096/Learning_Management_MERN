@@ -149,7 +149,7 @@ const AllLinkPage = () => {
                   createdAt: moment(singleLink?.createdAt).format("L LT"),
                   edit: (
                     <Link
-                      to={`/admin/orders/${singleLink?._id}`}
+                      to={`${singleLink?._id}`}
                       className="hover:text-green-500"
                     >
                       <FaEye />

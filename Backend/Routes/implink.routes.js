@@ -5,6 +5,8 @@ const {
   AdminImpLinksController,
   SearchImpLinksController,
   GetAllImpLinksController,
+  AdminSingleGetLinkController,
+  AdminUpdateLinkLinkController,
 } = require("../Controllers/implink.controller");
 
 const ImportantLinkRoutes = express.Router();
@@ -20,6 +22,9 @@ ImportantLinkRoutes.route("/admin/all").get(
   Authorization("admin"),
   AdminImpLinksController
 );
+ImportantLinkRoutes.route("/admin/single/:linkid")
+  .get(AdminSingleGetLinkController)
+  .put(Authentication, Authorization("admin"), AdminUpdateLinkLinkController);
 
 ImportantLinkRoutes.route("/getall").get(GetAllImpLinksController);
 ImportantLinkRoutes.route("/search").get(SearchImpLinksController);
