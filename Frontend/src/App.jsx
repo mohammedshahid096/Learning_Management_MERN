@@ -100,7 +100,7 @@ function App() {
       </BrowserRouter>
 
       <Toaster />
-      {/* <OnlineNavigator /> */}
+      <OnlineNavigator />
     </div>
   );
 }
