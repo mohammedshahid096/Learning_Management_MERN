@@ -250,7 +250,7 @@ const CourseDetails = () => {
       <MetaData title={singleCourseDetails?.courseDetail?.name} />
       <div className="p-10 flex gap-10 max-md:flex-col-reverse max-sm:p-0">
         <div className=" w-3/5 max-md:w-full max-md:p-7">
-          <div className="absolute top-3 left-1/3">
+          <div className="absolute top-3 left-1/3 max-sm:left-2">
             <Toast>
               <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-cyan-100 text-cyan-500 dark:bg-cyan-800 dark:text-cyan-200">
                 <HiFire className="h-5 w-5" />
