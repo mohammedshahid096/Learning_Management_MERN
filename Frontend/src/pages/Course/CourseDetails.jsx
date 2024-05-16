@@ -6,8 +6,8 @@ import {
   HomeSingleCourseAction,
 } from "../../Redux/actions/course.action";
 import toast from "react-hot-toast";
-import { List, Accordion, Button, Card, Rating } from "flowbite-react";
-import { HiCheckCircle } from "react-icons/hi";
+import { List, Accordion, Button, Card, Rating, Toast } from "flowbite-react";
+import { HiCheckCircle, HiFire } from "react-icons/hi";
 import ReactPlayer from "react-player/youtube";
 import RatingComponent from "../../utils/RatingComponent";
 import { PiMonitorPlayBold } from "react-icons/pi";
@@ -250,6 +250,20 @@ const CourseDetails = () => {
       <MetaData title={singleCourseDetails?.courseDetail?.name} />
       <div className="p-10 flex gap-10 max-md:flex-col-reverse max-sm:p-0">
         <div className=" w-3/5 max-md:w-full max-md:p-7">
+          <div className="absolute top-3 left-1/3">
+            <Toast>
+              <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-cyan-100 text-cyan-500 dark:bg-cyan-800 dark:text-cyan-200">
+                <HiFire className="h-5 w-5" />
+              </div>
+              <div className="ml-3 text-sm font-normal">
+                SuccessFull UPI Payment :
+                <p className="text-green-500 font-bold text-center">
+                  success@razorpay
+                </p>{" "}
+              </div>
+              <Toast.Toggle />
+            </Toast>
+          </div>
           <h2 className="text-xl font-bold">
             {singleCourseDetails?.courseDetail?.name}
           </h2>
