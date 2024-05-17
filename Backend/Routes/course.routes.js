@@ -10,6 +10,7 @@ const {
   DeleteCourseController,
   UpdateCoureDataController,
   SearchedCoursesController,
+  RelatedCoursesController,
 } = require("../Controllers/course.controller");
 const CourseRoutes = express.Router();
 
@@ -41,6 +42,7 @@ CourseRoutes.route("/all").get(AllCoursesWithout);
 
 // search courses
 CourseRoutes.route("/search").get(SearchedCoursesController);
+CourseRoutes.route("/related").get(RelatedCoursesController);
 
 // ### Purchased Courses
 CourseRoutes.route("/course-single-content/:courseid/:contentid").get(

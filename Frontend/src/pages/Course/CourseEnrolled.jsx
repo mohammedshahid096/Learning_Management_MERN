@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -6,7 +6,7 @@ import {
   HomeSingleCourseAction,
 } from "../../Redux/actions/course.action";
 import toast from "react-hot-toast";
-import { Breadcrumb, Accordion, Button, Card } from "flowbite-react";
+import { Breadcrumb, Accordion, Button, Card, Rating } from "flowbite-react";
 import { HiHome } from "react-icons/hi";
 import ReactPlayer from "react-player/youtube";
 import RatingComponent from "../../utils/RatingComponent";
@@ -14,6 +14,7 @@ import { PiMonitorPlayBold } from "react-icons/pi";
 import CustomLoader from "../../utils/Loader";
 import { HiOutlineArrowRight } from "react-icons/hi";
 import MetaData from "../../utils/MetaData";
+
 const Skeleton = () => {
   return (
     <div role="status">
@@ -60,6 +61,7 @@ const Skeleton = () => {
 };
 
 const CourseEnrolled = () => {
+  const [ratingPercentage, setratingPercentage] = useState([]);
   // # react-router-dom
   const { courseId } = useParams();
   const navigate = useNavigate();
@@ -95,6 +97,13 @@ const CourseEnrolled = () => {
     }
   };
 
+  // component constant
+  const ratingDetail = ratingPercentage.map((item) => (
+    <Rating.Advanced percentFilled={item.percentage} className="mb-2">
+      {item.rating} star
+    </Rating.Advanced>
+  ));
+
   // # useeffects
   useEffect(() => {
     const isAlreadyEnroll =
@@ -111,6 +120,50 @@ const CourseEnrolled = () => {
       navigate(`/course/${courseId}`);
     }
   }, [courseId, user]);
+
+  useEffect(() => {
+    const ratingArray = singleCourseDetails?.courseReviews || [];
+    const totalRatings = ratingArray.length;
+
+    function CalculateRatingCounts(ratings) {
+      const RatingCounts = {
+        1: 0,
+        2: 0,
+        3: 0,
+        4: 0,
+        5: 0,
+      };
+      for (let i of ratings) {
+        RatingCounts[i.rating] = RatingCounts[i.rating] + 1;
+      }
+
+      return RatingCounts;
+    }
+
+    function CalculateRatingPercentage(RatingCounts) {
+      const RatingPercentage = [];
+      for (let x in RatingCounts) {
+        const count = RatingCounts[x];
+        let percentage = (count / totalRatings) * 100;
+        if (!percentage) {
+          percentage = 0;
+        }
+        // RatingPercentage[x] = percentage.toFixed(2);
+        RatingPercentage.push({
+          percentage: Number(percentage.toFixed(2)),
+          rating: x,
+        });
+      }
+      return RatingPercentage;
+    }
+
+    if (singleCourseDetails?.courseReviews) {
+      const RatingCounts = CalculateRatingCounts(ratingArray);
+      const RatingPercentage = CalculateRatingPercentage(RatingCounts);
+      RatingPercentage.reverse();
+      setratingPercentage(RatingPercentage);
+    }
+  }, [singleCourseDetails?.courseReviews]);
 
   useEffect(() => {
     if (error) {
@@ -169,16 +222,7 @@ const CourseEnrolled = () => {
             </Button>
           </div>
 
-          <br />
-          <div className="max-md:px-5">
-            <h2 className="font-semibold text-2xl mb-2">Course Details</h2>
-            <div>
-              {" "}
-              <span className=" font-poppins whitespace-break-spaces">
-                {singleCourseDetails?.courseDetail?.description}
-              </span>{" "}
-            </div>
-          </div>
+          {/* <br /> */}
         </div>
 
         <div className="w-1/5 max-md:w-full max-md:p-5">
@@ -213,6 +257,27 @@ const CourseEnrolled = () => {
               </Accordion.Panel>
             </Accordion>
           </div>
+        </div>
+      </div>
+
+      <div className="p-5">
+        <div className="max-md:px-5">
+          <h2 className="font-semibold text-2xl mb-2">Course Details</h2>
+          <div>
+            {" "}
+            <span className=" font-poppins whitespace-break-spaces">
+              {singleCourseDetails?.courseDetail?.description}
+            </span>{" "}
+          </div>
+        </div>
+
+        <div>
+          <RatingComponent rating={singleCourseDetails?.courseDetail?.rating} />
+          <p className="mb-4 text-sm font-medium text-gray-500 dark:text-gray-400">
+            {singleCourseDetails?.courseReviews?.length} global ratings
+          </p>
+
+          {ratingDetail}
         </div>
       </div>
     </>

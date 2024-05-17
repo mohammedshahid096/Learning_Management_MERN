@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import bannerImage from "../assets/images/Learning-amico.png";
 import "../styles/hero.css";
 import { motion } from "framer-motion";
 import { Avatar, Card, Accordion, Carousel } from "flowbite-react";
 import RatingComponent from "../utils/RatingComponent";
+import { useNavigate } from "react-router-dom";
 
 const variants = {
   repeat: {
@@ -28,6 +29,21 @@ const StaticImages = [
 ];
 
 const Hero = () => {
+  const [searchKey, setsearchKey] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const timeOut = setTimeout(() => {
+      if (searchKey) {
+        navigate(`/search-courses?name=${searchKey}`);
+      }
+    }, 1500);
+
+    return () => {
+      clearTimeout(timeOut);
+    };
+  }, [searchKey]);
+
   return (
     <div className="flex max-sm:flex-col justify-around items-center mt-9 gap-15">
       {/* Left side with learning image */}
@@ -57,8 +73,8 @@ const Hero = () => {
         <input
           type="text"
           placeholder="Search courses..."
-          //   value={searchQuery}
-          //   onChange={handleSearchChange}
+          value={searchKey}
+          onChange={(e) => setsearchKey(e.target.value)}
           className="border border-gray-400 px-4 py-2 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full dark:bg-gray-800 bg-black text-white"
         />
 

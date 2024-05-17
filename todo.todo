@@ -1,10 +1,6 @@
 PENDING LISTS
 
-* when ever the user purchase the course redis state also need to update
-=> for user perpestive
 
-* when ever the admin add the course from admin panel then redis state also need to update
-=> for admin perpestive
 
 * admin needd to add the add links featuer for every courses that featuer
 => for add all toggle kind if we want to add same links to every video content   
@@ -14,6 +10,7 @@ PENDING LISTS
 NEW FEATURES IDEAS
 1. can implement the wishlist kind feature for a video content
 2. important videos for single videos that section need to add (can try for v2)
+3. in courses details page, related to that categroy other courses need to show
 
 
 ----------------------------------------------------------------------
@@ -25,3 +22,9 @@ NEW FEATURES IDEAS
 => implementing 
      1. here need to send the user details need to send in the cookies and that cookie frontend can access the data
      2. then user data will be collected from the cookie
+
+* when ever the user purchase the course redis state also need to update
+=> for user perpestive
+
+* when ever the admin add the course from admin panel then redis state also need to update
+=> for admin perpestive

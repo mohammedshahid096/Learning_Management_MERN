@@ -1,3 +1,4 @@
+import axios from "axios";
 import { URLConstant } from "../config/URLConstant";
 import axiosInstance from "../config/axiosInstance";
 /**
@@ -129,6 +130,22 @@ export const GetContentCourseDataApi = async (courseid, contentid) => {
 
     const { data } = await axiosInstance.get(
       `${URLConstant}/course/course-single-content/${courseid}/${contentid}`,
+      config
+    );
+    return data;
+  } catch (error) {
+    return error?.response?.data || error;
+  }
+};
+
+export const GetRelatedCourseDataApi = async (categoryid) => {
+  try {
+    const config = {
+      withCredentials: true,
+    };
+
+    const { data } = await axios.get(
+      `${URLConstant}/course/related?category=${categoryid}`,
       config
     );
     return data;

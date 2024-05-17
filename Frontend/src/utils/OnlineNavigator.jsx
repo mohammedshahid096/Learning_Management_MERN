@@ -27,26 +27,27 @@ export const OnlineNavigator = () => {
   }, []);
   return (
     <>
-      {onlineNavigatorState ? null : (
-        <div className="fixed inset-0 flex justify-center items-cente bg-transparent bg-opacity-50 backdrop-blur-sm">
-          <div className="p-6 h-screen">
-            <Toast>
-              <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-500 dark:bg-red-800 dark:text-red-200">
-                <RiWifiOffLine className="h-5 w-5" />
-              </div>
-              <div className="ml-3 text-sm font-normal">
-                Your are offline please try to connect the internet
-              </div>
-              <Toast.Toggle />
-            </Toast>
-            <div className="flex justify-center items-center h-full">
-              <div class="pulse">
-                <div class="progress blur-sm"></div>
+      {import.meta.env.VITE_DEVELOPMENT_MODE === "production" &&
+        (onlineNavigatorState ? null : (
+          <div className="fixed inset-0 flex justify-center items-cente bg-transparent bg-opacity-50 backdrop-blur-sm">
+            <div className="p-6 h-screen">
+              <Toast>
+                <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-500 dark:bg-red-800 dark:text-red-200">
+                  <RiWifiOffLine className="h-5 w-5" />
+                </div>
+                <div className="ml-3 text-sm font-normal">
+                  Your are offline please try to connect the internet
+                </div>
+                <Toast.Toggle />
+              </Toast>
+              <div className="flex justify-center items-center h-full">
+                <div class="pulse">
+                  <div class="progress blur-sm"></div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
+        ))}
     </>
   );
 };

@@ -1,4 +1,12 @@
-import { Button, Card, Avatar, Label, TextInput, Table } from "flowbite-react";
+import {
+  Button,
+  Card,
+  Avatar,
+  Label,
+  TextInput,
+  FileInput,
+  Table,
+} from "flowbite-react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import toast from "react-hot-toast";
@@ -15,9 +23,12 @@ import {
   userMyPurchaseAction,
 } from "../Redux/actions/course.action";
 import CustomLoader from "../utils/Loader";
+import { useNavigate } from "react-router-dom";
 
 export const UserProfileData = () => {
   const [isReadOnly, setisReadOnly] = useState(true);
+  const [profileImage, setprofileImage] = useState(null);
+  const [thumbnail, setthumbnail] = useState(null);
   // ### react redux
   const dispatch = useDispatch();
   const { error, loading, user, message, isUpdated } = useSelector(
@@ -34,17 +45,39 @@ export const UserProfileData = () => {
   });
 
   const sumbitUpdateHandlerFunction = (details) => {
-    dispatch(UpdateUserDetailAction(details));
+    dispatch(UpdateUserDetailAction(details, profileImage));
   };
 
   const resetSuccessFunction = () => {
     setisReadOnly(true);
-    dispatch(UpdateUserDetailAction(null, true));
+    dispatch(UpdateUserDetailAction(null, null, true));
   };
 
   const clearErrorFunction = () => {
     dispatch(ClearAuthReducer());
   };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setprofileImage(file);
+
+    // You can use FileReader to show a thumbnail preview
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      // Do something with the preview, e.g., set it as the source of an image tag
+      // e.g.,
+      setthumbnail(reader.result);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  function cancelButtonFunction() {
+    setisReadOnly(true);
+    if (profileImage || thumbnail) {
+      setprofileImage(null);
+      setthumbnail(null);
+    }
+  }
 
   const formik = useFormik({
     initialValues: { email: user?.email, name: user?.name },
@@ -65,6 +98,10 @@ export const UserProfileData = () => {
     if (isUpdated) {
       toast.success(message);
       resetSuccessFunction();
+      if (profileImage || thumbnail) {
+        setprofileImage(null);
+        setthumbnail(null);
+      }
     }
   }, [error, message]);
 
@@ -130,6 +167,30 @@ export const UserProfileData = () => {
             />
           </div>
 
+          <div>
+            <div className="mb-2">
+              <Label htmlFor="file-upload-helper-text" value="Update Profile" />
+            </div>
+            {thumbnail ? (
+              <Avatar
+                img={thumbnail}
+                size="xl"
+                // className="shadow"
+                bordered
+                // color={"warning"}
+                rounded
+              />
+            ) : (
+              <FileInput
+                id="file-upload-helper-text"
+                accept=".jpg, .jpeg, .png"
+                helperText="PNG, JPG or JPEG "
+                onChange={handleImageChange}
+                disabled={isReadOnly || loading}
+              />
+            )}
+          </div>
+
           {!user?.isSocialAuth && (
             <div>
               {isReadOnly ? (
@@ -142,13 +203,14 @@ export const UserProfileData = () => {
                     color="green"
                     type="submit"
                     processingSpinner={loading}
+                    disabled={loading}
                   >
                     Update
                   </Button>
                   <Button
                     className=""
                     color="failure"
-                    onClick={() => setisReadOnly(true)}
+                    onClick={cancelButtonFunction}
                   >
                     Cancel
                   </Button>
@@ -344,6 +406,7 @@ export const ChangeUserPassword = () => {
 };
 
 export const UserCoursesEnrolled = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { error, loading, myCourses } = useSelector(
     (state) => state.UserPersonalState
@@ -392,6 +455,7 @@ export const UserCoursesEnrolled = () => {
                 <Table.HeadCell>id</Table.HeadCell>
                 <Table.HeadCell>name</Table.HeadCell>
                 <Table.HeadCell>level</Table.HeadCell>
+                <Table.HeadCell>View</Table.HeadCell>
               </Table.Head>
               <Table.Body>
                 {myCourses?.map((singleCourse, index) => (
@@ -402,6 +466,17 @@ export const UserCoursesEnrolled = () => {
                     <Table.Cell>{singleCourse?._id}</Table.Cell>
                     <Table.Cell>{singleCourse?.name}</Table.Cell>
                     <Table.Cell>{singleCourse?.level}</Table.Cell>
+                    <Table.Cell>
+                      <Button
+                        color="green"
+                        size={"sm"}
+                        onClick={() =>
+                          navigate(`/course-access/${singleCourse?._id}`)
+                        }
+                      >
+                        View
+                      </Button>
+                    </Table.Cell>
                   </Table.Row>
                 ))}
               </Table.Body>

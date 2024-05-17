@@ -19,20 +19,20 @@ const NavItems = [
     url: "/search-courses",
   },
   {
-    title: "About",
-    url: "/about",
+    title: "Website",
+    url: "/websites",
   },
   {
     title: "Policy",
     url: "/privacy-policy",
   },
   {
-    title: "Website",
-    url: "/websites",
-  },
-  {
     title: "FAQ",
     url: "/faq",
+  },
+  {
+    title: "About",
+    url: "/about",
   },
 ];
 

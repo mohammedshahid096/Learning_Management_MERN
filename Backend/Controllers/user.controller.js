@@ -137,7 +137,9 @@ module.exports.LoginUserController = async (req, res, next) => {
 
     delete userExist.password;
 
-    await redis.set(userExist._id, JSON.stringify(userExist));
+    const expiryTime = 7 * 24 * 60 * 60;
+
+    await redis.set(userExist._id, JSON.stringify(userExist), "EX", expiryTime);
 
     SendToken(userExist, 200, res);
   } catch (error) {
@@ -300,8 +302,8 @@ module.exports.UpdateAccountController = async (req, res, next) => {
     }
 
     await user.save();
-
-    await redis.set(user._id, JSON.stringify(user));
+    const expiryTime = 7 * 24 * 60 * 60;
+    await redis.set(user._id, JSON.stringify(user), "EX", expiryTime);
     res.status(200).json({
       success: true,
       statusCode: 200,

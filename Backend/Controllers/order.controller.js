@@ -77,6 +77,11 @@ module.exports.CreateOrderController = async (req, res, next) => {
       await redis.set(req.userid, JSON.stringify(isUser));
     }
 
+    const isExistInMemoryCourse = await redis.get(req.body.courseid);
+    if (isExistInMemoryCourse) {
+      await redis.del(req.body.courseid);
+    }
+
     await notificationModel.create({
       user: req.userid,
       title: notificationConstant.NEW_ORDER,

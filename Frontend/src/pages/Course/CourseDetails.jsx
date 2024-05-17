@@ -17,6 +17,8 @@ import { CreateRazorPayOrderAPI } from "../../Apis/payment.api";
 import { URLConstant } from "../../config/URLConstant";
 import { CreateCourseOrderAPI } from "../../Apis/order.api";
 import MetaData from "../../utils/MetaData";
+import { PiStudent } from "react-icons/pi";
+import { GetRelatedCourseDataApi } from "../../Apis/course.api";
 
 const Skeleton = () => {
   return (
@@ -59,6 +61,94 @@ const Skeleton = () => {
           <div className="h-2.5 bg-gray-200  dark:bg-gray-500 w-full rounded-md mb-1 m-auto"></div>
         </Card>
       </div>
+    </div>
+  );
+};
+
+const RelatedCourses = ({ id }) => {
+  const [relatedData, setrelatedData] = useState(null);
+  const navigate = useNavigate();
+
+  const { user } = useSelector((state) => state.AuthState);
+
+  const fetchRelatedCategoryData = async () => {
+    let update = id?.map((item) => item._id).join(",");
+    const response = await GetRelatedCourseDataApi(update);
+    if (response.success) {
+      setrelatedData(response.data);
+    }
+  };
+
+  const redirectToCoursePage = (courseId) => {
+    const isAlreadyEnroll =
+      user?.courses.find((item) => item === courseId) || null;
+
+    if (isAlreadyEnroll || user?.role === "admin" || user?.role === "teacher") {
+      navigate(`/course-access/${courseId}`);
+    } else {
+      navigate(`/course/${courseId}`);
+    }
+  };
+
+  useEffect(() => {
+    if (id) {
+      fetchRelatedCategoryData();
+    }
+  }, [id]);
+  return (
+    <div className="flex gap-5 overflow-auto w-[95%] m-auto max-sm:flex-col max-sm:w-full">
+      {relatedData?.slice(0, 6).map((singleCourse) => (
+        <div key={singleCourse?._id} className="max-sm:m-auto">
+          <Card
+            key={singleCourse?._id}
+            className="w-[300px] max-sm:w-full h-[415px] overflow-auto"
+            imgAlt={singleCourse?.name}
+            imgSrc={singleCourse?.thumbnail?.url}
+          >
+            <h5 className="truncate text-wrap text-xl font-semibold tracking-tight text-gray-900 dark:text-white text-center underline">
+              {singleCourse?.name}
+            </h5>
+            <div className="flex justify-between">
+              <p>Level :</p> <p>{singleCourse?.level}</p>
+            </div>
+
+            <div className="flex items-center justify-between">
+              <span className="text-3xl font-bold text-gray-900 dark:text-white">
+                <RatingComponent
+                  rating={singleCourse?.rating}
+                  NumberRating={false}
+                />
+              </span>
+
+              <p className="text-sm inline-flex gap-1 items-center">
+                <PiStudent />
+                <span className=" text-slate-400 font-bold">
+                  {singleCourse?.purchase}
+                </span>{" "}
+                Students
+              </p>
+            </div>
+
+            <div className="flex justify-between">
+              <p>
+                <span className="line-through">
+                  {singleCourse?.estimatedprice}₹{" "}
+                </span>
+                <sup className="text-red-500"> {singleCourse?.price}₹</sup>{" "}
+              </p>{" "}
+            </div>
+
+            <Button
+              color="green"
+              pill
+              className="w-full"
+              onClick={() => redirectToCoursePage(singleCourse?._id)}
+            >
+              Buy for {singleCourse?.price} ₹
+            </Button>
+          </Card>
+        </div>
+      ))}
     </div>
   );
 };
@@ -233,6 +323,7 @@ const CourseDetails = () => {
       setratingPercentage(RatingPercentage);
     }
   }, [singleCourseDetails?.courseReviews]);
+
   // component constant
   const ratingDetail = ratingPercentage.map((item) => (
     <Rating.Advanced percentFilled={item.percentage} className="mb-2">
@@ -410,6 +501,10 @@ const CourseDetails = () => {
             </Button>
           </div>
         </div>
+      </div>
+      <div className="px-10 pb-10">
+        <h2 className="text-xl font-bold mb-5">Related Category Courses :</h2>
+        <RelatedCourses id={singleCourseDetails?.courseDetail?.categories} />
       </div>
       <CustomLoader loading={verifingCourse} />
     </>

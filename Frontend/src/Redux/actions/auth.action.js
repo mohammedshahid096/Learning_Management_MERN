@@ -245,7 +245,7 @@ export const UserDetailProfileAction = () => async (dispatch) => {
 };
 
 export const UpdateUserDetailAction =
-  (Details, Reset = false) =>
+  (Details, image, Reset = false) =>
   async (dispatch) => {
     try {
       if (Reset) {
@@ -256,11 +256,33 @@ export const UpdateUserDetailAction =
       const config = {
         withCredentials: true,
       };
-      const { data } = await axios.put(
+      const { data } = await axiosInstance.put(
         `${URLConstant}/user/me`,
         Details,
         config
       );
+
+      if (image) {
+        const formData = new FormData();
+        formData.append("ProfileAvatar", image);
+        let response = await axiosInstance.put(
+          `${URLConstant}/user/me/avatar`,
+          formData,
+          {
+            withCredentials: true,
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        if (response?.data.success) {
+          dispatch({
+            type: UPDATE_USER_DETAIL_SUCCESS,
+            payload: response.data,
+          });
+          return;
+        }
+      }
       dispatch({
         type: UPDATE_USER_DETAIL_SUCCESS,
         payload: data,

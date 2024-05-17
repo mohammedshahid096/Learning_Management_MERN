@@ -292,6 +292,28 @@ module.exports.SearchedCoursesController = async (req, res, next) => {
   }
 };
 
+// related courses
+module.exports.RelatedCoursesController = async (req, res, next) => {
+  try {
+    const { category } = req.query;
+    data = await coursesModel
+      .find({ categories: { $in: category.split(",") }, isActive: true })
+      .select(
+        "-benefits -prerequsites -description -demoUrl -categories -playlistid"
+      )
+      .sort({ createdAt: -1 })
+      .limit(6);
+
+    res.status(200).json({
+      success: true,
+      statusCode: 200,
+      data,
+    });
+  } catch (error) {
+    next(httpErrors.InternalServerError(error.message));
+  }
+};
+
 // ------------ For Specific Course by user ----------
 module.exports.GetUserSingleCourse = async (req, res, next) => {
   try {
