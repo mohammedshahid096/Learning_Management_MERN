@@ -40,11 +40,13 @@ For detailed setup and installation instructions, please refer to the README fil
 
 Use the following credentials to login and test different roles:
 
-| Role    | Email               | Password        |
-| ------- | ------------------- | --------------- |
-| Admin   | admin@example.com   | adminpassword   |
-| Teacher | teacher@example.com | teacherpassword |
-| User    | user@example.com    | userpassword    |
+| Role    | Email                 | Password    |
+| ------- | --------------------- | ----------- |
+| Admin   | admin@example.com     | Admin@123   |
+| Teacher | teacher@example.com   | Teacher@123 |
+| User    | user@example.com      | User@123    |
+| User    | tapirow782@bsomek.com | Test@123    |
+| User    | merabec951@huleos.com | Test@123    |
 
 ## Project Timeline
 
