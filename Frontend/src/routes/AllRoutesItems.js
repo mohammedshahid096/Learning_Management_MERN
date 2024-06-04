@@ -22,7 +22,7 @@ import OrderDetail from "../pages/admin/orders/OrderDetail";
 import AdminAllUsers from "../pages/admin/users/AdminAllUsers";
 import AdminTeam from "../pages/admin/users/AdminTeam";
 import UserDetailPage from "../pages/admin/users/UserDetailPage";
-const AllUSers = ["admin", "user"];
+const AllUSers = ["admin", "teacher", "user"];
 
 const AllRoutesItems = [
   { num: 1.1, path: "/", element: Home, protected: false, Access: [] },
@@ -47,7 +47,7 @@ const AllRoutesItems = [
     path: "/admin",
     element: AdminHome,
     protected: true,
-    Access: ["admin"],
+    Access: ["admin", "teacher"],
   },
   {
     num: 4,
@@ -75,7 +75,7 @@ const AllRoutesItems = [
     path: "/admin/user/all",
     element: AdminAllUsers,
     protected: true,
-    Access: ["admin"],
+    Access: ["admin", "teacher"],
   },
   {
     num: 8,
@@ -96,21 +96,21 @@ const AllRoutesItems = [
     path: "/admin/dashboard/user",
     element: UserDashboardPage,
     protected: true,
-    Access: ["admin"],
+    Access: ["admin", "teacher"],
   },
   {
     num: 11,
     path: "/admin/dashboard/course",
     element: CourseDashboardPage,
     protected: true,
-    Access: ["admin"],
+    Access: ["admin", "teacher"],
   },
   {
     num: 12,
     path: "/admin/user/:userId",
     element: UserDetailPage,
     protected: true,
-    Access: ["admin"],
+    Access: ["admin", "teacher"],
   },
   {
     num: 13,
@@ -152,14 +152,14 @@ const AllRoutesItems = [
     path: "/admin/orders/all",
     element: AllOrdersComponent,
     protected: true,
-    Access: ["admin"],
+    Access: ["admin", "teacher"],
   },
   {
     num: 18,
     path: "/admin/orders/:orderid",
     element: OrderDetail,
     protected: true,
-    Access: ["admin"],
+    Access: ["admin", "teacher"],
   },
   {
     num: 19,
@@ -173,7 +173,7 @@ const AllRoutesItems = [
     path: "/admin/implinks",
     element: AllLinkPage,
     protected: true,
-    Access: ["admin"],
+    Access: ["admin", "teacher"],
   },
   {
     num: 21,
@@ -187,7 +187,7 @@ const AllRoutesItems = [
     path: "/admin/implinks/:linkId",
     element: SingleImpLink,
     protected: true,
-    Access: ["admin"],
+    Access: ["admin", "teacher"],
   },
 ];
 

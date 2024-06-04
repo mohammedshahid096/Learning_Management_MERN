@@ -57,6 +57,7 @@ const Loader = () => {
 const AllUsersComponent = ({ setselectedUser }) => {
   // # Redux State
   const { loading, users } = useSelector((state) => state.AdminUserState);
+  const { user } = useSelector((state) => state.AuthState);
 
   // # react router dom
   const navigate = useNavigate();
@@ -122,12 +123,14 @@ const AllUsersComponent = ({ setselectedUser }) => {
       grow: 0,
       cell: (row) => (
         <div className="flex gap-2">
-          <span
-            className=" cursor-pointer hover:text-red-500"
-            onClick={() => setselectedUser({ id: row.id, name: row.name })}
-          >
-            <MdDeleteOutline size={20} />
-          </span>
+          {user?.role === "admin" && (
+            <span
+              className=" cursor-pointer hover:text-red-500"
+              onClick={() => setselectedUser({ id: row.id, name: row.name })}
+            >
+              <MdDeleteOutline size={20} />
+            </span>
+          )}
           <span
             className=" cursor-pointer hover:text-yellow-200"
             onClick={() => navigate(`/admin/user/${row.id}`)}

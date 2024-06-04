@@ -84,14 +84,14 @@ const AllLinkPage = () => {
       sortable: true,
       center: true,
       wrap: true,
-      grow: 5,
     },
     {
       name: "Title",
       selector: (row) => row.title,
       sortable: true,
       wrap: true,
-      center: true,
+      // center: true,
+      grow: 2,
     },
     {
       name: "Created At",

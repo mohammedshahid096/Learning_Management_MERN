@@ -15,6 +15,7 @@ import {
   VerifyUserAction,
 } from "../Redux/actions/auth.action";
 import { useAuth0 } from "@auth0/auth0-react";
+import { closeLoginAccountWithDetails } from "../Redux/reducers/user.reducer";
 
 export const Login = ({ setaccountType, setOpenModal }) => {
   // ### usestates
@@ -31,6 +32,7 @@ export const Login = ({ setaccountType, setOpenModal }) => {
   // ### react redux
   const dispatch = useDispatch();
   const { error, loading, user } = useSelector((state) => state.AuthState);
+  const { AccountDetails } = useSelector((state) => state.OpenAccountState);
 
   // ### functions
   const validateSchema = Yup.object().shape({
@@ -41,6 +43,9 @@ export const Login = ({ setaccountType, setOpenModal }) => {
   });
 
   const sumbitFunction = (details) => {
+    if (AccountDetails) {
+      dispatch(closeLoginAccountWithDetails());
+    }
     dispatch(LoginUserAction(details));
   };
 
@@ -49,7 +54,10 @@ export const Login = ({ setaccountType, setOpenModal }) => {
   };
 
   const formik = useFormik({
-    initialValues: { email: "", password: "" },
+    initialValues: {
+      email: AccountDetails?.email || "",
+      password: AccountDetails?.password || "",
+    },
     validationSchema: validateSchema,
     onSubmit: (values, { resetForm }) => {
       // resetForm();
@@ -225,7 +233,7 @@ export const Register = ({ setaccountType }) => {
     },
   });
 
-  const { errors, values, handleChange, handleSubmit } = formik;
+  const { errors, values, touched, handleChange, handleSubmit } = formik;
 
   // ### use effect
   useEffect(() => {
@@ -255,9 +263,13 @@ export const Register = ({ setaccountType }) => {
           <TextInput
             id="name"
             placeholder="Enter Your Name"
-            color={errors.name ? "failure" : "gray"}
+            color={touched.name && errors.name ? "failure" : "gray"}
             helperText={
-              <div className={errors?.name ? "block mb-1" : "hidden"}>
+              <div
+                className={
+                  touched.name && errors?.name ? "block mb-1" : "hidden"
+                }
+              >
                 <span className="font-medium">Oops! </span>
                 {errors?.name}
               </div>
@@ -274,9 +286,13 @@ export const Register = ({ setaccountType }) => {
           <TextInput
             id="email"
             placeholder="name@company.com"
-            color={errors.email ? "failure" : "gray"}
+            color={touched.email && errors.email ? "failure" : "gray"}
             helperText={
-              <div className={errors?.email ? "block mb-1" : "hidden"}>
+              <div
+                className={
+                  touched.email && errors?.email ? "block mb-1" : "hidden"
+                }
+              >
                 <span className="font-medium">Oops! </span>
                 {errors?.email}
               </div>
@@ -295,9 +311,15 @@ export const Register = ({ setaccountType }) => {
               id="password"
               type={showPassword ? "text" : "password"}
               placeholder="*******"
-              color={errors.password ? "failure" : "gray"}
+              color={touched.password && errors.password ? "failure" : "gray"}
               helperText={
-                <div className={errors?.password ? "block mb-1" : "hidden"}>
+                <div
+                  className={
+                    touched.password && errors?.password
+                      ? "block mb-1"
+                      : "hidden"
+                  }
+                >
                   <span className="font-medium">Oops! </span>
                   {errors?.password}
                 </div>
@@ -325,7 +347,7 @@ export const Register = ({ setaccountType }) => {
             color="blue"
             isProcessing={loading}
           >
-            Register a new account
+            Register with OTP
           </Button>
         </div>
       </form>

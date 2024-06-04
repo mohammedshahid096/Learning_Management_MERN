@@ -4,6 +4,7 @@ import {
   createAccessCookie,
   getAccessCookie,
   removeAccessCookie,
+  removeUserTokenDataCookie,
 } from "./cookie";
 
 const axiosInstance = axios.create();
@@ -41,6 +42,7 @@ axiosInstance.interceptors.request.use(async (res) => {
   } catch (error) {
     if (error.response.data.statusCode === 401) {
       removeAccessCookie();
+      removeUserTokenDataCookie();
       let currentPath = window.location.pathname;
       if (currentPath !== "/") {
         window.location.href = "/";

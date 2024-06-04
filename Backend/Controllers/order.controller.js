@@ -7,6 +7,7 @@ const {
   errorConstant,
   successConstant,
   notificationConstant,
+  expiryTime,
 } = require("../Utils/constants");
 const { redis } = require("../Config/redis.config");
 const { NewOrderValidation } = require("../JoiSchemas/order.schema");
@@ -31,7 +32,7 @@ module.exports.CreateOrderController = async (req, res, next) => {
       "orderInfo.id": req.body.order_id,
     });
     if (!isOrderExist) {
-      return next(httpErrors.NotFound(errorConstant.COURSE_NOT_FOUND));
+      return next(httpErrors.NotFound(errorConstant.ORDER_NOT_FOUND));
     }
 
     const isCourseEnrolled = isUser.courses.some(
@@ -74,7 +75,8 @@ module.exports.CreateOrderController = async (req, res, next) => {
     await isUser.save();
     const isExistInMemory = await redis.get(req.userid);
     if (isExistInMemory) {
-      await redis.set(req.userid, JSON.stringify(isUser));
+      let updateData = await userModel.findById(req.userid);
+      await redis.set(req.userid, JSON.stringify(updateData), "EX", expiryTime);
     }
 
     const isExistInMemoryCourse = await redis.get(req.body.courseid);

@@ -3,7 +3,7 @@ import { Button, Checkbox, Label, TextInput } from "flowbite-react";
 import CustomModal from "../../../utils/CustomModal";
 import { AddImpLinkAPI } from "../../../Apis/implink.api";
 import toast from "react-hot-toast";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { adminAllLinksAction } from "../../../Redux/actions/course.action";
 
 const AddLinkComponent = ({ limit, page }) => {
@@ -13,6 +13,7 @@ const AddLinkComponent = ({ limit, page }) => {
   const [isLoading, setisLoading] = useState(false);
 
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.AuthState);
 
   const addLinkSubmitHandler = async () => {
     setisLoading(true);
@@ -41,9 +42,11 @@ const AddLinkComponent = ({ limit, page }) => {
   return (
     <>
       <div className="flex justify-end">
-        <Button color="green" onClick={() => setopenModal(true)}>
-          Add Link
-        </Button>
+        {user.role === "admin" && (
+          <Button color="green" onClick={() => setopenModal(true)}>
+            Add Link
+          </Button>
+        )}
       </div>
 
       <CustomModal

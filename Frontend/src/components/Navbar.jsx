@@ -87,7 +87,9 @@ const Navbar = () => {
   // ### react-redux
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.AuthState);
-  const { isAccountPopUpOpen } = useSelector((state) => state.OpenAccountState);
+  const { isAccountPopUpOpen, AccountDetails } = useSelector(
+    (state) => state.OpenAccountState
+  );
 
   // ### functions
   const toggleDarkMode = () => {

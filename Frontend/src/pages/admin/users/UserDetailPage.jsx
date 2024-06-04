@@ -202,6 +202,11 @@ const UserDetailPage = () => {
   const [addModalOpen, setaddModalOpen] = useState(false);
   const [selectedDelete, setselectedDelete] = useState(null);
 
+  // # redux store
+  const {
+    user: { role },
+  } = useSelector((state) => state.AuthState);
+
   // # functions
   const fetchUserDetail = async () => {
     setloading(true);
@@ -225,11 +230,14 @@ const UserDetailPage = () => {
       <MetaData title={`Admin- ${user ? user.name : userId}`} />
       <Card className="mx-auto  shadow-md rounded-lg w-full overflow-auto">
         <div className="text-2xl font-bold  text-center">User Details</div>
-        <div className="flex justify-end">
-          <Button color="success" onClick={() => setaddModalOpen(true)}>
-            Add Course
-          </Button>
-        </div>
+
+        {role === "admin" && (
+          <div className="flex justify-end">
+            <Button color="success" onClick={() => setaddModalOpen(true)}>
+              Add Course
+            </Button>
+          </div>
+        )}
         <div className="grid grid-cols-2 max-md:grid-cols-1 gap-3 ">
           <Card className="break-words">
             <div className="flex items-center mb-4">

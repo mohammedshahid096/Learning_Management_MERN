@@ -22,6 +22,11 @@ const AllSideBars = {
     { name: "Change Password", icon: TbPasswordUser, activeCount: 2 },
     { name: "Dashboard", icon: HiChartPie, activeCount: 3 },
   ],
+  teacherSideBars: [
+    { name: "Profile", icon: HiUser, activeCount: 1 },
+    { name: "Change Password", icon: TbPasswordUser, activeCount: 2 },
+    { name: "Dashboard", icon: HiChartPie, activeCount: 3 },
+  ],
   userSideBars: [
     { name: "Profile", icon: HiUser, activeCount: 1 },
     { name: "Reset Password", icon: TbPasswordUser, activeCount: 2 },
@@ -39,6 +44,8 @@ const SideBar = ({ setactiveTab, activeTab }) => {
   const SidebarsItems =
     user?.role === "admin"
       ? AllSideBars.adminSideBars
+      : user?.role === "teacher"
+      ? AllSideBars.teacherSideBars
       : AllSideBars.userSideBars;
 
   // ### functions

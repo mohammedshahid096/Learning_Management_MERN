@@ -78,7 +78,7 @@ const RenderSearchData = ({ data }) => {
             }
           >
             <img
-              className="object-cover rounded-t-lg max-md:rounded-none  md:rounded-none md:rounded-s-lg h-28 w-28 max-sm:h-16 max-sm:w-16"
+              className="object-cover rounded-t-lg max-md:rounded-none  md:rounded-none md:rounded-s-lg h-28 w-28 max-md:48"
               src={singleURL?.icon}
               alt={singleURL?.provider}
             />
@@ -90,9 +90,6 @@ const RenderSearchData = ({ data }) => {
             </h5>
             <p className="mb-3 font-normal max-sm:text-sm text-gray-700 dark:text-gray-400 overflow-hidden  text-ellipsis max-h-5 max-w-xl">
               {singleURL?.description}
-              {/* {singleURL?.description && singleURL.description.length > 80
-           ? singleURL.description.slice(0, 80) + "..."
-           : singleURL.description} */}
             </p>
             <p className="text-sm text-gray-500 max-sm:text-sm dark:text-gray-400 text-right">
               - {singleURL?.provider}
@@ -254,7 +251,9 @@ const ImpLinksPage = () => {
       <MetaData title="important urls" />
       <CustomLoader loading={searchloading} />
 
-      <h1 className="text-xl text-center font-bold">Useful Website / NPM</h1>
+      <h1 className="text-3xl text-center font-bold">
+        Useful Website's / NPM's /Cheatsheet's
+      </h1>
       <div className="flex gap-3 p-3 max-sm:flex-col max-sm:justify-center">
         <TextInput
           placeholder="search keyword ... "
@@ -325,7 +324,7 @@ const ImpLinksPage = () => {
                   }
                 >
                   <img
-                    className="object-cover rounded-t-lg max-md:rounded-none  md:rounded-none md:rounded-s-lg h-28 w-28 max-sm:h-16 max-sm:w-16"
+                    className="object-cover rounded-t-lg max-md:rounded-none  md:rounded-none md:rounded-s-lg h-28 w-28 max-md:w-48"
                     src={singleURL?.icon}
                     alt={singleURL?.provider}
                   />
@@ -337,9 +336,6 @@ const ImpLinksPage = () => {
                   </h5>
                   <p className="mb-3 font-normal max-sm:text-sm text-gray-700 dark:text-gray-400 overflow-hidden  text-ellipsis max-h-5 max-w-xl">
                     {singleURL?.description}
-                    {/* {singleURL?.description && singleURL.description.length > 80
-                  ? singleURL.description.slice(0, 80) + "..."
-                  : singleURL.description} */}
                   </p>
                   <p className="text-sm text-gray-500 max-sm:text-sm dark:text-gray-400 text-right">
                     - {singleURL?.provider}

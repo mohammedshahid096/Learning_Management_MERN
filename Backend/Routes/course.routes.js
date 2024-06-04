@@ -34,7 +34,7 @@ CourseRoutes.route("/coursedata/single/:coursedataID").put(
 
 CourseRoutes.route("/courses/list").get(
   Authentication,
-  Authorization("admin", "user"),
+  Authorization("admin", "user", "teacher"),
   AllCoursesList
 );
 

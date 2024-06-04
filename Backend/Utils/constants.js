@@ -89,3 +89,5 @@ module.exports.paymentConstant = {
   ORDER_CREATED_FAIL: "RazorPay order is failed to created",
   PAYMENT_SIGNATURE_FAIL: "Signature not Match! pls doo the payment",
 };
+
+module.exports.expiryTime = 7 * 24 * 60 * 60;

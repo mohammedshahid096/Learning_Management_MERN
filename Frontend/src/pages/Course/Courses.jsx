@@ -291,7 +291,7 @@ const Courses = () => {
     dispatch(FilterCoursesAction("", true));
     setsearchkeys({});
     setselectedCategory([]);
-    setprice({ priceGte: 0, priceLte: 10000 });
+    setprice({ priceGte: 0, priceLte: 0 });
     setlevel("");
     setrating(0);
     setisApply(false);

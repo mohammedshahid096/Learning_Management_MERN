@@ -4,6 +4,7 @@ import {
   createAccessCookie,
   getAccessCookie,
   removeAccessCookie,
+  removeUserTokenDataCookie,
 } from "../../config/cookie";
 import {
   USER_CLEAR_ERRORS,
@@ -191,12 +192,15 @@ export const UserLogoutAction =
       );
 
       removeAccessCookie();
+      removeUserTokenDataCookie();
 
       dispatch({
         type: USER_LOGOUT_SUCCESS,
         payload: data,
       });
     } catch (error) {
+      removeAccessCookie();
+      removeUserTokenDataCookie();
       dispatch({
         type: USER_LOGOUT_FAIL,
         payload: error?.response?.data || error,

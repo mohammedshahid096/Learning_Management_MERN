@@ -68,12 +68,16 @@ UserRoutes.route("/me/avatar").put(
 // ### Admin
 UserRoutes.route("/users/all").get(
   Authentication,
-  Authorization("admin"),
+  Authorization("admin", "teacher"),
   UsersListController
 );
 
 UserRoutes.route("/users/:id")
-  .get(Authentication, Authorization("admin"), AdimGetSingleUserDetail)
+  .get(
+    Authentication,
+    Authorization("admin", "teacher"),
+    AdimGetSingleUserDetail
+  )
   .patch(Authentication, Authorization("admin"), AdminAddUserCourseController)
   .delete(Authentication, Authorization("admin"), AdminDeleteUserController);
 

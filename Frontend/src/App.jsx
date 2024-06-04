@@ -15,6 +15,17 @@ import AllRoutesItems from "./routes/AllRoutesItems";
 import { getUserTokenDataCookie, removeAccessCookie } from "./config/cookie";
 import Footer from "./components/Footer";
 import { OnlineNavigator } from "./utils/OnlineNavigator";
+import CustomSpeedDail from "./utils/SpeedDial";
+
+const OtherComponets = () => {
+  return (
+    <>
+      <Toaster />
+      <OnlineNavigator />
+      <CustomSpeedDail />
+    </>
+  );
+};
 
 function App() {
   // ### react redux
@@ -97,10 +108,8 @@ function App() {
           })}
         </Routes>
         <Footer />
+        <OtherComponets />
       </BrowserRouter>
-
-      <Toaster />
-      <OnlineNavigator />
     </div>
   );
 }

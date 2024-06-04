@@ -8,6 +8,10 @@ export const getUserTokenDataCookie = () => {
   return data;
 };
 
+export const removeUserTokenDataCookie = () => {
+  Cookies.remove(USER_TOKEN_KEY);
+};
+
 export const createAccessCookie = () => {
   Cookies.set(ACCESS_KEY, true, {
     expires: import.meta.env.VITE_ACCESS_TOKEN_KEY_TIME_COOKIE / (60 * 24),

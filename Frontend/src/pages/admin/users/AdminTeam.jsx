@@ -89,7 +89,7 @@ const AdminTeam = () => {
             >
               <option value={"admin"}>Admin</option>
               <option value={"user"}>User</option>
-              <option value={"Teacher"}>Teacher</option>
+              <option value={"teacher"}>Teacher</option>
             </Select>
           </div>
           <br />

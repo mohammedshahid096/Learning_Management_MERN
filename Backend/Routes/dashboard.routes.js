@@ -8,12 +8,12 @@ const DashboardRoutes = express.Router();
 
 DashboardRoutes.route("/admin/users").get(
   Authentication,
-  Authorization("admin"),
+  Authorization("admin", "teacher"),
   AdminUsersDashboardController
 );
 DashboardRoutes.route("/admin/courses").get(
   Authentication,
-  Authorization("admin"),
+  Authorization("admin", "teacher"),
   AdminCourseDashboardController
 );
 

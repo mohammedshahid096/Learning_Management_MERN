@@ -3,7 +3,8 @@ PENDING LISTS
 
 
 * admin needd to add the add links featuer for every courses that featuer
-=> for add all toggle kind if we want to add same links to every video content   
+=> for add all toggle kind if we want to add same links to every video content
+
 
 
 
@@ -28,3 +29,8 @@ NEW FEATURES IDEAS
 
 * when ever the admin add the course from admin panel then redis state also need to update
 => for admin perpestive
+
+
+* when ever rating is added then rating will be is not changing in the  coursemodel
+=> so here whenever new rating is added, need to find an avg of all the course rating 
+then need to update the rating value

@@ -15,6 +15,7 @@ const {
   errorConstant,
   SendMailConstant,
   successConstant,
+  expiryTime,
 } = require("../Utils/constants");
 const {
   CreateActivationToken,
@@ -137,8 +138,6 @@ module.exports.LoginUserController = async (req, res, next) => {
 
     delete userExist.password;
 
-    const expiryTime = 7 * 24 * 60 * 60;
-
     await redis.set(userExist._id, JSON.stringify(userExist), "EX", expiryTime);
 
     SendToken(userExist, 200, res);
@@ -197,7 +196,6 @@ module.exports.UpdateAccessTokenController = async (req, res, next) => {
       httpOnly: true,
       // maxAge: parseInt(process.env.COOKIE_MAX_TIME),
     };
-    const expiryTime = 7 * 24 * 60 * 60;
 
     await redis.set(getUser._id, JSON.stringify(getUser), "EX", expiryTime);
     res.cookie("access_token", AccessToken, AccessTokenOptions);
@@ -302,7 +300,6 @@ module.exports.UpdateAccountController = async (req, res, next) => {
     }
 
     await user.save();
-    const expiryTime = 7 * 24 * 60 * 60;
     await redis.set(user._id, JSON.stringify(user), "EX", expiryTime);
     res.status(200).json({
       success: true,

@@ -15,13 +15,13 @@ OrderRoutes.route("/addnew").post(
 );
 OrderRoutes.route("/admin/allorders").get(
   Authentication,
-  Authorization("admin"),
+  Authorization("admin", "teacher"),
   AdminAllOrdersController
 );
 
 OrderRoutes.route("/admin/:orderid").get(
   Authentication,
-  Authorization("admin"),
+  Authorization("admin", "teacher"),
   AdminSingleOrderDetailedController
 );
 

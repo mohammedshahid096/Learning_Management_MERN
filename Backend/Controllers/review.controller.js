@@ -40,7 +40,22 @@ module.exports.AddReviewController = async (req, res, next) => {
       review,
     });
     await newReview.save();
-    // await redis.del()
+
+    const allReviews = await reviewModel.find({ courseid });
+    let sum = 0;
+
+    allReviews.forEach((item) => {
+      sum += item.rating;
+    });
+
+    isCourseExist.rating = sum / allReviews.length;
+    await isCourseExist.save();
+
+    const isCourseCacheExist = await redis.get(courseid);
+    if (isCourseCacheExist) {
+      await redis.set(courseid, JSON.stringify(isCourseExist));
+    }
+
     res.status(201).json({
       success: true,
       statusCode: 201,

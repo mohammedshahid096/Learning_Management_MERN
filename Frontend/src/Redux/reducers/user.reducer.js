@@ -90,6 +90,7 @@ export const UserPersonalReducer = (
 export const openAccountSlice = createSlice({
   initialState: {
     isAccountPopUpOpen: false,
+    AccountDetails: null,
   },
   name: "OPEN_USER_LOGIN_ACCOUNT",
   reducers: {
@@ -99,7 +100,19 @@ export const openAccountSlice = createSlice({
     closeLoginAccount: (state) => {
       state.isAccountPopUpOpen = false;
     },
+    openLoginAccountWithDetails: (state, action) => {
+      state.isAccountPopUpOpen = true;
+      state.AccountDetails = action.payload;
+    },
+    closeLoginAccountWithDetails: (state) => {
+      state.AccountDetails = null;
+    },
   },
 });
 
-export const { openLoginAccount, closeLoginAccount } = openAccountSlice.actions;
+export const {
+  openLoginAccount,
+  closeLoginAccount,
+  openLoginAccountWithDetails,
+  closeLoginAccountWithDetails,
+} = openAccountSlice.actions;

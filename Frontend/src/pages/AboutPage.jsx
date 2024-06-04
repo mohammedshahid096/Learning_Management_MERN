@@ -7,7 +7,7 @@ function AboutPage() {
         <img
           src="https://github.com/mohammedshahid096/ShahidProtfolio/blob/main/src/images/shahidprofile.jpg?raw=true"
           alt="Mohammed Shahid"
-          className="w-48 h-48 rounded-full mb-4"
+          className="w-48 h-48 rounded-full mb-4 border-2 border-purple-800"
         />
         <h1 className="text-3xl font-bold mb-2">Mohammed Shahid</h1>
         <p className="text-lg text-gray-600">MERN Stack Developer</p>

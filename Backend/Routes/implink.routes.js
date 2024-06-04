@@ -19,7 +19,7 @@ ImportantLinkRoutes.route("/add").post(
 
 ImportantLinkRoutes.route("/admin/all").get(
   Authentication,
-  Authorization("admin"),
+  Authorization("admin", "teacher"),
   AdminImpLinksController
 );
 ImportantLinkRoutes.route("/admin/single/:linkid")
