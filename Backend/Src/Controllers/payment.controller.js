@@ -13,6 +13,11 @@ const { v4: uuidv4 } = require("uuid");
 const coursesModel = require("../Models/course.model");
 const orderModel = require("../Models/order.model");
 const crypto = require("crypto");
+const {
+  RAZOPAY_API_KEY,
+  RAZOPAY_API_SECRET,
+  RAZOPAY_REDIRECT_URL,
+} = require("../Config/index");
 
 // order payment gateway
 module.exports.checkoutRazorpayController = async (req, res, next) => {
@@ -35,8 +40,8 @@ module.exports.checkoutRazorpayController = async (req, res, next) => {
     };
 
     const razorpay = new Razorpay({
-      key_id: process.env.RAZOPAY_API_KEY,
-      key_secret: process.env.RAZOPAY_API_SECRET,
+      key_id: RAZOPAY_API_KEY,
+      key_secret: RAZOPAY_API_SECRET,
     });
 
     const checkout_pay = await razorpay.orders.create(options);
@@ -77,7 +82,7 @@ module.exports.paymentVerificationController = async (req, res, next) => {
     let decrypt_value = razorpay_order_id + "|" + razorpay_payment_id;
 
     generated_signature = crypto
-      .createHmac("sha256", process.env.RAZOPAY_API_SECRET)
+      .createHmac("sha256", RAZOPAY_API_SECRET)
       .update(decrypt_value.toString())
       .digest("hex");
 
@@ -90,8 +95,8 @@ module.exports.paymentVerificationController = async (req, res, next) => {
     });
 
     const razorpay = new Razorpay({
-      key_id: process.env.RAZOPAY_API_KEY,
-      key_secret: process.env.RAZOPAY_API_SECRET,
+      key_id: RAZOPAY_API_KEY,
+      key_secret: RAZOPAY_API_SECRET,
     });
 
     const paymentInfo = await razorpay.payments.fetch(razorpay_payment_id);
@@ -102,7 +107,7 @@ module.exports.paymentVerificationController = async (req, res, next) => {
     );
 
     res.redirect(
-      `${process.env.RAZOPAY_REDIRECT_URL}/${OrderDetails.courseid}?order_id=${razorpay_order_id}&uuid=${OrderDetails.uuid}`
+      `${RAZOPAY_REDIRECT_URL}/${OrderDetails.courseid}?order_id=${razorpay_order_id}&uuid=${OrderDetails.uuid}`
     );
     // res.status(200).json({
     //   success: true,

@@ -1,14 +1,20 @@
 const express = require("express");
-const dotenv = require("dotenv");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const MongoDataBaseConn = require("./Config/mongodb.config");
-const CloudinaryConn = require("./Config/cloudinary.config");
-const IndexRoutes = require("./Routes/index.routes");
+const morgan = require("morgan");
+const MongoDataBaseConn = require("./Src/Config/mongodb.config");
+const CloudinaryConn = require("./Src/Config/cloudinary.config");
+const IndexRoutes = require("./Src/Routes/index.routes");
+const { DEVELOPMENT_MODE, PORT } = require("./Src/Config/index");
+const { morganFilePath, morganFormat } = require("./Src/Config/morgan.config");
+const corsConfig = require("./Src/Config/cors.config");
+const { sendMail } = require("./Src/Utils/SendMail");
 
 const app = express();
-// env config
-dotenv.config();
+
+//----------------------------------------
+//------------ config --------------------
+//----------------------------------------
 
 // connecting to db
 MongoDataBaseConn();
@@ -19,19 +25,29 @@ CloudinaryConn();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-
 // cors config
+app.use(cors(corsConfig));
+// morgan
+if (DEVELOPMENT_MODE === "development") {
+  app.use(morgan(morganFormat.COMBINE, { stream: morganFilePath }));
+}
 
-app.use(
-  cors({
-    origin: JSON.parse(process.env.ALLOW_ORIGINS_ACCESS),
-    // origin: "https://learning-management-mern.vercel.app",
-    credentials: true,
-  })
-);
-
-// indexroute
+//----------------------------------------
+//--------------- Routes -----------------
+//----------------------------------------
+app.get("/", (req, res) => {
+  sendMail();
+  res.status(200).json({
+    success: true,
+    message: "Welcome Message",
+  });
+});
 app.use("/api/v1/", IndexRoutes);
+
+//----------------------------------------
+//--------------- others -----------------
+//----------------------------------------
+// if routes not found
 app.use("*", (req, res) => {
   res.status(500).json({
     success: false,
@@ -52,10 +68,4 @@ app.use((err, req, res, next) => {
   });
 });
 
-// server listening
-app.listen(process.env.PORT || 8001, () => {
-  console.log(`MODE : ${process.env.DEVELOPMENT_MODE}`);
-  console.log(
-    "server is running on:  http://localhost:" + process.env.PORT || 8001
-  );
-});
+module.exports = app;

@@ -1,3 +1,7 @@
+const {
+  ACCESS_TOKEN_KEY_TIME_COOKIE,
+  REFRESH_TOKEN_KEY_TIME_COOKIE,
+} = require("../Config");
 const { CreateAcessToken, CreateRefeshToken } = require("../Utils/jwt.token");
 
 module.exports = async (userData, status, res) => {
@@ -6,8 +10,7 @@ module.exports = async (userData, status, res) => {
 
   const AccessTokenOptions = {
     expires: new Date(
-      Date.now() +
-        parseInt(process.env.ACCESS_TOKEN_KEY_TIME_COOKIE) * 60 * 1000
+      Date.now() + parseInt(ACCESS_TOKEN_KEY_TIME_COOKIE) * 60 * 1000
     ), // for min
     sameSite: "none",
     secure: true,
@@ -16,7 +19,7 @@ module.exports = async (userData, status, res) => {
   };
   const RefreshTokenOptions = {
     expires: new Date(
-      Date.now() + parseInt(process.env.REFRESH_TOKEN_KEY_TIME_COOKIE) * 8640000
+      Date.now() + parseInt(REFRESH_TOKEN_KEY_TIME_COOKIE) * 8640000
     ), // for day
     sameSite: "none",
     secure: true,
@@ -25,7 +28,7 @@ module.exports = async (userData, status, res) => {
   };
   const UserTokenOptions = {
     expires: new Date(
-      Date.now() + parseInt(process.env.REFRESH_TOKEN_KEY_TIME_COOKIE) * 8640000
+      Date.now() + parseInt(REFRESH_TOKEN_KEY_TIME_COOKIE) * 8640000
     ), // for day
     // sameSite: "none",
     // secure: false,
