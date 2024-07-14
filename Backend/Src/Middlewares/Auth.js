@@ -2,6 +2,7 @@ const httpErrors = require("http-errors");
 const { errorConstant } = require("../Utils/constants");
 const { VerifyAccessToken } = require("../Utils/jwt.token");
 const { redis } = require("../Config/redis.config");
+const logger = require("../Config/applogger.config");
 
 // for authentication
 module.exports.Authentication = async (req, res, next) => {
@@ -27,7 +28,7 @@ module.exports.Authentication = async (req, res, next) => {
     req.role = user?.role;
     req.name = user?.name;
 
-    console.log(`req name: ${user.email} role:${user.role}`);
+    logger.info(`req name: ${user.email} role:${user.role}`);
     next();
   } catch (error) {
     next(httpErrors.InternalServerError(error.message));

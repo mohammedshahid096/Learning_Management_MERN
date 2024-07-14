@@ -103,7 +103,6 @@ const CustomSpeedDail = ({ status }) => {
       hiddenRef.current.hidden = false;
       setopenSpeedDailOptions(true);
     } else if (routes.includes(location.pathname)) {
-      console.log(location.pathname);
       hiddenRef.current.hidden = false;
     } else {
       hiddenRef.current.hidden = true;

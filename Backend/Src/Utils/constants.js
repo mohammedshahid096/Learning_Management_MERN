@@ -31,6 +31,9 @@ module.exports.successConstant = {
 
   // ### notification
   NOTIFICATION_UPDATED: "Notification is Updated Successfully",
+
+  // ### Notes
+  NOTE_CREATED_SUCCESS: "Successfully new note is created",
 };
 
 module.exports.errorConstant = {
@@ -70,6 +73,9 @@ module.exports.errorConstant = {
 
   // ### Important Link
   IMPORTANT_LINK_NOT_FOUND: "Iportant link is not found",
+
+  // ### Notes
+  NOTE_NOT_FOUND: "Note not found  with given id",
 };
 
 module.exports.SendMailConstant = {
