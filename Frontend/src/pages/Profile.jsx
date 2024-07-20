@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Sidebar } from "flowbite-react";
 import { HiArrowSmRight, HiChartPie, HiUser } from "react-icons/hi";
 import { FaDiscourse, FaList } from "react-icons/fa";
-import { TbPasswordUser } from "react-icons/tb";
+import { TbPasswordUser, TbNotes } from "react-icons/tb";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { UserLogoutAction } from "../Redux/actions/auth.action";
@@ -21,17 +21,20 @@ const AllSideBars = {
     { name: "Profile", icon: HiUser, activeCount: 1 },
     { name: "Change Password", icon: TbPasswordUser, activeCount: 2 },
     { name: "Dashboard", icon: HiChartPie, activeCount: 3 },
+    { name: "MyNotes", icon: TbNotes, activeCount: 6 },
   ],
   teacherSideBars: [
     { name: "Profile", icon: HiUser, activeCount: 1 },
     { name: "Change Password", icon: TbPasswordUser, activeCount: 2 },
     { name: "Dashboard", icon: HiChartPie, activeCount: 3 },
+    { name: "MyNotes", icon: TbNotes, activeCount: 6 },
   ],
   userSideBars: [
     { name: "Profile", icon: HiUser, activeCount: 1 },
     { name: "Reset Password", icon: TbPasswordUser, activeCount: 2 },
     { name: "My Courses", icon: FaDiscourse, activeCount: 4 },
     { name: "Purchase", icon: FaList, activeCount: 5 },
+    { name: "MyNotes", icon: TbNotes, activeCount: 6 },
   ],
 };
 
@@ -114,6 +117,7 @@ const Profile = () => {
         {activeTab === 3 && <Navigate to={"/admin"} />}
         {activeTab === 4 && <UserCoursesEnrolled />}
         {activeTab === 5 && <UserPurchaseList />}
+        {activeTab === 6 && <Navigate to={"/notes"} />}
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import { URLConstant } from "../../config/URLConstant";
-import axiosInstance from "../../config/axiosInstance";
+import axiosInstance, { AxiosConfig } from "../../config/axiosInstance";
 import {
   ADMIN_ALL_USERS_REQUEST,
   ADMIN_ALL_USERS_FAIL,
@@ -14,13 +14,12 @@ export const AdminGetUsersList =
       if (loading) {
         dispatch({ type: ADMIN_ALL_USERS_REQUEST });
       }
-      const config = {
-        withCredentials: true,
-      };
+      const config = new AxiosConfig();
+      config.removeContentType();
 
       const { data } = await axiosInstance.get(
         `${URLConstant}/user/users/all`,
-        config
+        config.getConfig()
       );
 
       dispatch({

@@ -1,6 +1,6 @@
 import React from "react";
-import MetaData from "../utils/MetaData";
-import PageNotBanner from "../assets/images/pagenotfound.png";
+import MetaData from "../../utils/MetaData";
+import PageNotBanner from "../../assets/images/pagenotfound.png";
 import { Button, Tooltip } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 

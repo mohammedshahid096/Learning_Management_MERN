@@ -1,19 +1,14 @@
 import { URLConstant } from "../config/URLConstant";
-import axiosInstance from "../config/axiosInstance";
+import axiosInstance, { AxiosConfig } from "../config/axiosInstance";
 
 export const CreateRazorPayOrderAPI = async (Details) => {
   try {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      withCredentials: true,
-    };
+    const config = new AxiosConfig();
 
     const { data } = await axiosInstance.post(
       `${URLConstant}/payment/order`,
       Details,
-      config
+      config.getConfig()
     );
     return data;
   } catch (error) {

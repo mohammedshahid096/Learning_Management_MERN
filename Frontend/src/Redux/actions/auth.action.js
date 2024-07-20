@@ -1,5 +1,5 @@
 import { URLConstant } from "../../config/URLConstant";
-import axiosInstance from "../../config/axiosInstance";
+import axiosInstance, { AxiosConfig } from "../../config/axiosInstance";
 import {
   createAccessCookie,
   getAccessCookie,
@@ -45,16 +45,13 @@ export const RegisterUserAction =
 
       dispatch({ type: USER_REGISTER_REQUEST });
 
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
+      const config = new AxiosConfig();
+      config.removeWithCredentials();
 
       const { data } = await axios.post(
         `${URLConstant}/user/register`,
         Details,
-        config
+        config.getConfig()
       );
       // const data = {
       //   success: true,
@@ -90,16 +87,13 @@ export const VerifyUserAction =
 
       dispatch({ type: USER_VERIFY_REQUEST });
 
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
+      const config = new AxiosConfig();
+      config.removeWithCredentials();
 
       const { data } = await axios.post(
         `${URLConstant}/user/verify`,
         Details,
-        config
+        config.getConfig()
       );
       //  const data =  { message: "user created successfully", success: true }
 
@@ -119,17 +113,12 @@ export const LoginUserAction = (Details) => async (dispatch) => {
   try {
     dispatch({ type: USER_LOGIN_REQUEST });
 
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      withCredentials: true,
-    };
+    const config = new AxiosConfig();
 
     const { data } = await axios.post(
       `${URLConstant}/user/login`,
       Details,
-      config
+      config.getConfig()
     );
     //  const data =  { message: "user created successfully", success: true }
     createAccessCookie();
@@ -147,17 +136,12 @@ export const LoginUserAction = (Details) => async (dispatch) => {
 
 export const SocialUserLoginAction = (Details) => async (dispatch) => {
   try {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      withCredentials: true,
-    };
+    const config = new AxiosConfig();
 
     const { data } = await axios.post(
       `${URLConstant}/user/socialAuth`,
       Details,
-      config
+      config.getConfig()
     );
 
     createAccessCookie();
@@ -182,13 +166,12 @@ export const UserLogoutAction =
         dispatch({ type: USER_LOGOUT_RESET });
         return;
       }
-      const config = {
-        withCredentials: true,
-      };
+      const config = new AxiosConfig();
+      config.removeContentType();
 
       const { data } = await axiosInstance.get(
         `${URLConstant}/user/logout`,
-        config
+        config.getConfig()
       );
 
       removeAccessCookie();
@@ -211,14 +194,13 @@ export const UserLogoutAction =
 export const UserDetailProfileAction = () => async (dispatch) => {
   const haveToken = getAccessCookie();
   try {
-    const config = {
-      withCredentials: true,
-    };
+    const config = new AxiosConfig();
+    config.removeContentType();
 
     if (haveToken) {
       const { data } = await axiosInstance.get(
         `${URLConstant}/user/me`,
-        config
+        config.getConfig()
       );
       dispatch({
         type: USER_DETAIL_SUCCESS,

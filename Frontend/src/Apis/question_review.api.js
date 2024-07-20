@@ -1,19 +1,14 @@
 import { URLConstant } from "../config/URLConstant";
-import axiosInstance from "../config/axiosInstance";
+import axiosInstance, { AxiosConfig } from "../config/axiosInstance";
 
 export const AddQuestionApi = async (Details, courseDataid) => {
   try {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      withCredentials: true,
-    };
+    const config = new AxiosConfig();
 
     const { data } = await axiosInstance.post(
       `${URLConstant}/question/add/${courseDataid}`,
       Details,
-      config
+      config.getConfig()
     );
     return data;
   } catch (error) {
@@ -23,16 +18,11 @@ export const AddQuestionApi = async (Details, courseDataid) => {
 
 export const DeleteQuestionApi = async (questionId) => {
   try {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      withCredentials: true,
-    };
+    const config = new AxiosConfig();
 
     const { data } = await axiosInstance.delete(
       `${URLConstant}/question/delete/${questionId}`,
-      config
+      config.getConfig()
     );
     return data;
   } catch (error) {
@@ -42,17 +32,12 @@ export const DeleteQuestionApi = async (questionId) => {
 
 export const AddAnswerApi = async (Details, questionId) => {
   try {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      withCredentials: true,
-    };
+    const config = new AxiosConfig();
 
     const { data } = await axiosInstance.put(
       `${URLConstant}/question/add-answer/${questionId}`,
       Details,
-      config
+      config.getConfig()
     );
     return data;
   } catch (error) {
@@ -64,17 +49,12 @@ export const AddAnswerApi = async (Details, questionId) => {
 
 export const AddReviewApi = async (Details, courseid) => {
   try {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      withCredentials: true,
-    };
+    const config = new AxiosConfig();
 
     const { data } = await axiosInstance.post(
       `${URLConstant}/review/add/${courseid}`,
       Details,
-      config
+      config.getConfig()
     );
     return data;
   } catch (error) {
@@ -84,17 +64,12 @@ export const AddReviewApi = async (Details, courseid) => {
 
 export const AddReviewReplyAdminApi = async (Details, reviewid) => {
   try {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      withCredentials: true,
-    };
+    const config = new AxiosConfig();
 
     const { data } = await axiosInstance.post(
       `${URLConstant}/review/reply/${reviewid}`,
       Details,
-      config
+      config.getConfig()
     );
     return data;
   } catch (error) {

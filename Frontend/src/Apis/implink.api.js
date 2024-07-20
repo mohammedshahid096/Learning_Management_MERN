@@ -1,20 +1,15 @@
 import axios from "axios";
 import { URLConstant } from "../config/URLConstant";
-import axiosInstance from "../config/axiosInstance";
+import axiosInstance, { AxiosConfig } from "../config/axiosInstance";
 
 export const AddImpLinkAPI = async (Details) => {
   try {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      withCredentials: true,
-    };
+    const config = new AxiosConfig();
 
     const { data } = await axiosInstance.post(
       `${URLConstant}/impurl/add`,
       Details,
-      config
+      config.getConfig()
     );
     return data;
   } catch (error) {
@@ -35,8 +30,11 @@ export const SearchImpLinkAPI = async (searchKey) => {
 
 export const AdminSingleImpLinkAPI = async (id) => {
   try {
+    const config = new AxiosConfig();
+
     const { data } = await axios.get(
-      `${URLConstant}/impurl/admin/single/${id}`
+      `${URLConstant}/impurl/admin/single/${id}`,
+      config.getConfig()
     );
     return data;
   } catch (error) {
@@ -46,16 +44,12 @@ export const AdminSingleImpLinkAPI = async (id) => {
 
 export const AdminUpdateImpLinkAPI = async (id, details) => {
   try {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      withCredentials: true,
-    };
+    const config = new AxiosConfig();
+
     const { data } = await axiosInstance.put(
       `${URLConstant}/impurl/admin/single/${id}`,
       details,
-      config
+      config.getConfig()
     );
     return data;
   } catch (error) {

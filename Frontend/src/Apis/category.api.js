@@ -1,5 +1,5 @@
 import { URLConstant } from "../config/URLConstant";
-import axiosInstance from "../config/axiosInstance";
+import axiosInstance, { AxiosConfig } from "../config/axiosInstance";
 
 /**
  * The AddCategoryApi function sends a POST request to add a new category with the provided details.
@@ -12,17 +12,12 @@ import axiosInstance from "../config/axiosInstance";
  */
 export const AddCategoryApi = async (Details) => {
   try {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      withCredentials: true,
-    };
+    const config = new AxiosConfig();
 
     const { data } = await axiosInstance.post(
       `${URLConstant}/category/add`,
       Details,
-      config
+      config.getConfig()
     );
     return data;
   } catch (error) {
@@ -43,17 +38,12 @@ export const AddCategoryApi = async (Details) => {
  */
 export const UpdateCategoryApi = async (categoryid, Details) => {
   try {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      withCredentials: true,
-    };
+    const config = new AxiosConfig();
 
     const { data } = await axiosInstance.put(
       `${URLConstant}/category/single/${categoryid}`,
       Details,
-      config
+      config.getConfig()
     );
     return data;
   } catch (error) {
@@ -73,13 +63,12 @@ export const UpdateCategoryApi = async (categoryid, Details) => {
  */
 export const DeleteCategoryApi = async (userid) => {
   try {
-    const config = {
-      withCredentials: true,
-    };
+    const config = new AxiosConfig();
+    config.removeContentType();
 
     const { data } = await axiosInstance.delete(
       `${URLConstant}/category/single/${userid}`,
-      config
+      config.getConfig()
     );
     return data;
   } catch (error) {

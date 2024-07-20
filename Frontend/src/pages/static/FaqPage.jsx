@@ -1,7 +1,7 @@
 import React from "react";
 import { Accordion } from "flowbite-react";
-import MetaData from "../utils/MetaData";
-import FaqBanner from "../assets/images/FAQs-bro.png";
+import MetaData from "../../utils/MetaData";
+import FaqBanner from "../../assets/images/FAQs-bro.png";
 
 const FaqPage = () => {
   const staticFAQ = [

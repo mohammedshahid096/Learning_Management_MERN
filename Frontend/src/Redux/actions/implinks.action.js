@@ -9,7 +9,6 @@ import {
   SEARCH_LINK_DATA_REQUEST,
   SEARCH_LINK_DATA_SUCCESS,
 } from "../constants/implink.constant";
-// import axiosInstance from "../../config/axiosInstance";
 
 export const SearchUrlLinksAction =
   (query, request = true) =>
@@ -19,13 +18,9 @@ export const SearchUrlLinksAction =
       if (request) {
         dispatch({ type: SEARCH_LINK_DATA_REQUEST });
       }
-      const config = {
-        withCredentials: true,
-      };
 
       const { data } = await axios.get(
-        `${URLConstant}/impurl/getall?limit=${limit}&page=${page}&type=${type}`,
-        config
+        `${URLConstant}/impurl/getall?limit=${limit}&page=${page}&type=${type}`
       );
 
       dispatch({
@@ -48,13 +43,9 @@ export const ScrollUrlLinksAction =
       if (request) {
         dispatch({ type: SCROLL_DATA_REQUEST });
       }
-      const config = {
-        withCredentials: true,
-      };
 
       const { data } = await axios.get(
-        `${URLConstant}/impurl/getall?limit=${limit}&page=${page}&type=${type}`,
-        config
+        `${URLConstant}/impurl/getall?limit=${limit}&page=${page}&type=${type}`
       );
 
       dispatch({

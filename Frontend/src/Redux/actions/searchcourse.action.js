@@ -9,6 +9,7 @@ import {
   SEARCH_COURSE_PAGE_REQUEST,
   SEARCH_COURSE_PAGE_SUCCESS,
 } from "../constants/course.contant";
+import { AxiosConfig } from "../../config/axiosInstance";
 
 export const SearchCoursesAction =
   (request = true) =>
@@ -17,11 +18,13 @@ export const SearchCoursesAction =
       if (request) {
         dispatch({ type: SEARCH_COURSE_PAGE_REQUEST });
       }
-      const config = {
-        withCredentials: true,
-      };
+      const config = new AxiosConfig();
+      config.removeContentType();
 
-      const { data } = await axios.get(`${URLConstant}/course/search?`, config);
+      const { data } = await axios.get(
+        `${URLConstant}/course/search?`,
+        config.getConfig()
+      );
 
       dispatch({
         type: SEARCH_COURSE_PAGE_SUCCESS,
@@ -44,13 +47,12 @@ export const FilterCoursesAction =
         return;
       }
       dispatch({ type: FILTER_COURSE_DATA_REQUEST });
-      const config = {
-        withCredentials: true,
-      };
+      const config = new AxiosConfig();
+      config.removeContentType();
 
       const { data } = await axios.get(
         `${URLConstant}/course/search?${query}`,
-        config
+        config.getConfig()
       );
 
       dispatch({

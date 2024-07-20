@@ -11,15 +11,11 @@ const axiosInstance = axios.create();
 
 const getAccessToken = async () => {
   try {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      withCredentials: true,
-    };
+    const config = new AxiosConfig();
+
     const { data } = await axios.get(
       `${URLConstant}/user/refresh_token`,
-      config
+      config.getConfig()
     );
 
     return data;
@@ -52,5 +48,46 @@ axiosInstance.interceptors.request.use(async (res) => {
     }
   }
 });
+
+export class AxiosConfig {
+  constructor() {
+    this.config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+    };
+  }
+
+  addConfig(key, value) {
+    this.config[key] = value;
+  }
+  addConfigHeader(key, value) {
+    this.config.headers[key] = value;
+  }
+
+  removeConfig(key) {
+    if (this.config.hasOwnProperty(key)) {
+      delete this.config[key];
+    }
+  }
+  removeConfigHeader(key) {
+    if (this.config.headers.hasOwnProperty(key)) {
+      delete this.config.headers[key];
+    }
+  }
+
+  removeWithCredentials() {
+    this.removeConfig("withCredentials");
+  }
+
+  removeContentType() {
+    this.removeConfig("Content-Type");
+  }
+
+  getConfig() {
+    return this.config;
+  }
+}
 
 export default axiosInstance;

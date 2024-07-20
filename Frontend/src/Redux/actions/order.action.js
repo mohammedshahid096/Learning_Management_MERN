@@ -1,5 +1,5 @@
 import { URLConstant } from "../../config/URLConstant";
-import axiosInstance from "../../config/axiosInstance";
+import axiosInstance, { AxiosConfig } from "../../config/axiosInstance";
 import {
   ADMIN_ALL_ORDERS_FAIL,
   ADMIN_ALL_ORDERS_REQUEST,
@@ -13,13 +13,12 @@ export const AdminGetAllOrdersList =
       if (request) {
         dispatch({ type: ADMIN_ALL_ORDERS_REQUEST });
       }
-      const config = {
-        withCredentials: true,
-      };
+      const config = new AxiosConfig();
+      config.removeContentType();
 
       const { data } = await axiosInstance.get(
         `${URLConstant}/order/admin/allorders?limit=${limit}&page=${page}`,
-        config
+        config.getConfig()
       );
 
       dispatch({

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { URLConstant } from "../config/URLConstant";
-import axiosInstance from "../config/axiosInstance";
+import axiosInstance, { AxiosConfig } from "../config/axiosInstance";
 /**
  * The function CreateCourseApi sends a POST request to upload course details to a specific URL with
  * axiosInstance and returns the response data.
@@ -16,17 +16,12 @@ import axiosInstance from "../config/axiosInstance";
 
 export const CreateCourseApi = async (Details) => {
   try {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      withCredentials: true,
-    };
+    const config = new AxiosConfig();
 
     const { data } = await axiosInstance.post(
       `${URLConstant}/course/uploadCourse`,
       Details,
-      config
+      config.getConfig()
     );
     return data;
   } catch (error) {
@@ -46,17 +41,12 @@ export const CreateCourseApi = async (Details) => {
  */
 export const UpdateCourseApi = async (courseid, Details) => {
   try {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      withCredentials: true,
-    };
+    const config = new AxiosConfig();
 
     const { data } = await axiosInstance.put(
       `${URLConstant}/course/single/${courseid}`,
       Details,
-      config
+      config.getConfig()
     );
     return data;
   } catch (error) {
@@ -80,17 +70,12 @@ export const UpdateCourseApi = async (courseid, Details) => {
  */
 export const UpdateCourseDataApi = async (courseid, Details) => {
   try {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      withCredentials: true,
-    };
+    const config = new AxiosConfig();
 
     const { data } = await axiosInstance.put(
       `${URLConstant}/course/coursedata/single/${courseid}`,
       Details,
-      config
+      config.getConfig()
     );
     return data;
   } catch (error) {
@@ -108,13 +93,12 @@ export const UpdateCourseDataApi = async (courseid, Details) => {
  */
 export const DeleteCourseApi = async (courseid) => {
   try {
-    const config = {
-      withCredentials: true,
-    };
+    const config = new AxiosConfig();
+    config.removeContentType();
 
     const { data } = await axiosInstance.delete(
       `${URLConstant}/course/single/${courseid}`,
-      config
+      config.getConfig()
     );
     return data;
   } catch (error) {
@@ -124,13 +108,12 @@ export const DeleteCourseApi = async (courseid) => {
 
 export const GetContentCourseDataApi = async (courseid, contentid) => {
   try {
-    const config = {
-      withCredentials: true,
-    };
+    const config = new AxiosConfig();
+    config.removeContentType();
 
     const { data } = await axiosInstance.get(
       `${URLConstant}/course/course-single-content/${courseid}/${contentid}`,
-      config
+      config.getConfig()
     );
     return data;
   } catch (error) {
@@ -140,13 +123,12 @@ export const GetContentCourseDataApi = async (courseid, contentid) => {
 
 export const GetRelatedCourseDataApi = async (categoryid) => {
   try {
-    const config = {
-      withCredentials: true,
-    };
+    const config = new AxiosConfig();
+    config.removeContentType();
 
     const { data } = await axios.get(
       `${URLConstant}/course/related?category=${categoryid}`,
-      config
+      config.getConfig()
     );
     return data;
   } catch (error) {

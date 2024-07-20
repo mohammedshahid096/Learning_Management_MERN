@@ -1,5 +1,5 @@
 import { URLConstant } from "../../config/URLConstant";
-import axiosInstance from "../../config/axiosInstance";
+import axiosInstance, { AxiosConfig } from "../../config/axiosInstance";
 import {
   COURSE_DASHBOARD_FAIL,
   COURSE_DASHBOARD_REQUEST,
@@ -16,13 +16,12 @@ export const AdminUserAnalysisAction =
       if (request) {
         dispatch({ type: USER_DASHBOARD_REQUEST });
       }
-      const config = {
-        withCredentials: true,
-      };
+      const config = new AxiosConfig();
+      config.removeContentType();
 
       const { data } = await axiosInstance.get(
         `${URLConstant}/dashboard/admin/users`,
-        config
+        config.getConfig()
       );
 
       dispatch({
@@ -44,13 +43,12 @@ export const AdminCourseAnalysisAction =
       if (request) {
         dispatch({ type: COURSE_DASHBOARD_REQUEST });
       }
-      const config = {
-        withCredentials: true,
-      };
+      const config = new AxiosConfig();
+      config.removeContentType();
 
       const { data } = await axiosInstance.get(
         `${URLConstant}/dashboard/admin/courses`,
-        config
+        config.getConfig()
       );
 
       dispatch({

@@ -83,28 +83,30 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <Routes>
-          {AllRoutesItems.map((singleRoutes) => {
-            if (singleRoutes.protected) {
-              return (
-                <Route
-                  path={singleRoutes.path}
-                  key={singleRoutes.num}
-                  element={
-                    <ProtectedRoute Access={singleRoutes.Access}>
-                      <singleRoutes.element />
-                    </ProtectedRoute>
-                  }
-                />
-              );
-            } else {
-              return (
-                <Route
-                  path={singleRoutes.path}
-                  key={singleRoutes.num}
-                  element={<singleRoutes.element />}
-                />
-              );
-            }
+          {AllRoutesItems[user?.role ? user.role : "public"].map((category) => {
+            return category.routes.map((route) => {
+              if (route.protected) {
+                return (
+                  <Route
+                    path={route.path}
+                    key={route.num}
+                    element={
+                      <ProtectedRoute Access={route.Access}>
+                        <route.element />
+                      </ProtectedRoute>
+                    }
+                  />
+                );
+              } else {
+                return (
+                  <Route
+                    path={route.path}
+                    key={route.num}
+                    element={<route.element />}
+                  />
+                );
+              }
+            });
           })}
         </Routes>
         <Footer />

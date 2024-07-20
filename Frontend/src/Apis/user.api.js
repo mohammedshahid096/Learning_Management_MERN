@@ -1,5 +1,5 @@
 import { URLConstant } from "../config/URLConstant";
-import axiosInstance from "../config/axiosInstance";
+import axiosInstance, { AxiosConfig } from "../config/axiosInstance";
 
 /**
  * The function `UpdateUserRoleApi` sends a PATCH request to update a user's role using Axios with
@@ -103,25 +103,20 @@ export const Add_or_DeleteCourseUserAdminApi = async (
   isUpdate
 ) => {
   try {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      withCredentials: true,
-    };
+    const config = new AxiosConfig();
 
     if (isUpdate) {
       const { data } = await axiosInstance.patch(
         `${URLConstant}/user/users/${userid}`,
         { courseid },
-        config
+        config.getConfig()
       );
       return data;
     } else {
-      config.data = { courseid };
+      config.addConfig("data", { courseid });
       const { data } = await axiosInstance.delete(
         `${URLConstant}/user/users/${userid}`,
-        config
+        config.getConfig()
       );
       return data;
     }
