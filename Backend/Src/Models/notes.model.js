@@ -12,6 +12,19 @@ const ModelSchema = new mongoose.Schema(
       required: true,
       lowercase: true,
     },
+
+    users: [
+      {
+        userId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "user",
+        },
+        hasAccess: {
+          type: Boolean,
+          default: false,
+        },
+      },
+    ],
     points: [
       {
         pointId: { type: String, required: true },

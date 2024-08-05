@@ -23,6 +23,7 @@ import AdminAllUsers from "../pages/admin/users/AdminAllUsers";
 import AdminTeam from "../pages/admin/users/AdminTeam";
 import UserDetailPage from "../pages/admin/users/UserDetailPage";
 import AllNotes from "../pages/notes/AllNotes";
+import NotesDetails from "../pages/notes/NotesDetails";
 const AllUSers = ["admin", "teacher", "user"];
 
 const AllRoutesItems_1 = [
@@ -723,6 +724,13 @@ const RoleBasedRoutes = {
           num: 123,
           path: "/notes",
           element: AllNotes,
+          protected: true,
+          Access: ["admin"],
+        },
+        {
+          num: 1234,
+          path: "/notes/:notesId",
+          element: NotesDetails,
           protected: true,
           Access: ["admin"],
         },

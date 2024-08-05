@@ -22,7 +22,6 @@ const Skeleton = () => {
       {Array.from({ length: 4 }, (_, i) => i)?.map((singleURL, index) => (
         <div
           key={"skeleton_" + index + 1}
-          target="_blank"
           className="flex w-5/12 max-md:w-full flex-row items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-m hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 "
         >
           <div className="flex justify-center items-center rounded-t-lg max-md:rounded-none  md:rounded-none md:rounded-s-lg h-28 w-28 max-sm:h-16 max-sm:w-16 opacity-10 animate-pulse">

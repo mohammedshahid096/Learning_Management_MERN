@@ -13,6 +13,7 @@ import {
 } from "./reducers/user.reducer.js";
 import { DashboardUserReducer } from "./reducers/Dashboard.reducer.js";
 import SearchImpLinkReducer from "./reducers/ImpLinks.reducer.js";
+import NotesReducer from "./reducers/notes.reducer.js";
 
 const middleware = (getDefaultMiddleware) =>
   getDefaultMiddleware().concat(thunk);
@@ -34,6 +35,7 @@ const reducer = {
   AdminUserState: AdminUserReducer,
   DashboardState: DashboardUserReducer,
   URLState: SearchImpLinkReducer,
+  NotesState: NotesReducer,
 };
 
 const store = configureStore({

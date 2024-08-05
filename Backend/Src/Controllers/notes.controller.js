@@ -5,11 +5,15 @@ const {
   CreateNewNotesValidation,
   AddNewPointValidation,
   DeletePointValidation,
+  AddRemoveUserToNotesValidation,
 } = require("../JoiSchemas/notes.schema");
 const { v4: uuidv4 } = require("uuid");
 const notesModel = require("../Models/notes.model");
 const { redis } = require("../Config/redis.config");
+const userModel = require("../Models/user.model");
 
+/* The `CreateNewNoteController` function is responsible for creating a new note. Here is a breakdown
+of what it does: */
 module.exports.CreateNewNoteController = async (req, res, next) => {
   try {
     logger.warn("Controllers - Notes - CreateNewNote - Start");
@@ -40,6 +44,8 @@ module.exports.CreateNewNoteController = async (req, res, next) => {
   }
 };
 
+/* The `AddNewPointController` function is responsible for adding a new point to an existing note. Here
+is a breakdown of what it does: */
 module.exports.AddNewPointController = async (req, res, next) => {
   try {
     logger.warn("Controllers - Notes - AddNewPointController - Start");
@@ -74,6 +80,8 @@ module.exports.AddNewPointController = async (req, res, next) => {
   }
 };
 
+/* The `DeletePointController` function is responsible for deleting a specific point from an existing
+note. Here is a breakdown of what it does: */
 module.exports.DeletePointController = async (req, res, next) => {
   try {
     logger.warn("Controllers - Notes - DeletePointController - Start");
@@ -107,6 +115,8 @@ module.exports.DeletePointController = async (req, res, next) => {
   }
 };
 
+/* The `DeleteNoteController` function is responsible for deleting a specific note based on the
+`noteId` parameter received in the request. Here is a breakdown of what it does: */
 module.exports.DeleteNoteController = async (req, res, next) => {
   try {
     logger.warn("Controllers - Notes - DeleteNoteController - Start");
@@ -129,6 +139,8 @@ module.exports.DeleteNoteController = async (req, res, next) => {
   }
 };
 
+/* The `GetSingleNoteController` function is responsible for retrieving a single note based on the
+`noteId` parameter received in the request. Here is a breakdown of what it does: */
 module.exports.GetSingleNoteController = async (req, res, next) => {
   try {
     logger.warn("Controller - Notes - GetSingleNoteController - Start");
@@ -154,6 +166,8 @@ module.exports.GetSingleNoteController = async (req, res, next) => {
   }
 };
 
+/* The `GetAllUserNotesController` function is responsible for retrieving all notes belonging to a
+specific user. Here is a breakdown of what it does: */
 module.exports.GetAllUserNotesController = async (req, res, next) => {
   try {
     logger.warn("Controller - Notes - GetAllUserNotesController - Start");
@@ -161,7 +175,9 @@ module.exports.GetAllUserNotesController = async (req, res, next) => {
     if (userNotes) {
       userNotes = JSON.parse(userNotes);
     } else {
-      userNotes = await notesModel.find({ user: req.userid });
+      userNotes = await notesModel.find({
+        $or: [{ user: req.userid }, { "users.userId": req.userid }],
+      });
       await redis.set(`notes-${req.userid}`, JSON.stringify(userNotes));
     }
     logger.warn("Controller - Notes - GetAllUserNotesController - End");
@@ -173,6 +189,57 @@ module.exports.GetAllUserNotesController = async (req, res, next) => {
   } catch (error) {
     logger.error(
       "Controller - Notes - GetAllUserNotesController - Error",
+      error
+    );
+    next(httpErrors.InternalServerError(error.message));
+  }
+};
+
+/* The `AddRemoveUserToNotesController` function is responsible for handling the logic to add or remove
+a user to/from a specific note. Here is a breakdown of what it does: */
+module.exports.AddRemoveUserToNotesController = async (req, res, next) => {
+  try {
+    logger.warn("Controller - Notes - AddUserToNotesController - Start");
+    const { noteId } = req.params;
+    const { userid, type, hasAccess } = req.body;
+    const { error } = AddRemoveUserToNotesValidation(req.body);
+    if (error) {
+      return next(httpErrors.BadRequest(error.details[0].message));
+    }
+    const isUserExist = await userModel.findById(userid);
+    if (!isUserExist) {
+      return next(httpErrors.NotFound(errorConstant.USER_NOT_FOUND));
+    }
+    let query = {};
+
+    if (req.body.type === "add") {
+      query = { $push: { users: { userId: userid, hasAccess: false } } };
+    } else if (req.body.type === "remove") {
+      query = { $pull: { users: { userId: userid } } };
+    } else {
+      await notesModel.findByIdAndUpdate(noteId, {
+        $pull: { users: { userId: userid } },
+      });
+      query = { $push: { users: { userId: userid, hasAccess: hasAccess } } };
+    }
+
+    const updateData = await notesModel.findByIdAndUpdate(noteId, query, {
+      new: true,
+    });
+    if (!updateData) {
+      return next(httpErrors.NotFound(errorConstant.NOTE_NOT_FOUND));
+    }
+    await redis.del(`notes-${req.userid}`);
+    logger.warn("Controller - Notes - AddUserToNotesController - End");
+    res.status(200).json({
+      success: true,
+      statusCode: 200,
+      message: "Successfully Updated the query",
+      data: updateData,
+    });
+  } catch (error) {
+    logger.error(
+      "Controller - Notes - AddUserToNotesController - Error",
       error
     );
     next(httpErrors.InternalServerError(error.message));
