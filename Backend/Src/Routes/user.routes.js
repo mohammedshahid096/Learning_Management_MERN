@@ -17,6 +17,7 @@ const {
   AdminAddUserCourseController,
   AdminDeleteUserController,
   userCoursesListController,
+  GetUserIdByQueryController,
 } = require("../Controllers/user.controller");
 const { Authentication, Authorization } = require("../Middlewares/Auth");
 const { UserProfileUpload } = require("../Middlewares/Multer");
@@ -91,6 +92,12 @@ UserRoutes.route("/delete/:userid").delete(
   Authentication,
   Authorization("admin"),
   DeleteUserController
+);
+
+// ### Public
+UserRoutes.route("/public/user-query").get(
+  Authentication,
+  GetUserIdByQueryController
 );
 
 module.exports = UserRoutes;

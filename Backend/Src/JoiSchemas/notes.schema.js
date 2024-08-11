@@ -47,7 +47,7 @@ adding or removing a user's access to notes. It takes a `body` object as input, 
 contain three properties: */
 module.exports.AddRemoveUserToNotesValidation = (body) => {
   const schema = Joi.object({
-    userid: Joi.string().required(),
+    email: Joi.string().required(),
     type: Joi.string().valid("add", "remove", "access").required(),
     hasAccess: Joi.boolean(),
   });

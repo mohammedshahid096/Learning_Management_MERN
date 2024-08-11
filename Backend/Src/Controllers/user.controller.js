@@ -586,3 +586,21 @@ module.exports.DeleteUserController = async (req, res, next) => {
     next(httpErrors.InternalServerError(error.message));
   }
 };
+
+// -----------------------
+// PUBLIC
+// -----------------------
+module.exports.GetUserIdByQueryController = async (req, res, next) => {
+  try {
+    const { email } = req.query;
+    const data = await userModel.findOne({ email }).select("email name");
+    res.status(200).json({
+      success: true,
+      statusCode: 200,
+      message: "user found",
+      data,
+    });
+  } catch (error) {
+    next(httpErrors.InternalServerError(error.message));
+  }
+};

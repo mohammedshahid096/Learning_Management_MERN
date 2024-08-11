@@ -7,6 +7,7 @@ const {
   GetAllUserNotesController,
   DeleteNoteController,
   GetSingleNoteController,
+  AddRemoveUserToNotesController,
 } = require("../Controllers/notes.controller");
 
 const NotesRoutes = express.Router();
@@ -22,5 +23,10 @@ NotesRoutes.route("/all/:noteId")
 NotesRoutes.route("/note-point/:noteId")
   .post(Authentication, AddNewPointController)
   .delete(Authentication, DeletePointController);
+
+NotesRoutes.route("/users/operations/:noteId").post(
+  Authentication,
+  AddRemoveUserToNotesController
+);
 
 module.exports = NotesRoutes;

@@ -1,7 +1,14 @@
 import axiosInstance, { AxiosConfig } from "../../config/axiosInstance";
 import { URLConstant } from "../../config/URLConstant";
 import {
+  ADD_NEW_POINT_FAIL,
+  ADD_NEW_POINT_REQUEST,
+  ADD_NEW_POINT_SUCCESS,
+  ADD_USER_TO_NOTES_FAIL,
+  ADD_USER_TO_NOTES_REQUEST,
+  ADD_USER_TO_NOTES_SUCCESS,
   ALL_NOTES_FAIL,
+  ALL_NOTES_PUSH,
   ALL_NOTES_REQUEST,
   ALL_NOTES_SUCCESS,
   CLEAR_NOTES_ERRORS,
@@ -59,3 +66,52 @@ export const GetSingleNotesAction = (id) => async (dispatch) => {
     });
   }
 };
+
+export const AddNewPointNotesAction = (id, details) => async (dispatch) => {
+  try {
+    dispatch({
+      type: ADD_NEW_POINT_REQUEST,
+    });
+    const config = new AxiosConfig();
+
+    const { data } = await axiosInstance.post(
+      `${URLConstant}/notes/note-point/${id}`,
+      details,
+      config.getConfig()
+    );
+    dispatch({
+      type: ADD_NEW_POINT_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ADD_NEW_POINT_FAIL,
+      payload: error?.response?.data || error,
+    });
+  }
+};
+
+export const AddRemoveAccessUserNoteAction =
+  (noteid, details) => async (dispatch) => {
+    try {
+      dispatch({
+        type: ADD_USER_TO_NOTES_REQUEST,
+      });
+      const config = new AxiosConfig();
+      const { data } = await axiosInstance.post(
+        `${URLConstant}/notes/users/operations/${noteid}`,
+        details,
+        config.getConfig()
+      );
+
+      dispatch({
+        type: ADD_USER_TO_NOTES_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ADD_USER_TO_NOTES_FAIL,
+        payload: error?.response?.data || error,
+      });
+    }
+  };

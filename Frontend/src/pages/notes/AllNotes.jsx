@@ -3,7 +3,7 @@ import { Button, Card, Badge } from "flowbite-react";
 import { HiCheckCircle, HiOutlineArrowRight } from "react-icons/hi";
 import { TbNotesOff } from "react-icons/tb";
 import { FaUserCircle } from "react-icons/fa";
-import { GrNotes } from "react-icons/gr";
+
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -13,6 +13,8 @@ import {
 } from "../../Redux/actions/notes.action";
 import toast from "react-hot-toast";
 import CustomLoader from "../../utils/Loader";
+import NewNotes from "./NewNotes";
+import MetaData from "../../utils/MetaData";
 
 const Skeleton = () => {
   return (
@@ -75,6 +77,7 @@ const AllNotes = () => {
 
   return (
     <>
+      <MetaData title="All Note's" />
       <h1 className=" text-3xl text-center font-bold py-4">My Notebook</h1>
       {loading ? (
         <>
@@ -84,9 +87,7 @@ const AllNotes = () => {
       ) : allNotes && allNotes.length > 0 ? (
         <>
           <div className=" flex justify-end pr-6">
-            <Button color="purple">
-              Add New <GrNotes className=" ml-2" />{" "}
-            </Button>
+            <NewNotes />
           </div>
           <div className="grid grid-cols-3 gap-10 p-8 items-baseline max-md:flex max-md:flex-col">
             {allNotes.map((item) => (
@@ -102,7 +103,10 @@ const AllNotes = () => {
                     className="font-normal text-gray-700 dark:text-gray-400 flex items-center gap-3"
                     key={point?.pointId}
                   >
-                    <HiCheckCircle color="#0891b3" /> {point.content}
+                    <span className="text-lg">
+                      <HiCheckCircle color="#0891b3" />
+                    </span>
+                    {point.content}
                   </p>
                 ))}
                 <div className="flex justify-between items-center">

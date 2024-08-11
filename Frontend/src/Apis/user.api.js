@@ -124,3 +124,11 @@ export const Add_or_DeleteCourseUserAdminApi = async (
     return error?.response?.data || error;
   }
 };
+
+// export const GetUserIdByQueryApi = async(query)=>{
+//   try {
+//     const config =
+//   } catch (error) {
+//     return error?.response?.data || error
+//   }
+// }

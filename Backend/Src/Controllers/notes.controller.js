@@ -1,5 +1,9 @@
 const httpErrors = require("http-errors");
-const { errorConstant, successConstant } = require("../Utils/constants");
+const {
+  errorConstant,
+  successConstant,
+  expiryTime,
+} = require("../Utils/constants");
 const logger = require("../Config/applogger.config");
 const {
   CreateNewNotesValidation,
@@ -51,6 +55,7 @@ module.exports.AddNewPointController = async (req, res, next) => {
     logger.warn("Controllers - Notes - AddNewPointController - Start");
     const { noteId } = req.params;
     const { error } = AddNewPointValidation(req.body);
+
     if (error) {
       return next(httpErrors.BadRequest(error.details[0].message));
     }
@@ -58,11 +63,10 @@ module.exports.AddNewPointController = async (req, res, next) => {
       pointId: uuidv4(),
       content: req.body.point,
     };
-    const data = await notesModel.findByIdAndUpdate(
-      noteId,
-      { $push: { points: details } },
-      { new: true }
-    );
+
+    const data = await notesModel
+      .findByIdAndUpdate(noteId, { $push: { points: details } }, { new: true })
+      .populate("users.userId", "email name");
     if (!data) {
       return next(httpErrors.NotFound(errorConstant.NOTE_NOT_FOUND));
     }
@@ -145,15 +149,23 @@ module.exports.GetSingleNoteController = async (req, res, next) => {
   try {
     logger.warn("Controller - Notes - GetSingleNoteController - Start");
     const { noteId } = req.params;
-    let data = null;
-    let userNotes = await redis.get(`notes-${req.userid}`);
-    if (userNotes) {
-      userNotes = JSON.parse(userNotes);
-    } else {
-      userNotes = await notesModel.find({ user: req.userid }).lean();
-      await redis.set(`notes-${req.userid}`, JSON.stringify(userNotes));
-    }
-    data = userNotes.find((item) => item._id === noteId);
+    // let data = null;
+    // let userNotes = await redis.get(`notes-${req.userid}`);
+    // if (userNotes) {
+    //   userNotes = JSON.parse(userNotes);
+    // } else {
+    //   userNotes = await notesModel.find({ user: req.userid }).lean();
+    //   await redis.set(
+    //     `notes-${req.userid}`,
+    //     JSON.stringify(userNotes),
+    //     "EX",
+    //     expiryTime
+    //   );
+    // }
+    // data = userNotes.find((item) => item._id === noteId);
+    const data = await notesModel
+      .findById(noteId)
+      .populate("users.userId", "email name");
     if (!data) {
       return next(httpErrors.NotFound(errorConstant.NOTE_NOT_FOUND));
     }
@@ -178,7 +190,12 @@ module.exports.GetAllUserNotesController = async (req, res, next) => {
       userNotes = await notesModel.find({
         $or: [{ user: req.userid }, { "users.userId": req.userid }],
       });
-      await redis.set(`notes-${req.userid}`, JSON.stringify(userNotes));
+      await redis.set(
+        `notes-${req.userid}`,
+        JSON.stringify(userNotes),
+        "EX",
+        expiryTime
+      );
     }
     logger.warn("Controller - Notes - GetAllUserNotesController - End");
     res.status(200).json({
@@ -201,31 +218,51 @@ module.exports.AddRemoveUserToNotesController = async (req, res, next) => {
   try {
     logger.warn("Controller - Notes - AddUserToNotesController - Start");
     const { noteId } = req.params;
-    const { userid, type, hasAccess } = req.body;
+    const { email, type, hasAccess } = req.body;
     const { error } = AddRemoveUserToNotesValidation(req.body);
     if (error) {
       return next(httpErrors.BadRequest(error.details[0].message));
     }
-    const isUserExist = await userModel.findById(userid);
+    const isUserExist = await userModel
+      .findOne({ email })
+      .select("email name")
+      .lean();
     if (!isUserExist) {
       return next(httpErrors.NotFound(errorConstant.USER_NOT_FOUND));
     }
     let query = {};
+    const userid = isUserExist._id;
 
-    if (req.body.type === "add") {
+    let isPresent = await notesModel.findById(noteId).lean();
+    // console.log(isPresent.users);
+
+    isPresent = isPresent?.users.some(
+      (item) => item.userId.toString() === userid.toString()
+    );
+
+    if (req.body.type === "add" && !isPresent) {
       query = { $push: { users: { userId: userid, hasAccess: false } } };
-    } else if (req.body.type === "remove") {
+    } else if (req.body.type === "remove" && isPresent) {
       query = { $pull: { users: { userId: userid } } };
-    } else {
+    } else if (req.body.type === "access" && isPresent) {
       await notesModel.findByIdAndUpdate(noteId, {
         $pull: { users: { userId: userid } },
       });
       query = { $push: { users: { userId: userid, hasAccess: hasAccess } } };
+    } else {
+      let message =
+        type === "add" && isPresent
+          ? "User is Already added"
+          : "User is not present";
+      return next(httpErrors.BadRequest(message));
     }
 
-    const updateData = await notesModel.findByIdAndUpdate(noteId, query, {
-      new: true,
-    });
+    const updateData = await notesModel
+      .findByIdAndUpdate(noteId, query, {
+        new: true,
+      })
+      .populate("users.userId", "email name");
+
     if (!updateData) {
       return next(httpErrors.NotFound(errorConstant.NOTE_NOT_FOUND));
     }
@@ -235,6 +272,7 @@ module.exports.AddRemoveUserToNotesController = async (req, res, next) => {
       success: true,
       statusCode: 200,
       message: "Successfully Updated the query",
+      userName: isUserExist.name,
       data: updateData,
     });
   } catch (error) {
