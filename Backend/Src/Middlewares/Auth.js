@@ -46,3 +46,35 @@ module.exports.Authorization = (...roles) => {
     next();
   };
 };
+
+// for authentication By Pass Middleware
+module.exports.AuthenticationByPass = async (req, res, next) => {
+  try {
+    const { access_token, refresh_token } = req.cookies;
+
+    if (!access_token) {
+      return next();
+    }
+
+    const decode = await VerifyAccessToken(access_token);
+    if (!decode.success) {
+      res.clearCookie("access_token");
+      res.clearCookie("refresh_token");
+      return next(httpErrors.Unauthorized(decode.error.message));
+    }
+
+    let user = await redis.get(decode.id);
+    if (!user) {
+      return next(httpErrors.NotFound(errorConstant.USER_NOT_FOUND));
+    }
+    user = JSON.parse(user);
+    req.userid = user?._id;
+    req.role = user?.role;
+    req.name = user?.name;
+
+    logger.info(`req name: ${user.email} role:${user.role}`);
+    next();
+  } catch (error) {
+    next(httpErrors.InternalServerError(error.message));
+  }
+};

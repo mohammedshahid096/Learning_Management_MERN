@@ -58,7 +58,7 @@ module.exports.CreateOrderController = async (req, res, next) => {
       user: { name: isUser.name },
       order: {
         uuid: isOrderExist.uuid,
-        course: isOrderExist.name,
+        course: isOrderExist.courseid.name,
         price: isOrderExist.paymentInfo.amount / 100,
         date: moment(isOrderExist.updatedAt).format("D-MMM-yyyy"),
       },

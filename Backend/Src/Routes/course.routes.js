@@ -1,5 +1,9 @@
 const express = require("express");
-const { Authorization, Authentication } = require("../Middlewares/Auth");
+const {
+  Authorization,
+  Authentication,
+  AuthenticationByPass,
+} = require("../Middlewares/Auth");
 const {
   UploadCourseController,
   GetSpecificCompleteCourse,
@@ -22,7 +26,7 @@ CourseRoutes.route("/uploadCourse").post(
 
 // ### single course related without purchase
 CourseRoutes.route("/single/:courseid")
-  .get(GetSpecificCompleteCourse)
+  .get(AuthenticationByPass, GetSpecificCompleteCourse)
   .put(Authentication, Authorization("admin"), EditCourseController)
   .delete(Authentication, Authorization("admin"), DeleteCourseController);
 

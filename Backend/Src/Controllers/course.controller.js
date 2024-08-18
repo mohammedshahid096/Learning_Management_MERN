@@ -16,11 +16,16 @@ const {
   CoursesListService,
   GetSingleCourseDataService,
 } = require("../Services/course.service");
-const { errorConstant, successConstant } = require("../Utils/constants");
+const {
+  errorConstant,
+  successConstant,
+  expiryTime,
+} = require("../Utils/constants");
 const { redis } = require("../Config/redis.config");
 const {
   GetAllQuestionsService,
 } = require("../Services/Question_Review.service");
+const logger = require("../Config/applogger.config");
 
 // uploading a new course
 module.exports.UploadCourseController = async (req, res, next) => {
@@ -92,7 +97,7 @@ module.exports.EditCourseController = async (req, res, next) => {
       return next(httpErrors.NotFound(errorConstant.COURSE_NOT_FOUND));
     }
     await redis.del(courseid);
-    await redis.del("allCourses");
+    // await redis.del("allCourses");
     res.status(200).json({
       success: true,
       statusCode: 200,
@@ -142,7 +147,7 @@ module.exports.UpdateCoureDataController = async (req, res, next) => {
     }
 
     await redis.del(updateData.courseid.toString());
-    await redis.del("allCourses");
+    // await redis.del("allCourses");
     res.status(200).json({
       success: true,
       statusCode: 200,
@@ -160,7 +165,7 @@ module.exports.GetSpecificCompleteCourse = async (req, res, next) => {
 
     let isCacheExist = await redis.get(courseid);
 
-    if (isCacheExist) {
+    if (isCacheExist || req?.role === "user") {
       isCacheExist = JSON.parse(isCacheExist);
       const { courseDetail, coursesData } = isCacheExist;
       return res.status(200).json({
@@ -183,7 +188,13 @@ module.exports.GetSpecificCompleteCourse = async (req, res, next) => {
       coursesData = await GetSingleAllCourseDataService(courseid, false);
     } else {
       coursesData = await GetSingleAllCourseDataService(courseid);
-      await redis.set(courseid, JSON.stringify({ courseDetail, coursesData }));
+
+      // await redis.set(
+      //   courseid,
+      //   JSON.stringify({ courseDetail, coursesData }),
+      //   "EX",
+      //   expiryTime
+      // );
     }
 
     res.status(200).json({

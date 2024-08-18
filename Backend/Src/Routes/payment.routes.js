@@ -8,7 +8,7 @@ const PaymentRoutes = express.Router();
 
 PaymentRoutes.route("/order").post(Authentication, checkoutRazorpayController);
 PaymentRoutes.route("/verify").post(
-  // Authentication,
+  Authentication,
   paymentVerificationController
 );
 

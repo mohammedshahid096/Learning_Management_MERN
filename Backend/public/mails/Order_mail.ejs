@@ -26,9 +26,10 @@
       }
       .header {
         text-align: center;
-        color: #333;
+        color: #fff;
         border-bottom: 1px solid #ddd;
         padding: 20px 0;
+        background: purple;
       }
       .content {
         margin-top: 20px;
@@ -57,19 +58,48 @@
       <div class="container">
         <h2 class="header">Order Confirmation</h2>
         <div class="content">
-          <p>Dear <%= user.name %>,</p>
-          <p>Thank you for your purchase! Your order details are as follows:</p>
+          <p>Dear <b><%= user.name %></b> ,</p>
+
+          <p>Your order details are as follows:</p>
+
           <p><strong class="highlight">Order ID:</strong> <%= order.uuid %></p>
           <p>
             <strong class="highlight">Course Name:</strong> <%= order.course %>
           </p>
           <p><strong class="highlight">Price:</strong> ₹ <%= order.price %></p>
           <p><strong class="highlight">Date:</strong> <%= order.date %></p>
+
+          <p>
+            Thank you for purchasing our course, <%= order.name %> We're
+            thrilled to have you on board and excited to be a part of your
+            learning journey
+          </p>
+
+          <p>
+            As you dive into the material, we hope you find the content
+            engaging, insightful, and valuable for achieving your goals. Our
+            team has put a lot of effort into creating a comprehensive and
+            user-friendly experience, and we're confident that you'll gain a lot
+            from it
+          </p>
+
+          <p>
+            Should you have any questions or need assistance along the way,
+            please don't hesitate to reach out. We're here to support you every
+            step of the way
+          </p>
+
+          <p>
+            Wishing you all the best as you embark on this educational
+            adventure. We're excited to see where this journey takes you!
+          </p>
+
+          <p>Thank you once again, and happy learning!</p>
         </div>
         <div class="footer">
           <p>
             If you have any questions or concerns, please contact us at
-            <a href="mailto:[Support Email]">support@gmail.com</a>.
+            <a href="mailto:[Support Email]">www.mohdshahid303@gmail.com</a>.
           </p>
           <p class="highlight">
             Thank you for choosing our Learning Management System!

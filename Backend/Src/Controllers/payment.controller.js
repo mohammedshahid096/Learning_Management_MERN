@@ -18,10 +18,12 @@ const {
   RAZOPAY_API_SECRET,
   RAZOPAY_REDIRECT_URL,
 } = require("../Config/index");
+const logger = require("../Config/applogger.config");
 
 // order payment gateway
 module.exports.checkoutRazorpayController = async (req, res, next) => {
   try {
+    logger.warn("Controller - Payment - ChecoutRazopayController - Start");
     const { error } = CreateOrderValidation(req.body);
     if (error) {
       return next(httpErrors.BadRequest(error.details[0].message));
@@ -45,6 +47,7 @@ module.exports.checkoutRazorpayController = async (req, res, next) => {
     });
 
     const checkout_pay = await razorpay.orders.create(options);
+
     if (!checkout_pay) {
       return next(httpErrors.BadRequest(paymentConstant.ORDER_CREATED_FAIL));
     }
@@ -58,6 +61,8 @@ module.exports.checkoutRazorpayController = async (req, res, next) => {
     });
     await UserOrder.save();
 
+    logger.warn("Controller - Payment - ChecoutRazopayController - End");
+
     res.status(200).json({
       success: true,
       statusCode: 200,
@@ -65,6 +70,11 @@ module.exports.checkoutRazorpayController = async (req, res, next) => {
       data: UserOrder,
     });
   } catch (error) {
+    logger.error(
+      "Controller - Payment - ChecoutRazopayController - Error",
+      error
+    );
+
     next(httpErrors.InternalServerError(error.message));
   }
 };
@@ -72,6 +82,7 @@ module.exports.checkoutRazorpayController = async (req, res, next) => {
 // verify the payment
 module.exports.paymentVerificationController = async (req, res, next) => {
   try {
+    logger.warn("Controller - Payment - paymentVerificationController - Start");
     const { error } = VerifyPaymentValidation(req.body);
     if (error) {
       return next(httpErrors.BadRequest(error.details[0].message));
@@ -106,6 +117,8 @@ module.exports.paymentVerificationController = async (req, res, next) => {
       { new: true }
     );
 
+    logger.warn("Controller - Payment - paymentVerificationController - End");
+
     res.redirect(
       `${RAZOPAY_REDIRECT_URL}/${OrderDetails.courseid}?order_id=${razorpay_order_id}&uuid=${OrderDetails.uuid}`
     );
@@ -116,6 +129,10 @@ module.exports.paymentVerificationController = async (req, res, next) => {
     //   message: "success fully payment is  done",
     // });
   } catch (error) {
+    logger.error(
+      "Controller - Payment - paymentVerificationController - Error",
+      error
+    );
     next(httpErrors.InternalServerError(error.message ?? error));
   }
 };
