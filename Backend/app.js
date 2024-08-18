@@ -8,7 +8,6 @@ const IndexRoutes = require("./Src/Routes/index.route");
 const { DEVELOPMENT_MODE, PORT } = require("./Src/Config/index");
 const { morganFilePath, morganFormat } = require("./Src/Config/morgan.config");
 const corsConfig = require("./Src/Config/cors.config");
-const { sendMail } = require("./Src/Utils/SendMail");
 
 const app = express();
 
@@ -36,7 +35,6 @@ if (DEVELOPMENT_MODE === "development") {
 //--------------- Routes -----------------
 //----------------------------------------
 app.get("/", (req, res) => {
-  sendMail();
   res.status(200).json({
     success: true,
     message: "Welcome Message",

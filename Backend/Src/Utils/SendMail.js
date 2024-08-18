@@ -33,6 +33,6 @@ module.exports.sendMail = async (emailoptions) => {
     html,
   };
 
-  const response = await transporter.sendMail(sendMailOptions);
-  logger.debug("mail message response", response);
+  await transporter.sendMail(sendMailOptions);
+  // logger.debug("mail message response", response);
 };
