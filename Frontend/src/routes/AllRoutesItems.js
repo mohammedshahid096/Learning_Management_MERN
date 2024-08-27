@@ -356,6 +356,25 @@ const RoleBasedRoutes = {
         },
       ],
     },
+    {
+      category: "Notes",
+      routes: [
+        {
+          num: 123,
+          path: "/notes",
+          element: AllNotes,
+          protected: true,
+          Access: ["user"],
+        },
+        {
+          num: 1234,
+          path: "/notes/:notesId",
+          element: NotesDetails,
+          protected: true,
+          Access: ["user"],
+        },
+      ],
+    },
   ],
 
   //  teacher routes
@@ -474,6 +493,25 @@ const RoleBasedRoutes = {
           num: 15,
           path: "/course-access/:courseId/:courseContentId",
           element: CourseContentData,
+          protected: true,
+          Access: ["teacher"],
+        },
+      ],
+    },
+    {
+      category: "Notes",
+      routes: [
+        {
+          num: 123,
+          path: "/notes",
+          element: AllNotes,
+          protected: true,
+          Access: ["teacher"],
+        },
+        {
+          num: 1234,
+          path: "/notes/:notesId",
+          element: NotesDetails,
           protected: true,
           Access: ["teacher"],
         },
@@ -678,6 +716,25 @@ const RoleBasedRoutes = {
       ],
     },
     {
+      category: "Notes",
+      routes: [
+        {
+          num: 123,
+          path: "/notes",
+          element: AllNotes,
+          protected: true,
+          Access: ["admin"],
+        },
+        {
+          num: 1234,
+          path: "/notes/:notesId",
+          element: NotesDetails,
+          protected: true,
+          Access: ["admin"],
+        },
+      ],
+    },
+    {
       category: "Static Pages",
       routes: [
         {
@@ -714,25 +771,6 @@ const RoleBasedRoutes = {
           element: FaqPage,
           protected: false,
           Access: [],
-        },
-      ],
-    },
-    {
-      category: "Notes",
-      routes: [
-        {
-          num: 123,
-          path: "/notes",
-          element: AllNotes,
-          protected: true,
-          Access: ["admin"],
-        },
-        {
-          num: 1234,
-          path: "/notes/:notesId",
-          element: NotesDetails,
-          protected: true,
-          Access: ["admin"],
         },
       ],
     },

@@ -127,10 +127,16 @@ const AllNotes = () => {
           </div>
         </>
       ) : (
-        <Card className="flex justify-center items-center flex-col gap-5 py-6">
-          <h3 className="text-2xl">Your Notes is Empty </h3>
-          <TbNotesOff size={80} />
-        </Card>
+        <>
+          <div className=" flex justify-end pr-6">
+            <NewNotes />
+          </div>
+          <br />
+          <Card className="flex justify-center items-center flex-col gap-5 py-6">
+            <h3 className="text-2xl">Your Notes is Empty </h3>
+            <TbNotesOff size={80} />
+          </Card>
+        </>
       )}
     </>
   );

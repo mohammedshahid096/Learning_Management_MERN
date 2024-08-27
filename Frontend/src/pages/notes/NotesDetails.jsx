@@ -130,7 +130,7 @@ const NotesDetails = () => {
             </div>
           ) : (
             <div className="p-3 grid grid-cols-3 items-start gap-5">
-              <div className="p-4 rounded-md bg-[#202938] col-span-2">
+              <div className="p-4 rounded-md dark:bg-[#202938] col-span-2">
                 <h1 className=" text-center uppercase font-bold text-xl">
                   {singleNotes.title}:{" "}
                 </h1>
@@ -150,7 +150,7 @@ const NotesDetails = () => {
                 ))}
               </div>
 
-              <div className="p-4 rounded-md bg-[#202938] pb-7 ">
+              <div className="p-4 rounded-md dark:bg-[#202938] pb-7 ">
                 <h1 className=" text-center uppercase font-bold text-xl">
                   Details
                 </h1>
@@ -226,6 +226,17 @@ const NotesDetails = () => {
                       </div>
                     ))}
                 </div>
+
+                <br />
+                <Button
+                  className="w-full"
+                  color="red"
+                  isProcessing={newpointloading}
+                  disabled={newpointloading}
+                  onClick={addNewPointHandler}
+                >
+                  Add New Point
+                </Button>
               </div>
             </div>
           )}
