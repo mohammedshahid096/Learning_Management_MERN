@@ -5,9 +5,12 @@ const morgan = require("morgan");
 const MongoDataBaseConn = require("./Src/Config/mongodb.config");
 const CloudinaryConn = require("./Src/Config/cloudinary.config");
 const IndexRoutes = require("./Src/Routes/index.route");
-const { DEVELOPMENT_MODE, PORT } = require("./Src/Config/index");
+const { DEVELOPMENT_MODE, SESSION_SECRET_KEY } = require("./Src/Config/index");
 const { morganFilePath, morganFormat } = require("./Src/Config/morgan.config");
 const corsConfig = require("./Src/Config/cors.config");
+const session = require("express-session");
+const passportConfig = require("./Src/Config/passport.config");
+const GoogleAuthRoutes = require("./Src/Routes/google.routes");
 
 const app = express();
 
@@ -31,6 +34,17 @@ if (DEVELOPMENT_MODE === "development") {
   app.use(morgan(morganFormat.COMBINE, { stream: morganFilePath }));
 }
 
+// session and passport session
+app.use(
+  session({
+    secret: SESSION_SECRET_KEY,
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+app.use(passportConfig.initialize());
+app.use(passportConfig.session());
+
 //----------------------------------------
 //--------------- Routes -----------------
 //----------------------------------------
@@ -40,6 +54,8 @@ app.get("/", (req, res) => {
     message: "Welcome Message",
   });
 });
+// # Google Auth Routes
+app.use("/auth", GoogleAuthRoutes);
 app.use("/api/v1/", IndexRoutes);
 
 //----------------------------------------

@@ -37,12 +37,16 @@ input::-webkit-outer-spin-button {
   margin: 0;
 }
 
+.card-p-5px > div {
+  padding: 5px;
+}
+
 @layer utilities {
   * {
     @apply m-0 p-0 box-border;
   }
   .app {
-    @apply bg-white dark:bg-gradient-to-b dark:from-gray-900 dark:to-black duration-300 dark:text-white;
+    @apply bg-white dark:bg-gradient-to-b dark:from-gray-900 dark:to-black duration-300 dark:text-white font-poppins;
   }
   .navbar {
     @apply bg-zinc-100 dark:bg-gradient-to-b dark:from-gray-900 dark:to-black duration-300;

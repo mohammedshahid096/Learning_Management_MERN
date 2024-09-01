@@ -1,5 +1,9 @@
 const logger = require("./Src/Config/applogger.config");
-const { PORT, DEVELOPMENT_MODE } = require("./Src/Config/index");
+const {
+  PORT,
+  DEVELOPMENT_MODE,
+  GOOGLE_CALLBACK_URL,
+} = require("./Src/Config/index");
 const app = require("./app");
 
 function startServer() {

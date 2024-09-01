@@ -24,6 +24,7 @@ import AdminTeam from "../pages/admin/users/AdminTeam";
 import UserDetailPage from "../pages/admin/users/UserDetailPage";
 import AllNotes from "../pages/notes/AllNotes";
 import NotesDetails from "../pages/notes/NotesDetails";
+import SnippetPage from "../pages/snippet/SnippetPage";
 const AllUSers = ["admin", "teacher", "user"];
 
 const AllRoutesItems_1 = [
@@ -769,6 +770,18 @@ const RoleBasedRoutes = {
           num: 2.3,
           path: "/faq",
           element: FaqPage,
+          protected: false,
+          Access: [],
+        },
+      ],
+    },
+    {
+      category: "Snippets",
+      routes: [
+        {
+          num: 14,
+          path: "/snippets",
+          element: SnippetPage,
           protected: false,
           Access: [],
         },

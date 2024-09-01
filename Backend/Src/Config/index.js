@@ -5,7 +5,7 @@ module.exports = {
   PORT: process.env.PORT || 8002,
 
   // development mode
-  DEVELOPMENT_MODE: process.env.DEVELOPMENT_MODE,
+  DEVELOPMENT_MODE: process.env.DEVELOPMENT_MODE || "development",
 
   // cors
   ALLOW_ORIGINS_ACCESS: process.env.ALLOW_ORIGINS_ACCESS || "[]",
@@ -44,4 +44,21 @@ module.exports = {
   REFRESH_TOKEN_KEY_TIME: process.env.REFRESH_TOKEN_KEY_TIME,
   REFRESH_TOKEN_KEY: process.env.REFRESH_TOKEN_KEY,
   REFRESH_TOKEN_KEY_TIME_COOKIE: process.env.REFRESH_TOKEN_KEY_TIME_COOKIE,
+
+  // ----- google console
+  GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID || "YOUR_GOOGLE_CLIENT_ID",
+  GOOGLE_CLIENT_SECRET:
+    process.env.GOOGLE_CLIENT_SECRET || "YOUR_GOOGLE_SECRET_KEY",
+  GOOGLE_CALLBACK_URL:
+    process.env.GOOGLE_CALL_BACK_URL ||
+    "http://localhost:8001/auth/google/callback",
+  SESSION_SECRET_KEY: process.env.SESSION_SECRET_KEY || "testsecret",
+  GOOGLE_SCOPE: [
+    "email",
+    "profile",
+    // "https://www.googleapis.com/auth/calendar.events",
+    // "https://www.googleapis.com/auth/calendar",
+    // "https://www.googleapis.com/auth/calendar.events.freebusy",
+    // "https://www.googleapis.com/auth/gmail.readonly",
+  ],
 };

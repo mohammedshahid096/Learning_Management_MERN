@@ -40,6 +40,9 @@ const ModelSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    google_id: {
+      type: String,
+    },
     courses: [
       {
         type: mongoose.Schema.Types.ObjectId,
