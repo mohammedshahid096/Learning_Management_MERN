@@ -9,6 +9,7 @@ const { DEVELOPMENT_MODE, SESSION_SECRET_KEY } = require("./Src/Config/index");
 const { morganFilePath, morganFormat } = require("./Src/Config/morgan.config");
 const corsConfig = require("./Src/Config/cors.config");
 const session = require("express-session");
+const MemoryStore = require("memorystore")(session);
 const passportConfig = require("./Src/Config/passport.config");
 const GoogleAuthRoutes = require("./Src/Routes/google.routes");
 
@@ -37,6 +38,10 @@ if (DEVELOPMENT_MODE === "development") {
 // session and passport session
 app.use(
   session({
+    cookie: { maxAge: 86400000 },
+    store: new MemoryStore({
+      checkPeriod: 86400000, // prune expired entries every 24h
+    }),
     secret: SESSION_SECRET_KEY,
     resave: false,
     saveUninitialized: true,
