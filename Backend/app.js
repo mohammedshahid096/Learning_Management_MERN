@@ -1,7 +1,6 @@
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const morgan = require("morgan");
 const MongoDataBaseConn = require("./Src/Config/mongodb.config");
 const CloudinaryConn = require("./Src/Config/cloudinary.config");
 const IndexRoutes = require("./Src/Routes/index.route");
@@ -32,6 +31,7 @@ app.use(cookieParser());
 app.use(cors(corsConfig));
 // morgan
 if (DEVELOPMENT_MODE === "development") {
+  const morgan = require("morgan");
   app.use(morgan(morganFormat.COMBINE, { stream: morganFilePath }));
 }
 
