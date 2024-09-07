@@ -5,7 +5,6 @@ const MongoDataBaseConn = require("./Src/Config/mongodb.config");
 const CloudinaryConn = require("./Src/Config/cloudinary.config");
 const IndexRoutes = require("./Src/Routes/index.route");
 const { DEVELOPMENT_MODE, SESSION_SECRET_KEY } = require("./Src/Config/index");
-const { morganFilePath, morganFormat } = require("./Src/Config/morgan.config");
 const corsConfig = require("./Src/Config/cors.config");
 const session = require("express-session");
 const MemoryStore = require("memorystore")(session);
@@ -31,6 +30,10 @@ app.use(cookieParser());
 app.use(cors(corsConfig));
 // morgan
 if (DEVELOPMENT_MODE === "development") {
+  const {
+    morganFilePath,
+    morganFormat,
+  } = require("./Src/Config/morgan.config");
   const morgan = require("morgan");
   app.use(morgan(morganFormat.COMBINE, { stream: morganFilePath }));
 }
