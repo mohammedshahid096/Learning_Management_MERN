@@ -1,0 +1,459 @@
+[{
+  "_id": {
+    "$oid": "663f5fec96f2460e35289268"
+  },
+  "title": "React Icons",
+  "description": "Include popular icons in your React projects easly with react-icons.",
+  "language": "en",
+  "url": "https://react-icons.github.io/react-icons/",
+  "provider": "react-icons github",
+  "keywords": [
+    "React",
+    "Icons",
+    "Tree Shaking",
+    "SVG"
+  ],
+  "icon": "https://react-icons.github.io/react-icons/favicon.png",
+  "isNpm": false,
+  "createdAt": {
+    "$date": "2024-05-11T12:09:16.191Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-11T12:09:16.191Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "663f6b6a51561f467121dd07"
+  },
+  "title": "Magic UI",
+  "description": "Beautiful UI components and templates to make your landing page look stunning.",
+  "language": "en",
+  "type": "website",
+  "url": "https://magicui.design/",
+  "provider": "magicui",
+  "keywords": [
+    "React",
+    "Tailwind CSS",
+    "Framer Motion",
+    "Landing Page",
+    "Components",
+    "Next.js"
+  ],
+  "author": "dillionverma",
+  "image": "https://magicui.design/api/og",
+  "icon": "https://magicui.design/apple-icon.png?540885f9655d3d99",
+  "isNpm": false,
+  "createdAt": {
+    "$date": "2024-05-11T12:58:18.484Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-11T12:58:18.484Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6641116efc3f5f76d1aad9aa"
+  },
+  "title": "Every shortcut for designers, centralized and searchable",
+  "description": "Shortcuts.design is the ultimate shortcut reference for designers. Charge your workflow with all the shortcuts of your favorite tools in one place 🚀",
+  "language": "en",
+  "type": "Resource for designers",
+  "url": "http://shortcuts.design",
+  "provider": "shortcuts",
+  "keywords": [
+    "shortcuts",
+    "shortcuts.design",
+    "Figma shortcuts mac",
+    "Figma shortcuts windows",
+    "all Figma shortcuts mac",
+    "all Figma shortcuts windows",
+    "figma keyboard shortcuts",
+    "windows shortcuts",
+    "sublime shortcuts",
+    "figma hotkeys",
+    "figma zoom to selection",
+    "all shortcuts",
+    "design shortcuts",
+    "shortcuts overview"
+  ],
+  "author": "Michel van Heest",
+  "twitter": "http://shortcuts.design",
+  "image": "https://shortcuts.design/shortcuts-design-social.jpg/",
+  "icon": "https://shortcuts.design/shortcuts-design-favicon.ico",
+  "isNpm": false,
+  "createdAt": {
+    "$date": "2024-05-12T18:58:54.019Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-12T18:58:54.019Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66411197fc3f5f76d1aad9ae"
+  },
+  "title": "CSS Loader Generator: CSS Spinners & CSS Progress Bars Online | 10015 Tools",
+  "description": "Online CSS Loader Generator is a free tool for generating CSS loaders from different categories such as CSS spinners, CSS progress bars, CSS dot loaders, CSS bar loaders and many more. You can customize the color, size, and speed of the loaders.",
+  "language": "en",
+  "type": "article",
+  "url": "https://10015.io/tools/css-loader-generator",
+  "provider": "10015",
+  "keywords": [],
+  "twitter": "https://10015.io/tools/css-loader-generator",
+  "image": "https://10015.io/assets/tools/og-image/css-loader-generator.jpg",
+  "icon": "https://10015.io/icons/icon-192x192.png",
+  "isNpm": false,
+  "createdAt": {
+    "$date": "2024-05-12T18:59:35.328Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-12T18:59:35.328Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "664111b2fc3f5f76d1aad9b2"
+  },
+  "title": "Shape Divider App",
+  "description": "Create fully responsive shape dividers for your next web project",
+  "language": "en",
+  "type": "website",
+  "url": "https://shapedivider.app/",
+  "provider": "shapedivider",
+  "keywords": [],
+  "image": "https://shapedivider.app/static/assets/images/shape_divider_app_share.png",
+  "icon": "https://shapedivider.app/favicon.ico",
+  "isNpm": false,
+  "createdAt": {
+    "$date": "2024-05-12T19:00:02.115Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-12T19:00:02.115Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "664111cdfc3f5f76d1aad9b6"
+  },
+  "title": "CSS Portal - Generators, Resources, Tools, HTML - CSS Portal",
+  "description": "CSS Portal is home to many examples of CSS / HTML and how it can be used in website design.",
+  "language": "en",
+  "type": "website",
+  "url": "https://www.cssportal.com/",
+  "provider": "cssportal",
+  "keywords": [
+    "css",
+    "css3",
+    "generators",
+    "html",
+    "resources",
+    "references"
+  ],
+  "image": "https://www.cssportal.com/assets/images/cssicon.png",
+  "icon": "https://www.cssportal.com/assets/images/favicon.ico",
+  "isNpm": false,
+  "createdAt": {
+    "$date": "2024-05-12T19:00:29.152Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-12T19:00:29.152Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "664111defc3f5f76d1aad9ba"
+  },
+  "title": "Remove Watermark - Upload Images to remove translucent watermarks - Watermarkremover.io",
+  "description": "The watermark remover tool allows you to remove watermarks from your images for free in just few seconds, no signup required.",
+  "language": "en",
+  "type": "website",
+  "url": "https://www.watermarkremover.io/upload",
+  "provider": "Watermarkremover.io",
+  "keywords": [
+    "remove watermark",
+    "remove watermark from image",
+    "watermark remover",
+    "watermarkremover.io",
+    "watermark",
+    "watermark free",
+    "watermark free image",
+    "remove watermark online"
+  ],
+  "author": "Fynd",
+  "twitter": "@wmremover_io",
+  "image": "https://www.watermarkremover.io/static/public/watermark_remover.jpg",
+  "icon": "https://cdn.pixelbin.io/v2/dummy-cloudname/original/watermarkremover_asset/logo/favicon.ico",
+  "isNpm": false,
+  "createdAt": {
+    "$date": "2024-05-12T19:00:46.503Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-12T19:00:46.503Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "664111f4fc3f5f76d1aad9be"
+  },
+  "title": "Bigjpg - AI Super-Resolution lossless image enlarging / upscaling tool using Deep Convolutional Neural Networks",
+  "description": "Bigjpg - Image Super-Resolution for Anime-style artworks using the Deep Convolutional Neural Networks without quality loss. Photos are also supported.",
+  "type": "website",
+  "url": "https://bigjpg.com",
+  "provider": "bigjpg",
+  "keywords": [
+    "bigjpg",
+    "waifu",
+    "waifu2x",
+    "waifu2x",
+    "miku",
+    "CNN",
+    "image enlarge",
+    "image enlarge",
+    "fangda",
+    "waifu github",
+    "upscaling",
+    "Image Super-Resolution Using Deep Convolutional Networks",
+    "Chao Dong",
+    "Chen Change Loy",
+    "Kaiming He",
+    "Xiaoou Tang",
+    "Anime-style art",
+    "without losing quality",
+    "PhotoZoom pro",
+    "photoshop cc",
+    "image enhance",
+    "image enhance"
+  ],
+  "author": "xieyang",
+  "image": "https://bigjpg.com/static/css/og.jpg",
+  "icon": "https://bigjpg.com/static/css/touch-icon-iphone-retina.png",
+  "isNpm": false,
+  "createdAt": {
+    "$date": "2024-05-12T19:01:08.549Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-12T19:01:08.549Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6641120efc3f5f76d1aad9c2"
+  },
+  "title": "Storyset | Customize, animate and download illustration for free",
+  "description": "Edit and animate all our customizable illustrations to enhance your projects totally free. Start now to be creative in our online editor ✅",
+  "language": "en",
+  "url": "https://storyset.com/",
+  "provider": "storyset",
+  "keywords": [],
+  "icon": "https://storyset.com/apple-touch-icon.png",
+  "isNpm": false,
+  "createdAt": {
+    "$date": "2024-05-12T19:01:34.004Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-12T19:01:34.004Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66411224fc3f5f76d1aad9c6"
+  },
+  "title": "Online Markdown Editor - Dillinger, the Last Markdown Editor ever.",
+  "description": "Dillinger is an online cloud based HTML5 filled\n  Markdown Editor. Sync with Dropbox, Github, Google Drive or OneDrive.\n  Convert HTML to Markdown. 100% Open Source!",
+  "language": "en",
+  "url": "https://dillinger.io/",
+  "provider": "dillinger",
+  "keywords": [
+    "Markdown",
+    "Dillinger",
+    "Editor",
+    "ACE",
+    "Github",
+    "Open Source",
+    "Node.js"
+  ],
+  "author": "Joe McCann and Martin Broder",
+  "icon": "https://dillinger.io/apple-touch-icon.png",
+  "isNpm": false,
+  "createdAt": {
+    "$date": "2024-05-12T19:01:56.961Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-12T19:01:56.961Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66411250fc3f5f76d1aad9ca"
+  },
+  "title": "Dein vernetzter Workspace für Wikis, Dokumente und Projekte | Notion",
+  "description": "Ein neues Tool, das alle Apps, die du täglich für deine Arbeit benötigst, an einem Ort zusammenfasst: Der einheitliche Workspace für dich und dein Team.",
+  "language": "de",
+  "type": "website",
+  "url": "https://www.notion.so/de-de",
+  "provider": "Notion",
+  "keywords": [],
+  "twitter": "@NotionHQ",
+  "image": "https://www.notion.so/front-static/meta/default.png",
+  "icon": "https://www.notion.so/front-static/logo-ios.png",
+  "isNpm": false,
+  "createdAt": {
+    "$date": "2024-05-12T19:02:40.534Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-12T19:02:40.534Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6641127afc3f5f76d1aad9ce"
+  },
+  "title": "cl1p.net - The internet clipboard",
+  "url": "https://cl1p.net",
+  "provider": "cl1p",
+  "keywords": [],
+  "icon": "https://cl1p.net/favicon.ico",
+  "isNpm": false,
+  "createdAt": {
+    "$date": "2024-05-12T19:03:22.552Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-12T19:03:22.552Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "664112bdfc3f5f76d1aad9d2"
+  },
+  "title": "moment",
+  "description": "Parse, validate, manipulate, and display dates. Latest version: 2.30.1, last published: 5 months ago. Start using moment in your project by running `npm i moment`. There are 69263 other projects in the npm registry using moment.",
+  "language": "en",
+  "url": "https://www.npmjs.com/package/moment",
+  "provider": "npm",
+  "keywords": [
+    "moment",
+    "date",
+    "time",
+    "parse",
+    "format",
+    "validate",
+    "i18n",
+    "l10n",
+    "ender"
+  ],
+  "image": "https://static-production.npmjs.com/338e4905a2684ca96e08c7780fc68412.png",
+  "icon": "https://static-production.npmjs.com/1996fcfdf7ca81ea795f67f093d7f449.png",
+  "isNpm": true,
+  "createdAt": {
+    "$date": "2024-05-12T19:04:29.900Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-15T13:08:01.259Z"
+  },
+  "__v": 0,
+  "author": "shahid"
+},
+{
+  "_id": {
+    "$oid": "664112d0fc3f5f76d1aad9d6"
+  },
+  "title": "react-youtube",
+  "description": "React.js powered YouTube player component. Latest version: 10.1.0, last published: a year ago. Start using react-youtube in your project by running `npm i react-youtube`. There are 263 other projects in the npm registry using react-youtube.",
+  "language": "en",
+  "url": "https://www.npmjs.com/package/react-youtube",
+  "provider": "npm",
+  "keywords": [
+    "react",
+    "youtube",
+    "player",
+    "react-component"
+  ],
+  "image": "https://static-production.npmjs.com/338e4905a2684ca96e08c7780fc68412.png",
+  "icon": "https://static-production.npmjs.com/1996fcfdf7ca81ea795f67f093d7f449.png",
+  "isNpm": true,
+  "createdAt": {
+    "$date": "2024-05-12T19:04:48.889Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-12T19:04:48.889Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "664112e1fc3f5f76d1aad9da"
+  },
+  "title": "react-player",
+  "description": "A React component for playing a variety of URLs, including file paths, YouTube, Facebook, Twitch, SoundCloud, Streamable, Vimeo, Wistia and DailyMotion. Latest version: 2.16.0, last published: a month ago. Start using react-player in your project by running `npm i react-player`. There are 1130 other projects in the npm registry using react-player.",
+  "language": "en",
+  "url": "https://www.npmjs.com/package/react-player",
+  "provider": "npm",
+  "keywords": [
+    "react",
+    "media",
+    "player",
+    "video",
+    "audio",
+    "youtube",
+    "facebook",
+    "twitch",
+    "soundcloud",
+    "streamable",
+    "vimeo",
+    "wistia",
+    "dailymotion",
+    "hls",
+    "dash",
+    "react-component"
+  ],
+  "image": "https://static-production.npmjs.com/338e4905a2684ca96e08c7780fc68412.png",
+  "icon": "https://static-production.npmjs.com/1996fcfdf7ca81ea795f67f093d7f449.png",
+  "isNpm": true,
+  "createdAt": {
+    "$date": "2024-05-12T19:05:05.036Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-12T19:05:05.036Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "664112f0fc3f5f76d1aad9de"
+  },
+  "title": "timeago.js",
+  "description": "timeago.js is a simple library (only 1kb) to used to format datetime with `*** time ago` statement. eg: '3 hours ago'. localization supported.. Latest version: 4.0.2, last published: 4 years ago. Start using timeago.js in your project by running `npm i timeago.js`. There are 217 other projects in the npm registry using timeago.js.",
+  "language": "en",
+  "url": "https://www.npmjs.com/package/timeago.js",
+  "provider": "npm",
+  "keywords": [
+    "timeago",
+    "datetime",
+    "*** time ago",
+    "date",
+    "javascript timeago"
+  ],
+  "image": "https://static-production.npmjs.com/338e4905a2684ca96e08c7780fc68412.png",
+  "icon": "https://static-production.npmjs.com/1996fcfdf7ca81ea795f67f093d7f449.png",
+  "isNpm": true,
+  "createdAt": {
+    "$date": "2024-05-12T19:05:20.585Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-15T13:08:41.781Z"
+  },
+  "__v": 0
+}]

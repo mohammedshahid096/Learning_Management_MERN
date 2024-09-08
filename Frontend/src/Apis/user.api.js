@@ -1,5 +1,6 @@
 import { URLConstant } from "../config/URLConstant";
 import axiosInstance, { AxiosConfig } from "../config/axiosInstance";
+import axios from "axios";
 
 /**
  * The function `UpdateUserRoleApi` sends a PATCH request to update a user's role using Axios with
@@ -125,10 +126,36 @@ export const Add_or_DeleteCourseUserAdminApi = async (
   }
 };
 
-// export const GetUserIdByQueryApi = async(query)=>{
-//   try {
-//     const config =
-//   } catch (error) {
-//     return error?.response?.data || error
-//   }
-// }
+export const ResetPasswordApi = async (token, details) => {
+  try {
+    const config = new AxiosConfig();
+    config.removeWithCredentials();
+
+    const { data } = await axios.put(
+      `${URLConstant}/user/password/reset-password/${token}`,
+      details,
+      config.getConfig()
+    );
+
+    return data;
+  } catch (error) {
+    return error?.response?.data || error;
+  }
+};
+
+export const ForgetPasswordTokenApi = async (details) => {
+  try {
+    const config = new AxiosConfig();
+    config.removeWithCredentials();
+
+    const { data } = await axios.post(
+      `${URLConstant}/user/password/forgot`,
+      details,
+      config.getConfig()
+    );
+
+    return data;
+  } catch (error) {
+    return error?.response?.data || error;
+  }
+};

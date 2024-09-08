@@ -1,0 +1,1305 @@
+{
+	"info": {
+		"_postman_id": "495bd7ce-b872-48a9-8b4d-d670e87fa2da",
+		"name": "LMS(Learning Management)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28253165"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\" :\"udaysree\",\r\n  \"email\":\"www.mohdshahid303@gmail.com\",\r\n  \"password\" :\"Shahid@123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{lms_url}}/api/v1/user/register",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"register"
+							]
+						},
+						"description": "Register a New User"
+					},
+					"response": []
+				},
+				{
+					"name": "Verify Account",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"activation_code\":\"9234\",\r\n  \"activation_token\" :\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Im5hbWUiOiJNb2hhbW1lZCBzaGFoaWQiLCJlbWFpbCI6Ind3dy5tb2hkc2hhaGlkMzAzQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiU2hhaGlkQDEyMyJ9LCJhY3RpdmF0aW9uQ29kZSI6IjkyMzgiLCJpYXQiOjE3MDg2MjUyOTcsImV4cCI6MTcwODYyNTU5N30.0GH6W8kN0blyXrx9CVbe4NpZaNVy-CB0hi19xIDvQko\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{lms_url}}/api/v1/user/verify",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"verify"
+							]
+						},
+						"description": "Verify the Account\n\nbody parameters are : activation_code, activation_token"
+					},
+					"response": []
+				},
+				{
+					"name": "Login User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\":\"mohdshahid303@gmail.com\",\r\n//   \"email\":\"user1@example.com\",\r\n  \"password\" :\"Shahid@1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{lms_url}}/api/v1/user/login",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"login"
+							]
+						},
+						"description": "Login a user\n\nbody params are :\n\nname , email, password"
+					},
+					"response": []
+				},
+				{
+					"name": "Logout User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{lms_url}}/api/v1/user/logout",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"logout"
+							]
+						},
+						"description": "Login a user\n\nbody params are :\n\nname , email, password"
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{lms_url}}/api/v1/user/refresh_token",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"refresh_token"
+							]
+						},
+						"description": "refreshing the new Access Token\n\nfor this we need to have a refresh token cookie"
+					},
+					"response": []
+				},
+				{
+					"name": "Social Auth",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\":\"mohdshahid303@gmail.com\",\r\n  \"name\" :\"shahdi\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{lms_url}}/api/v1/user/socialAuth",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"socialAuth"
+							]
+						},
+						"description": "Login or sign in\n\nbody params are :\n\nname , email,"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "MyProfile",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{lms_url}}/api/v1/user/me",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Forgot Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" :\"waxesan459@esterace.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{lms_url}}/api/v1/user/password/forgot",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"password",
+								"forgot"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Rest Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\" :\"Shahid@1223\",\r\n    \"confirm_password\" :\"Shahid@12234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{lms_url}}/api/v1/user/password/reset-password/4afdef10e1e4f109c608a26842520473a1409dacdabe42d2e2fb12c894f2",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"password",
+								"reset-password",
+								"4afdef10e1e4f109c608a26842520473a1409dacdabe42d2e2fb12c894f2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Users Admin",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{lms_url}}/api/v1/user/users/all",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"users",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Role --Admin",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"role\" :\"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{lms_url}}/api/v1/user/role/65f1eba3e2ffb84f57564edd",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"role",
+								"65f1eba3e2ffb84f57564edd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add  user course--Admin",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"courseid\" :\"65df8a551cf9c7602a747783\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{lms_url}}/api/v1/user/users/65f1eba3e2ffb84f57564edd",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"users",
+								"65f1eba3e2ffb84f57564edd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete user course --Admin Copy",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"courseid\" :\"65df8a551cf9c7602a747783\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{lms_url}}/api/v1/user/users/65f1eba3e2ffb84f57564edd",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"users",
+								"65f1eba3e2ffb84f57564edd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete user --Admin",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"role\" :\"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{lms_url}}/api/v1/user/delete/65f1eba3e2ffb84f57564edd",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"delete",
+								"65f1eba3e2ffb84f57564edd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Profile",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" :\"Mohammed Shahid\"\r\n    // \"email\" :\"shahid@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{lms_url}}/api/v1/user/me",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"me"
+							]
+						},
+						"description": "This endpoint allows the user to update their own profile information. The HTTP PUT request is sent to {{lms_url}}/api/v1/user/me with the user's updated details in the request body. The request body should contain the \"name\" field with the updated name. The \"email\" field can also be included for updating the email address.\n\n### Request Body\n\n- name (string, optional): The updated name of the user.\n    \n- email (string, optional): The updated email address of the user.\n    \n\n### Response\n\nUpon a successful update, the endpoint returns a 200 status code with a JSON response. The response includes a \"success\" boolean indicating the success status, a \"statusCode\" for further details, and the updated user \"data\" object containing the user's profile information such as \"url\", \"_id\", \"name\", \"email\", \"role\", \"isVerified\", \"courses\", \"createdAt\", \"updatedAt\", and \"__v\".\n\nExample Response:\n\n``` json\n{\n    \"success\": true,\n    \"statusCode\": 0,\n    \"data\": {\n        \"profile\": {\n            \"url\": \"\"\n        },\n        \"_id\": \"\",\n        \"name\": \"\",\n        \"email\": \"\",\n        \"role\": \"\",\n        \"isVerified\": true,\n        \"courses\": [],\n        \"createdAt\": \"\",\n        \"updatedAt\": \"\",\n        \"__v\": 0\n    }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Password",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"old_password\" :\"Shahid@1234\",\r\n    \"new_password\" :\"Shahid@123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{lms_url}}/api/v1/user/me/update-password",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"me",
+								"update-password"
+							]
+						},
+						"description": "This endpoint allows the currently authenticated user to update their password. The HTTP PUT request should be sent to {{lms_url}}/api/v1/user/me/update-password with a raw request body containing the old password and the new password.\n\n### Request Body\n\n- old_password (string, required): The user's current password.\n- new_password (string, required): The new password to be set.\n    \n\n### Response\n\nUpon a successful update, the API returns a 200 status with a JSON response containing the following fields:\n\n- success (boolean): Indicates if the password update was successful.\n- statusCode (integer): A code indicating the status of the operation.\n- message (string): A message related to the password update operation.\n    \n\nExample Response:\n\n``` json\n{\n    \"success\": true,\n    \"statusCode\": 0,\n    \"message\": \"\"\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "User Avatar Profile",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "ProfileAvatar",
+									"type": "file",
+									"src": "/C:/Users/MOHAMMED SHAHID/Pictures/chslogo.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{lms_url}}/api/v1/user/me/avatar",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"me",
+								"avatar"
+							]
+						},
+						"description": "This endpoint allows the user to update their avatar by sending an HTTP PUT request to {{lms_url}}/api/v1/user/me/avatar. The request should use form-data as the body type, with the key \"ProfileAvatar\" containing the avatar file to be uploaded.\n\nUpon successful execution, the API returns a 200 status code with a JSON response. The response includes a \"success\" flag indicating the success of the operation, along with a \"data\" object containing the updated profile information. This includes the public ID and URL of the updated avatar, as well as other user details such as ID, name, email, role, verification status, courses, creation and update timestamps, and version."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Courses",
+			"item": [
+				{
+					"name": "Add Course",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"playlistid\": \"PLinedj3B30sDby4Al-i13hQJGQoRQDfPo\",\r\n  \"price\": 1299,\r\n  \"estimatedprice\": 1500,\r\n  \"tags\": \"Node.js, JavaScript, Backend\",\r\n  \"level\": \"Intermediate\",\r\n  \"benefits\": [\r\n    { \"title\": \"Understand asynchronous programming in Node.js\" },\r\n    { \"title\": \"Build RESTful APIs with Express.js\" },\r\n    { \"title\": \"Integrate MongoDB for database operations\" },\r\n    { \"title\": \"Deploy Node.js applications to production servers\" }\r\n  ],\r\n  \"prerequsites\": [\r\n    { \"title\": \"Basic knowledge of JavaScript\" },\r\n    { \"title\": \"Understanding of web development concepts\" }\r\n  ],\r\n  \"rating\": 4.5,\r\n  \"purchase\": 10\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{lms_url}}/api/v1/course/uploadCourse",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"course",
+								"uploadCourse"
+							]
+						},
+						"description": "### Upload Course\n\nThis API endpoint allows you to upload a new course to the learning management system.\n\n- Method: POST\n- URL: `{{lms_url}}/api/v1/course/uploadCourse`\n    \n\n#### Request Body\n\n- Payload (raw request body type):\n    \n    ``` json\n    {\n      \"playlistid\":\"\",\n      \"price\":0,\n      \"estimatedprice\":0,\n      \"tags\":\"\",\n      \"level\":\"\",\n      \"benefits\":[{\"title\":\"\"}],\n      \"prerequsites\":[{\"title\":\"\"}],\n      \"rating\":0,\n      \"purchase\":0\n    }\n    \n     ```\n    \n\n#### Response\n\n- Status: 201\n- Content-Type: application/json\n- Body:\n    \n    ``` json\n    {\n      \"success\":true,\n      \"statusCode\":0,\n      \"data\":{\n        \"details\":{\n          \"name\":\"\",\n          \"description\":\"\",\n          \"price\":0,\n          \"estimatedprice\":0,\n          \"thumbnail\":{\"url\":\"\"},\n          \"tags\":\"\",\n          \"level\":\"\",\n          \"demoUrl\":\"\",\n          \"benefits\":[{\"title\":\"\",\"_id\":\"\"}],\n          \"prerequsites\":[{\"title\":\"\",\"_id\":\"\"}],\n          \"rating\":0,\n          \"purchase\":0,\n          \"_id\":\"\",\n          \"createdAt\":\"\",\n          \"updatedAt\":\"\",\n          \"__v\":0\n        },\n        \"courseData\":[\n          {\n            \"courseid\":\"\",\n            \"videoUrl\":\"\",\n            \"videothumbnail\":{\"url\":\"\"},\n            \"title\":\"\",\n            \"description\":\"\",\n            \"length\":{\n              \"accessibility\":{\n                \"accessibilityData\":{\"label\":\"\"}\n              },\n              \"simpleText\":\"\"\n            },\n            \"sequence\":0,\n            \"_id\":\"\",\n            \"links\":[],\n            \"createdAt\":\"\",\n            \"updatedAt\":\"\",\n            \"__v\":0\n          }\n        ]\n      }\n    }\n    \n     ```\n    \n\nThis endpoint returns a success status with detailed information about the uploaded course in the response body."
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Course",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n//   \"price\": 1299,\r\n  \"estimatedprice\": 1600\r\n//   \"tags\": \"Node.js, JavaScript, Backend\",\r\n//   \"level\": \"Intermediate\",\r\n//   \"benefits\": [\r\n//     { \"title\": \"Understand asynchronous programming in Node.js\" },\r\n//     { \"title\": \"Build RESTful APIs with Express.js\" },\r\n//     { \"title\": \"Integrate MongoDB for database operations\" },\r\n//     { \"title\": \"Deploy Node.js applications to production servers\" }\r\n//   ],\r\n//   \"prerequsites\": [\r\n//     { \"title\": \"Basic knowledge of JavaScript\" },\r\n//     { \"title\": \"Understanding of web development concepts\" }\r\n//   ],\r\n//   \"rating\": 4.5,\r\n//   \"purchase\": 10\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{lms_url}}/api/v1/course/single/65df8a551cf9c7602a747783",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"course",
+								"single",
+								"65df8a551cf9c7602a747783"
+							]
+						},
+						"description": "### Upload Course\n\nThis API endpoint allows you to upload a new course to the learning management system.\n\n- Method: POST\n- URL: `{{lms_url}}/api/v1/course/uploadCourse`\n    \n\n#### Request Body\n\n- Payload (raw request body type):\n    \n    ``` json\n    {\n      \"playlistid\":\"\",\n      \"price\":0,\n      \"estimatedprice\":0,\n      \"tags\":\"\",\n      \"level\":\"\",\n      \"benefits\":[{\"title\":\"\"}],\n      \"prerequsites\":[{\"title\":\"\"}],\n      \"rating\":0,\n      \"purchase\":0\n    }\n    \n     ```\n    \n\n#### Response\n\n- Status: 201\n- Content-Type: application/json\n- Body:\n    \n    ``` json\n    {\n      \"success\":true,\n      \"statusCode\":0,\n      \"data\":{\n        \"details\":{\n          \"name\":\"\",\n          \"description\":\"\",\n          \"price\":0,\n          \"estimatedprice\":0,\n          \"thumbnail\":{\"url\":\"\"},\n          \"tags\":\"\",\n          \"level\":\"\",\n          \"demoUrl\":\"\",\n          \"benefits\":[{\"title\":\"\",\"_id\":\"\"}],\n          \"prerequsites\":[{\"title\":\"\",\"_id\":\"\"}],\n          \"rating\":0,\n          \"purchase\":0,\n          \"_id\":\"\",\n          \"createdAt\":\"\",\n          \"updatedAt\":\"\",\n          \"__v\":0\n        },\n        \"courseData\":[\n          {\n            \"courseid\":\"\",\n            \"videoUrl\":\"\",\n            \"videothumbnail\":{\"url\":\"\"},\n            \"title\":\"\",\n            \"description\":\"\",\n            \"length\":{\n              \"accessibility\":{\n                \"accessibilityData\":{\"label\":\"\"}\n              },\n              \"simpleText\":\"\"\n            },\n            \"sequence\":0,\n            \"_id\":\"\",\n            \"links\":[],\n            \"createdAt\":\"\",\n            \"updatedAt\":\"\",\n            \"__v\":0\n          }\n        ]\n      }\n    }\n    \n     ```\n    \n\nThis endpoint returns a success status with detailed information about the uploaded course in the response body."
+					},
+					"response": []
+				},
+				{
+					"name": "Single Course",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{lms_url}}/api/v1/course/single/65df8a551cf9c7602a747783",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"course",
+								"single",
+								"65df8a551cf9c7602a747783"
+							]
+						},
+						"description": "This HTTP GET request retrieves the details of a specific course by providing the course ID in the URL. The response contains the course details including its name, description, price, tags, level, benefits, prerequisites, rating, purchase count, and creation/update timestamps. Additionally, it includes an array of course data containing video details such as video URL, title, description, length, sequence, and timestamps."
+					},
+					"response": []
+				},
+				{
+					"name": "All Courses Without",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{lms_url}}/api/v1/course/all",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"course",
+								"all"
+							]
+						},
+						"description": "This HTTP GET request retrieves the details of a specific course by providing the course ID in the URL. The response contains the course details including its name, description, price, tags, level, benefits, prerequisites, rating, purchase count, and creation/update timestamps. Additionally, it includes an array of course data containing video details such as video URL, title, description, length, sequence, and timestamps."
+					},
+					"response": []
+				},
+				{
+					"name": "All Courses List Admin",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{lms_url}}/api/v1/course/courses/list",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"course",
+								"courses",
+								"list"
+							]
+						},
+						"description": "This HTTP GET request retrieves the details of a specific course by providing the course ID in the URL. The response contains the course details including its name, description, price, tags, level, benefits, prerequisites, rating, purchase count, and creation/update timestamps. Additionally, it includes an array of course data containing video details such as video URL, title, description, length, sequence, and timestamps."
+					},
+					"response": []
+				},
+				{
+					"name": "User Single Course",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{lms_url}}/api/v1/course/course-single-content/65df8a551cf9c7602a747783",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"course",
+								"course-single-content",
+								"65df8a551cf9c7602a747783"
+							]
+						},
+						"description": "This HTTP GET request retrieves the details of a specific course by providing the course ID in the URL. The response contains the course details including its name, description, price, tags, level, benefits, prerequisites, rating, purchase count, and creation/update timestamps. Additionally, it includes an array of course data containing video details such as video URL, title, description, length, sequence, and timestamps."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Questions",
+			"item": [
+				{
+					"name": "Add Question",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"courseid\":\"65df8a551cf9c7602a747783\",\r\n    \"question\" :\"why the only node js\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{lms_url}}/api/v1/question/add/65e06e21cdf52f603f02a061",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"question",
+								"add",
+								"65e06e21cdf52f603f02a061"
+							]
+						},
+						"description": "### Add Question\n\nThis endpoint allows you to add a new question to a specific course.\n\n#### Request Body\n\n- `courseid` (string, required): The ID of the course to which the question belongs.\n- `question` (string, required): The text of the question.\n    \n\n#### Response\n\n- `success` (boolean): Indicates if the request was successful.\n- `statusCode` (integer): The status code of the response.\n- `message` (string): Additional information or error message.\n- `newQuestion` (object): Details of the newly added question, including its ID, course ID, author, question text, and an empty array of answers.\n    \n\nExample:\n\n``` json\n{\n    \"success\": true,\n    \"statusCode\": 0,\n    \"message\": \"\",\n    \"newQuestion\": {\n        \"courseid\": \"\",\n        \"coursesData_id\": \"\",\n        \"askedBy\": \"\",\n        \"question\": \"\",\n        \"_id\": \"\",\n        \"answers\": [],\n        \"__v\": 0\n    }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Add Answer",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"courseid\":\"65df8a551cf9c7602a747783\",\r\n    \"answer\" :\"yaa this is truee\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{lms_url}}/api/v1/question/add-answer/65e06e21cdf52f603f02a061",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"question",
+								"add-answer",
+								"65e06e21cdf52f603f02a061"
+							]
+						},
+						"description": "### Add Question\n\nThis endpoint allows you to add a new question to a specific course.\n\n#### Request Body\n\n- `courseid` (string, required): The ID of the course to which the question belongs.\n- `question` (string, required): The text of the question.\n    \n\n#### Response\n\n- `success` (boolean): Indicates if the request was successful.\n- `statusCode` (integer): The status code of the response.\n- `message` (string): Additional information or error message.\n- `newQuestion` (object): Details of the newly added question, including its ID, course ID, author, question text, and an empty array of answers.\n    \n\nExample:\n\n``` json\n{\n    \"success\": true,\n    \"statusCode\": 0,\n    \"message\": \"\",\n    \"newQuestion\": {\n        \"courseid\": \"\",\n        \"coursesData_id\": \"\",\n        \"askedBy\": \"\",\n        \"question\": \"\",\n        \"_id\": \"\",\n        \"answers\": [],\n        \"__v\": 0\n    }\n}\n\n ```"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reviews",
+			"item": [
+				{
+					"name": "Add Review",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"courseid\":\"65df8a551cf9c7602a747783\",\r\n    \"review\" :\"this course is very nice\",\r\n     \"rating\" :3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{lms_url}}/api/v1/review/add/65df8a551cf9c7602a747783",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"review",
+								"add",
+								"65df8a551cf9c7602a747783"
+							]
+						},
+						"description": "### Add Question\n\nThis endpoint allows you to add a new question to a specific course.\n\n#### Request Body\n\n- `courseid` (string, required): The ID of the course to which the question belongs.\n- `question` (string, required): The text of the question.\n    \n\n#### Response\n\n- `success` (boolean): Indicates if the request was successful.\n- `statusCode` (integer): The status code of the response.\n- `message` (string): Additional information or error message.\n- `newQuestion` (object): Details of the newly added question, including its ID, course ID, author, question text, and an empty array of answers.\n    \n\nExample:\n\n``` json\n{\n    \"success\": true,\n    \"statusCode\": 0,\n    \"message\": \"\",\n    \"newQuestion\": {\n        \"courseid\": \"\",\n        \"coursesData_id\": \"\",\n        \"askedBy\": \"\",\n        \"question\": \"\",\n        \"_id\": \"\",\n        \"answers\": [],\n        \"__v\": 0\n    }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Reply",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"reply\":\"amazing thannks\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{lms_url}}/api/v1/review/reply/65e0962ca23af57fae34bc1f",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"review",
+								"reply",
+								"65e0962ca23af57fae34bc1f"
+							]
+						},
+						"description": "### Add Question\n\nThis endpoint allows you to add a new question to a specific course.\n\n#### Request Body\n\n- `courseid` (string, required): The ID of the course to which the question belongs.\n- `question` (string, required): The text of the question.\n    \n\n#### Response\n\n- `success` (boolean): Indicates if the request was successful.\n- `statusCode` (integer): The status code of the response.\n- `message` (string): Additional information or error message.\n- `newQuestion` (object): Details of the newly added question, including its ID, course ID, author, question text, and an empty array of answers.\n    \n\nExample:\n\n``` json\n{\n    \"success\": true,\n    \"statusCode\": 0,\n    \"message\": \"\",\n    \"newQuestion\": {\n        \"courseid\": \"\",\n        \"coursesData_id\": \"\",\n        \"askedBy\": \"\",\n        \"question\": \"\",\n        \"_id\": \"\",\n        \"answers\": [],\n        \"__v\": 0\n    }\n}\n\n ```"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Order",
+			"item": [
+				{
+					"name": "New Order place",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"courseid\":\"65df8a551cf9c7602a747783\",\r\n    \"payment_info\":{\r\n        \"mode\":\"upi\",\r\n        \"price\":1299\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{lms_url}}/api/v1/order/addnew",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"order",
+								"addnew"
+							]
+						},
+						"description": "### Add Question\n\nThis endpoint allows you to add a new question to a specific course.\n\n#### Request Body\n\n- `courseid` (string, required): The ID of the course to which the question belongs.\n- `question` (string, required): The text of the question.\n    \n\n#### Response\n\n- `success` (boolean): Indicates if the request was successful.\n- `statusCode` (integer): The status code of the response.\n- `message` (string): Additional information or error message.\n- `newQuestion` (object): Details of the newly added question, including its ID, course ID, author, question text, and an empty array of answers.\n    \n\nExample:\n\n``` json\n{\n    \"success\": true,\n    \"statusCode\": 0,\n    \"message\": \"\",\n    \"newQuestion\": {\n        \"courseid\": \"\",\n        \"coursesData_id\": \"\",\n        \"askedBy\": \"\",\n        \"question\": \"\",\n        \"_id\": \"\",\n        \"answers\": [],\n        \"__v\": 0\n    }\n}\n\n ```"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Notifications",
+			"item": [
+				{
+					"name": "All Notifications",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"courseid\":\"65df8a551cf9c7602a747783\",\r\n    \"payment_info\":{\r\n        \"mode\":\"upi\",\r\n        \"price\":1299\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{lms_url}}/api/v1/notification/all",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"notification",
+								"all"
+							]
+						},
+						"description": "### Add Question\n\nThis endpoint allows you to add a new question to a specific course.\n\n#### Request Body\n\n- `courseid` (string, required): The ID of the course to which the question belongs.\n- `question` (string, required): The text of the question.\n    \n\n#### Response\n\n- `success` (boolean): Indicates if the request was successful.\n- `statusCode` (integer): The status code of the response.\n- `message` (string): Additional information or error message.\n- `newQuestion` (object): Details of the newly added question, including its ID, course ID, author, question text, and an empty array of answers.\n    \n\nExample:\n\n``` json\n{\n    \"success\": true,\n    \"statusCode\": 0,\n    \"message\": \"\",\n    \"newQuestion\": {\n        \"courseid\": \"\",\n        \"coursesData_id\": \"\",\n        \"askedBy\": \"\",\n        \"question\": \"\",\n        \"_id\": \"\",\n        \"answers\": [],\n        \"__v\": 0\n    }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Notification",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"courseid\":\"65df8a551cf9c7602a747783\",\r\n    \"payment_info\":{\r\n        \"mode\":\"upi\",\r\n        \"price\":1299\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{lms_url}}/api/v1/notification/single/65ea0eb03ee45ea86918e1d0",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"notification",
+								"single",
+								"65ea0eb03ee45ea86918e1d0"
+							]
+						},
+						"description": "### Add Question\n\nThis endpoint allows you to add a new question to a specific course.\n\n#### Request Body\n\n- `courseid` (string, required): The ID of the course to which the question belongs.\n- `question` (string, required): The text of the question.\n    \n\n#### Response\n\n- `success` (boolean): Indicates if the request was successful.\n- `statusCode` (integer): The status code of the response.\n- `message` (string): Additional information or error message.\n- `newQuestion` (object): Details of the newly added question, including its ID, course ID, author, question text, and an empty array of answers.\n    \n\nExample:\n\n``` json\n{\n    \"success\": true,\n    \"statusCode\": 0,\n    \"message\": \"\",\n    \"newQuestion\": {\n        \"courseid\": \"\",\n        \"coursesData_id\": \"\",\n        \"askedBy\": \"\",\n        \"question\": \"\",\n        \"_id\": \"\",\n        \"answers\": [],\n        \"__v\": 0\n    }\n}\n\n ```"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "All Categories",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"courseid\":\"65df8a551cf9c7602a747783\",\r\n    \"payment_info\":{\r\n        \"mode\":\"upi\",\r\n        \"price\":1299\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{lms_url}}/api/v1/category/all",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"category",
+								"all"
+							]
+						},
+						"description": "### Add Question\n\nThis endpoint allows you to add a new question to a specific course.\n\n#### Request Body\n\n- `courseid` (string, required): The ID of the course to which the question belongs.\n- `question` (string, required): The text of the question.\n    \n\n#### Response\n\n- `success` (boolean): Indicates if the request was successful.\n- `statusCode` (integer): The status code of the response.\n- `message` (string): Additional information or error message.\n- `newQuestion` (object): Details of the newly added question, including its ID, course ID, author, question text, and an empty array of answers.\n    \n\nExample:\n\n``` json\n{\n    \"success\": true,\n    \"statusCode\": 0,\n    \"message\": \"\",\n    \"newQuestion\": {\n        \"courseid\": \"\",\n        \"coursesData_id\": \"\",\n        \"askedBy\": \"\",\n        \"question\": \"\",\n        \"_id\": \"\",\n        \"answers\": [],\n        \"__v\": 0\n    }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Single Category",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"courseid\":\"65df8a551cf9c7602a747783\",\r\n    \"payment_info\":{\r\n        \"mode\":\"upi\",\r\n        \"price\":1299\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{lms_url}}/api/v1/category/single/660a61eb32152405cb0783a3",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"category",
+								"single",
+								"660a61eb32152405cb0783a3"
+							]
+						},
+						"description": "### Add Question\n\nThis endpoint allows you to add a new question to a specific course.\n\n#### Request Body\n\n- `courseid` (string, required): The ID of the course to which the question belongs.\n- `question` (string, required): The text of the question.\n    \n\n#### Response\n\n- `success` (boolean): Indicates if the request was successful.\n- `statusCode` (integer): The status code of the response.\n- `message` (string): Additional information or error message.\n- `newQuestion` (object): Details of the newly added question, including its ID, course ID, author, question text, and an empty array of answers.\n    \n\nExample:\n\n``` json\n{\n    \"success\": true,\n    \"statusCode\": 0,\n    \"message\": \"\",\n    \"newQuestion\": {\n        \"courseid\": \"\",\n        \"coursesData_id\": \"\",\n        \"askedBy\": \"\",\n        \"question\": \"\",\n        \"_id\": \"\",\n        \"answers\": [],\n        \"__v\": 0\n    }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Add Category",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\" :\"Node js\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{lms_url}}/api/v1/category/add",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"category",
+								"add"
+							]
+						},
+						"description": "### Add Question\n\nThis endpoint allows you to add a new question to a specific course.\n\n#### Request Body\n\n- `courseid` (string, required): The ID of the course to which the question belongs.\n- `question` (string, required): The text of the question.\n    \n\n#### Response\n\n- `success` (boolean): Indicates if the request was successful.\n- `statusCode` (integer): The status code of the response.\n- `message` (string): Additional information or error message.\n- `newQuestion` (object): Details of the newly added question, including its ID, course ID, author, question text, and an empty array of answers.\n    \n\nExample:\n\n``` json\n{\n    \"success\": true,\n    \"statusCode\": 0,\n    \"message\": \"\",\n    \"newQuestion\": {\n        \"courseid\": \"\",\n        \"coursesData_id\": \"\",\n        \"askedBy\": \"\",\n        \"question\": \"\",\n        \"_id\": \"\",\n        \"answers\": [],\n        \"__v\": 0\n    }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateCategory --Admin",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{lms_url}}/api/v1/category/single/660a61b332152405cb0783a0",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"category",
+								"single",
+								"660a61b332152405cb0783a0"
+							]
+						},
+						"description": "### Add Question\n\nThis endpoint allows you to add a new question to a specific course.\n\n#### Request Body\n\n- `courseid` (string, required): The ID of the course to which the question belongs.\n- `question` (string, required): The text of the question.\n    \n\n#### Response\n\n- `success` (boolean): Indicates if the request was successful.\n- `statusCode` (integer): The status code of the response.\n- `message` (string): Additional information or error message.\n- `newQuestion` (object): Details of the newly added question, including its ID, course ID, author, question text, and an empty array of answers.\n    \n\nExample:\n\n``` json\n{\n    \"success\": true,\n    \"statusCode\": 0,\n    \"message\": \"\",\n    \"newQuestion\": {\n        \"courseid\": \"\",\n        \"coursesData_id\": \"\",\n        \"askedBy\": \"\",\n        \"question\": \"\",\n        \"_id\": \"\",\n        \"answers\": [],\n        \"__v\": 0\n    }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Category --Admin",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{lms_url}}/api/v1/category/single/660a61eb32152405cb0783a3",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"category",
+								"single",
+								"660a61eb32152405cb0783a3"
+							]
+						},
+						"description": "### Add Question\n\nThis endpoint allows you to add a new question to a specific course.\n\n#### Request Body\n\n- `courseid` (string, required): The ID of the course to which the question belongs.\n- `question` (string, required): The text of the question.\n    \n\n#### Response\n\n- `success` (boolean): Indicates if the request was successful.\n- `statusCode` (integer): The status code of the response.\n- `message` (string): Additional information or error message.\n- `newQuestion` (object): Details of the newly added question, including its ID, course ID, author, question text, and an empty array of answers.\n    \n\nExample:\n\n``` json\n{\n    \"success\": true,\n    \"statusCode\": 0,\n    \"message\": \"\",\n    \"newQuestion\": {\n        \"courseid\": \"\",\n        \"coursesData_id\": \"\",\n        \"askedBy\": \"\",\n        \"question\": \"\",\n        \"_id\": \"\",\n        \"answers\": [],\n        \"__v\": 0\n    }\n}\n\n ```"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Dashboards",
+			"item": [
+				{
+					"name": "users --Admin",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"courseid\":\"65df8a551cf9c7602a747783\",\r\n    \"payment_info\":{\r\n        \"mode\":\"upi\",\r\n        \"price\":1299\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{lms_url}}/api/v1/dashboard/admin/users",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"dashboard",
+								"admin",
+								"users"
+							]
+						},
+						"description": "### Add Question\n\nThis endpoint allows you to add a new question to a specific course.\n\n#### Request Body\n\n- `courseid` (string, required): The ID of the course to which the question belongs.\n- `question` (string, required): The text of the question.\n    \n\n#### Response\n\n- `success` (boolean): Indicates if the request was successful.\n- `statusCode` (integer): The status code of the response.\n- `message` (string): Additional information or error message.\n- `newQuestion` (object): Details of the newly added question, including its ID, course ID, author, question text, and an empty array of answers.\n    \n\nExample:\n\n``` json\n{\n    \"success\": true,\n    \"statusCode\": 0,\n    \"message\": \"\",\n    \"newQuestion\": {\n        \"courseid\": \"\",\n        \"coursesData_id\": \"\",\n        \"askedBy\": \"\",\n        \"question\": \"\",\n        \"_id\": \"\",\n        \"answers\": [],\n        \"__v\": 0\n    }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "courses --Admin",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"courseid\":\"65df8a551cf9c7602a747783\",\r\n    \"payment_info\":{\r\n        \"mode\":\"upi\",\r\n        \"price\":1299\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{lms_url}}/api/v1/dashboard/admin/courses",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"dashboard",
+								"admin",
+								"courses"
+							]
+						},
+						"description": "### Add Question\n\nThis endpoint allows you to add a new question to a specific course.\n\n#### Request Body\n\n- `courseid` (string, required): The ID of the course to which the question belongs.\n- `question` (string, required): The text of the question.\n    \n\n#### Response\n\n- `success` (boolean): Indicates if the request was successful.\n- `statusCode` (integer): The status code of the response.\n- `message` (string): Additional information or error message.\n- `newQuestion` (object): Details of the newly added question, including its ID, course ID, author, question text, and an empty array of answers.\n    \n\nExample:\n\n``` json\n{\n    \"success\": true,\n    \"statusCode\": 0,\n    \"message\": \"\",\n    \"newQuestion\": {\n        \"courseid\": \"\",\n        \"coursesData_id\": \"\",\n        \"askedBy\": \"\",\n        \"question\": \"\",\n        \"_id\": \"\",\n        \"answers\": [],\n        \"__v\": 0\n    }\n}\n\n ```"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Notes",
+			"item": [
+				{
+					"name": "New Notes",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\" :\"Second new Notes\",\r\n    \"points\" :[\"shahidfhere are you\",\"this is soo and sooo project\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{lms_url}}/api/v1/notes/new-note",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"notes",
+								"new-note"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add New Point",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"point\" :\"this is soooooooooooooooooooooooo sooo project\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{lms_url}}/api/v1/notes/notepoint/6693a9178139eb4c44af956e",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"notes",
+								"notepoint",
+								"6693a9178139eb4c44af956e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Note",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"pointId\" :\"d442d3b6-e818-49e2-861c-bcf75e9c236d\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{lms_url}}/api/v1/notes/all/6693bc308668ef73f639da09",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"notes",
+								"all",
+								"6693bc308668ef73f639da09"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Single Note",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"pointId\" :\"d442d3b6-e818-49e2-861c-bcf75e9c236d\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{lms_url}}/api/v1/notes/all/6693bca40fce207169492803",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"notes",
+								"all",
+								"6693bca40fce207169492803"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Note Point",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"pointId\" :\"d442d3b6-e818-49e2-861c-bcf75e9c236d\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{lms_url}}/api/v1/notes/note-point/6693a9178139eb4c44af956e",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"notes",
+								"note-point",
+								"6693a9178139eb4c44af956e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All User Notes",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"pointId\" :\"d442d3b6-e818-49e2-861c-bcf75e9c236d\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{lms_url}}/api/v1/notes/all",
+							"host": [
+								"{{lms_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"notes",
+								"all"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

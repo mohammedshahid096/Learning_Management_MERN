@@ -8,9 +8,13 @@ const {
   UpdatePasswordValidation,
   UpdateUserRoleValidation,
   AddCourseByAdminValidation,
+  SendResetPasswordLinkValidation,
+  ResetPasswordValidation,
 } = require("../JoiSchemas/user.schema");
 const userModel = require("../Models/user.model");
 const coursesModel = require("../Models/course.model");
+const orderModel = require("../Models/order.model");
+const resetPasswordModel = require("../Models/resetpassword.model");
 const {
   errorConstant,
   SendMailConstant,
@@ -29,7 +33,12 @@ const SendToken = require("../Middlewares/SendToken");
 const { redis } = require("../Config/redis.config");
 const { GetSingleUserService } = require("../Services/user.service");
 const cloudinary = require("cloudinary");
-const orderModel = require("../Models/order.model");
+const {
+  GetResetPasswordToken,
+  GetHashedToken,
+} = require("../Utils/PasswordResetToken");
+const { ALLOW_ORIGINS_ACCESS, DEVELOPMENT_MODE } = require("../Config");
+const moment = require("moment");
 
 // creating a user controller
 module.exports.CreateUserController = async (req, res, next) => {
@@ -599,6 +608,129 @@ module.exports.GetUserIdByQueryController = async (req, res, next) => {
       statusCode: 200,
       message: "user found",
       data,
+    });
+  } catch (error) {
+    next(httpErrors.InternalServerError(error.message));
+  }
+};
+
+// forgot password controller
+module.exports.ForgotPasswordSendTokenController = async (req, res, next) => {
+  try {
+    const { error } = SendResetPasswordLinkValidation(req.body);
+    if (error) {
+      return next(httpErrors.BadRequest(error.details[0].message));
+    }
+    const { email } = req.body;
+
+    const isUserExist = await userModel
+      .findOne({ email, isSocialAuth: false })
+      .lean();
+
+    if (!isUserExist)
+      return next(httpErrors.NotFound(errorConstant.USER_NOT_FOUND));
+
+    const alreadySend = await resetPasswordModel.findOne({ email });
+    if (alreadySend) {
+      await resetPasswordModel.findByIdAndDelete(alreadySend._id);
+    }
+
+    const { hashToken, resetToken } = GetResetPasswordToken();
+
+    const details = {
+      email,
+      userid: isUserExist._id,
+      token: hashToken,
+      expiry: Date.now() + 15 * 60 * 1000,
+    };
+    const newPasswordDoc = new resetPasswordModel(details);
+    await newPasswordDoc.save();
+
+    const [local5173, local3000, production] = JSON.parse(ALLOW_ORIGINS_ACCESS);
+
+    let redirectUrl = null;
+    if (DEVELOPMENT_MODE === "development") {
+      redirectUrl = `${local5173}/reset-password/${resetToken}`;
+    } else {
+      redirectUrl = `${production}/reset-password/${resetToken}`;
+    }
+
+    await sendMail({
+      email,
+      subject: "LMS Reset Password",
+      template: "ResetPassword_mail.ejs",
+      data: {
+        userName: isUserExist.name,
+        redirectUrl,
+      },
+    });
+
+    res.status(200).json({
+      success: true,
+      statusCode: 200,
+      message: `successfully Email is to ${email} `,
+    });
+  } catch (error) {
+    next(httpErrors.InternalServerError(error.message));
+  }
+};
+
+// forgot password controller
+module.exports.ResetPasswordController = async (req, res, next) => {
+  try {
+    const { token } = req.params;
+    const { password, confirm_password } = req.body;
+
+    const { error } = ResetPasswordValidation(req.body);
+    if (error) return next(httpErrors.BadRequest(error.details[0].message));
+    if (password !== confirm_password)
+      return next(
+        httpErrors.BadRequest("password and confirm password should be same")
+      );
+
+    const hashToken = GetHashedToken(token);
+
+    const isDocExist = await resetPasswordModel
+      .findOne({ token: hashToken })
+      .lean();
+
+    if (!isDocExist)
+      return next(httpErrors.BadRequest("invalid URL or url expired"));
+
+    const expiryTime = moment(isDocExist.expiry);
+    const currentTime = moment();
+    const timeDiff = expiryTime.diff(currentTime);
+
+    if (timeDiff < 0) {
+      await resetPasswordModel.findByIdAndDelete(isDocExist._id);
+      return next(httpErrors.BadRequest("URL expired"));
+    }
+
+    const isUserExist = await userModel
+      .findById(isDocExist.userid)
+      .select("+password");
+
+    if (!isUserExist)
+      return next(httpErrors.NotFound(errorConstant.USER_NOT_FOUND));
+
+    const isPasswordMatch = await VerifyPasswordMethod(
+      password,
+      isUserExist.password
+    );
+
+    if (isPasswordMatch)
+      return next(
+        httpErrors.BadRequest("old and new password should not be same")
+      );
+
+    isUserExist.password = password;
+    await isUserExist.save();
+    await resetPasswordModel.findByIdAndDelete(isDocExist._id);
+
+    res.status(200).json({
+      success: true,
+      statusCode: 200,
+      message: `successfully your password is upadate `,
     });
   } catch (error) {
     next(httpErrors.InternalServerError(error.message));

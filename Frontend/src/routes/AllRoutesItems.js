@@ -25,6 +25,7 @@ import UserDetailPage from "../pages/admin/users/UserDetailPage";
 import AllNotes from "../pages/notes/AllNotes";
 import NotesDetails from "../pages/notes/NotesDetails";
 import SnippetPage from "../pages/snippet/SnippetPage";
+import ResetPassword from "../pages/ResetPassword";
 const AllUSers = ["admin", "teacher", "user"];
 
 const AllRoutesItems_1 = [
@@ -257,6 +258,18 @@ const RoleBasedRoutes = {
           num: 13,
           path: "/course/:courseId",
           element: CourseDetails,
+          protected: false,
+          Access: [],
+        },
+      ],
+    },
+    {
+      category: "Reset Password",
+      routes: [
+        {
+          num: 14,
+          path: "/reset-password/:tokenId",
+          element: ResetPassword,
           protected: false,
           Access: [],
         },

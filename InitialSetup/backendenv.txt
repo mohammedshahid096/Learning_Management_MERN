@@ -1,0 +1,57 @@
+# port
+PORT = 8000
+DEVELOPMENT_MODE = development 
+# DEVELOPMENT_MODE = production
+
+# mongo db
+DB_URL = 
+DB_URL_DEV = mongodb://127.0.0.1:27017/LMS
+
+# redis db
+REDIS_URL = 
+REDIS_URL_DEV = redis://default:authpassword@127.0.0.1:6379
+
+# jwt 
+### activation key
+JWT_SECRET_KEY = KwRus3Gc
+### Access Token 
+ACCESS_TOKEN_KEY = AMnjPNpwc
+ACCESS_TOKEN_KEY_TIME = 5m
+ACCESS_TOKEN_KEY_TIME_COOKIE = 5
+
+### Refresh Token
+REFRESH_TOKEN_KEY = CHdNpD3tj
+REFRESH_TOKEN_KEY_TIME = 3d 
+REFRESH_TOKEN_KEY_TIME_COOKIE = 3
+
+# Access Origins
+ALLOW_ORIGINS_ACCESS =["http://localhost:5173","http://localhost:3000"]
+
+
+# nodemailer
+NODEMAILER_SERVICE=gmail
+NODEMAILER_HOST=smtp.gmail.com
+NODEMAILER_PORT=587
+NODEMAILER_USER= 
+NODEMAILER_PASS=
+
+
+# cloudinary
+CLOUDINARY_NAME= 
+CLOUDINARY_API_KEY = 
+CLOUDINARY_API_SECRETKEY =
+
+# Razo Pay
+RAZOPAY_API_KEY = 
+RAZOPAY_API_SECRET = 
+RAZOPAY_REDIRECT_URL = http://localhost:5173/course
+
+
+# google console
+GOOGLE_CLIENT_ID = 
+GOOGLE_CLIENT_SECRET = 
+GOOGLE_CALL_BACK_URL = http://localhost:8000/auth/google/callback
+
+
+# session secret
+SESSION_SECRET_KEY = 

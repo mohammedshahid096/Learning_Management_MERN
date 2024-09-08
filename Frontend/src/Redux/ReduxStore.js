@@ -42,8 +42,8 @@ const store = configureStore({
   reducer,
   preloadedState: initialState,
   middleware,
-  devTools:
-    import.meta.env.VITE_DEVELOPMENT_MODE === "production" ? false : true,
+  // devTools:
+  //   import.meta.env.VITE_DEVELOPMENT_MODE === "production" ? false : true,
 });
 
 export default store;

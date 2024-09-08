@@ -16,6 +16,7 @@ import {
 } from "../Redux/actions/auth.action";
 import { useAuth0 } from "@auth0/auth0-react";
 import { closeLoginAccountWithDetails } from "../Redux/reducers/user.reducer";
+import { ForgetPasswordTokenApi } from "../Apis/user.api";
 
 export const Login = ({ setaccountType, setOpenModal }) => {
   // ### usestates
@@ -143,13 +144,13 @@ export const Login = ({ setaccountType, setOpenModal }) => {
             </div>
           </div>
         </div>
-        <div className="flex justify-end mb-4">
-          <a
-            href="#"
+        <div className="flex justify-end mb-4 cursor-pointer">
+          <span
+            onClick={() => setaccountType("forgotpassword")}
             className="text-sm text-cyan-700 hover:underline dark:text-cyan-500"
           >
             Lost Password?
-          </a>
+          </span>
         </div>
         <div>
           <Button
@@ -184,7 +185,7 @@ export const Login = ({ setaccountType, setOpenModal }) => {
         Not registered?&nbsp;
         <span
           onClick={() => setaccountType("signup")}
-          className="text-cyan-700 hover:underline dark:text-cyan-500"
+          className="text-cyan-700 hover:underline dark:text-cyan-500 cursor-pointer"
         >
           Create account
         </span>
@@ -372,7 +373,7 @@ export const Register = ({ setaccountType }) => {
         Already registered?&nbsp;
         <span
           onClick={() => setaccountType("login")}
-          className="text-cyan-700 hover:underline dark:text-cyan-500"
+          className="text-cyan-700 hover:underline dark:text-cyan-500 cursor-pointer"
         >
           Login here
         </span>
@@ -521,6 +522,105 @@ export const VerifyAccount = ({ setaccountType }) => {
           className="text-cyan-700 hover:underline dark:text-cyan-500"
         >
           login here
+        </span>
+      </div>
+    </div>
+  );
+};
+
+export const ForgotPassword = ({ setaccountType }) => {
+  const [loading, setloading] = useState(false);
+  // ### functions
+  const validateSchema = Yup.object().shape({
+    email: Yup.string()
+      .email("Invalid email")
+      .required("please enter your email!"),
+  });
+
+  const sumbitFunction = async (details) => {
+    setloading(true);
+    const response = await ForgetPasswordTokenApi(details);
+    if (response.success) {
+      toast.success(response.message);
+    } else {
+      toast.error(response.message);
+    }
+    setloading(false);
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+    },
+    validationSchema: validateSchema,
+    onSubmit: (values, { resetForm }) => {
+      // resetForm();
+      sumbitFunction(values);
+    },
+  });
+
+  const { errors, values, touched, handleChange, handleSubmit } = formik;
+
+  return (
+    <div className="space-y-5">
+      <form onSubmit={handleSubmit}>
+        <div>
+          <div className="mb-2 block">
+            <Label htmlFor="email" value="Your email" />
+          </div>
+          <TextInput
+            id="email"
+            placeholder="name@company.com"
+            color={touched.email && errors.email ? "failure" : "gray"}
+            helperText={
+              <div
+                className={
+                  touched.email && errors?.email ? "block mb-1" : "hidden"
+                }
+              >
+                <span className="font-medium">Oops! </span>
+                {errors?.email}
+              </div>
+            }
+            value={values.email}
+            onChange={handleChange}
+            readOnly={loading}
+          />
+        </div>
+
+        <div className="flex justify-end mb-4 cursor-pointer">
+          <span
+            className="text-sm text-cyan-700 hover:underline dark:text-cyan-500"
+            onClick={() => setaccountType("login")}
+          >
+            Want to Login?
+          </span>
+        </div>
+        <div>
+          <Button
+            className="w-full"
+            type="submit"
+            color="red"
+            isProcessing={loading}
+            disabled={loading}
+          >
+            Generate Reset-Password Link
+          </Button>
+        </div>
+      </form>
+
+      <div className="flex justify-center text-black dark:text-white font-bold">
+        {" "}
+        or{" "}
+      </div>
+
+      <div className="flex justify-between text-sm font-medium text-gray-500 dark:text-gray-300">
+        Not registered?&nbsp;
+        <span
+          onClick={() => setaccountType("signup")}
+          className="text-cyan-700 hover:underline dark:text-cyan-500 cursor-pointer"
+        >
+          Create account
         </span>
       </div>
     </div>

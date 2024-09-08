@@ -1,0 +1,292 @@
+[{
+  "_id": {
+    "$oid": "65df8a551cf9c7602a747783"
+  },
+  "name": "Master NodeJS",
+  "description": "Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine. It allows developers to run JavaScript on the server side, creating server-side applications with JavaScript.\n\nWhat are we going to cover?\n- Basics of Web\n- Basics of NodeJS and Modules\n- Working on NodeJS\n- Creating WebServers and API with Node and Express Framework.\n- MongoDB as Database for Data Storage.\n- EJS for Server Side Rendering.\n- Authentication and Authorization.\n- JWT Tokens\n- Advanced NodeJS Patterns such as MVC, etc.\n- Building Server with Express and Typescript.\n- And the list goes on...\n\n#nodejs #javascript #mernstack",
+  "price": 13,
+  "estimatedprice": 13,
+  "thumbnail": {
+    "url": "https://i.ytimg.com/vi/ohIAiuHMKMI/hqdefault.jpg?sqp=-oaymwEiCKgBEF5IWvKriqkDFQgBFQAAAAAYASUAAMhCPQCAokN4AQ==&rs=AOn4CLDJWrQAoib7VrvQAPKwWsCdpQ72wA"
+  },
+  "tags": "Node.js, JavaScript, Backend",
+  "level": "Intermediate",
+  "demoUrl": "https://www.youtube.com/watch?v=ohIAiuHMKMI",
+  "benefits": [
+    {
+      "title": "Understand asynchronous programming in Node.js",
+      "_id": {
+        "$oid": "66c1f3958ab26f1e653e6b08"
+      }
+    },
+    {
+      "title": "Build RESTful APIs with Express.js",
+      "_id": {
+        "$oid": "66c1f3958ab26f1e653e6b09"
+      }
+    },
+    {
+      "title": "Integrate MongoDB for database operations",
+      "_id": {
+        "$oid": "66c1f3958ab26f1e653e6b0a"
+      }
+    },
+    {
+      "title": "Deploy Node.js applications to production servers",
+      "_id": {
+        "$oid": "66c1f3958ab26f1e653e6b0b"
+      }
+    }
+  ],
+  "prerequsites": [
+    {
+      "title": "Basic knowledge of JavaScript",
+      "_id": {
+        "$oid": "66c1f3958ab26f1e653e6b0c"
+      }
+    },
+    {
+      "title": "Understanding of web development concepts",
+      "_id": {
+        "$oid": "66c1f3958ab26f1e653e6b0d"
+      }
+    },
+    {
+      "title": "shahidiiidkdkjkddj",
+      "_id": {
+        "$oid": "66c1f3958ab26f1e653e6b0e"
+      }
+    }
+  ],
+  "rating": 4.5,
+  "purchase": 12,
+  "createdAt": {
+    "$date": "2024-02-28T19:32:38.020Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-18T13:13:57.156Z"
+  },
+  "__v": 0,
+  "categories": [
+    {
+      "$oid": "660accdab849d34c6345bad8"
+    },
+    {
+      "$oid": "660a61eb32152405cb0783a3"
+    },
+    {
+      "$oid": "660a61b332152405cb0783a0"
+    }
+  ],
+  "playlistid": "PLinedj3B30sDby4Al-i13hQJGQoRQDfPo",
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "660bf37d75774afb59dced00"
+  },
+  "name": "MERN STACK IN HINDI 2024",
+  "playlistid": "PLwGdqUZWnOp2Z3eFOgtOGvOWIk4e8Bsr_",
+  "description": "Welcome to the World Best \"MERN Stack Tutorial in Hindi\" series!",
+  "price": 1300,
+  "estimatedprice": 1600,
+  "thumbnail": {
+    "url": "https://i.ytimg.com/vi/IymPq7ik29k/hqdefault.jpg?sqp=-oaymwEiCKgBEF5IWvKriqkDFQgBFQAAAAAYASUAAMhCPQCAokN4AQ==&rs=AOn4CLC5pS3ObPzKvjbbrBT_X45tJLJQqw"
+  },
+  "tags": "Node.js, JavaScript, Backend",
+  "level": "Beginner",
+  "demoUrl": "https://www.youtube.com/watch?v=IymPq7ik29k",
+  "benefits": [
+    {
+      "title": " is simply dummy text of the printing and typesetting industry.",
+      "_id": {
+        "$oid": "661a5a45cbe923bb8c2da7d7"
+      }
+    },
+    {
+      "title": "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, ",
+      "_id": {
+        "$oid": "661a5a45cbe923bb8c2da7d8"
+      }
+    }
+  ],
+  "prerequsites": [
+    {
+      "title": " is simply dummy text of the p",
+      "_id": {
+        "$oid": "661a5a45cbe923bb8c2da7d9"
+      }
+    },
+    {
+      "title": "660bdf31438afa195c68b3ee",
+      "_id": {
+        "$oid": "661a5a45cbe923bb8c2da7da"
+      }
+    }
+  ],
+  "rating": 0,
+  "purchase": 3,
+  "createdAt": {
+    "$date": "2024-04-02T12:01:01.023Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-10T18:58:31.686Z"
+  },
+  "__v": 0,
+  "categories": [
+    {
+      "$oid": "660a61b332152405cb0783a0"
+    }
+  ],
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "6635c82aef094e9cc423d482"
+  },
+  "name": "MERN STACK SUPREME 🔥",
+  "playlistid": "PLt5mNkGuWcuXc26LBe_5mBfVoN-12q_ns",
+  "description": "Create a Subscription based video streaming platform using mern stack.\nTechnologies used are MongoDB, Express, React, Node, RazorPay, ChakraUI, JWT Authentication, Nodemailer, Cookie Authentication, Cors, Cloudinary, Multer, Datauri",
+  "price": 1999,
+  "estimatedprice": 1499,
+  "thumbnail": {
+    "url": "https://i.ytimg.com/vi/IQlMX5ZoHmA/hqdefault.jpg?sqp=-oaymwEiCKgBEF5IWvKriqkDFQgBFQAAAAAYASUAAMhCPQCAokN4AQ==&rs=AOn4CLBLqkDAM83NVqhHhRECvURfTkWw8Q"
+  },
+  "tags": "Node.js, JavaScript, Backend",
+  "level": "Intermediate",
+  "demoUrl": "https://www.youtube.com/watch?v=IQlMX5ZoHmA",
+  "benefits": [
+    {
+      "title": "test 1",
+      "_id": {
+        "$oid": "6635c82aef094e9cc423d483"
+      }
+    }
+  ],
+  "prerequsites": [
+    {
+      "title": "test 2",
+      "_id": {
+        "$oid": "6635c82aef094e9cc423d484"
+      }
+    }
+  ],
+  "categories": [
+    {
+      "$oid": "660a61eb32152405cb0783a3"
+    },
+    {
+      "$oid": "660a61b332152405cb0783a0"
+    },
+    {
+      "$oid": "660accdab849d34c6345bad8"
+    }
+  ],
+  "rating": 0,
+  "purchase": 0,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2024-05-04T05:31:22.681Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-10T18:58:53.391Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6635cb44ef094e9cc423d506"
+  },
+  "name": "React JS In Telugu",
+  "playlistid": "PLWnZ0qt0PImVaDkDbF96dnRGO0_lXVLKf",
+  "description": "Reactjs tutorial for beginners in telugu.",
+  "price": 49,
+  "estimatedprice": 67,
+  "thumbnail": {
+    "url": "https://i.ytimg.com/vi/rF5Yor08uGw/hqdefault.jpg?sqp=-oaymwEiCKgBEF5IWvKriqkDFQgBFQAAAAAYASUAAMhCPQCAokN4AQ==&rs=AOn4CLCLQSljerwua8-ZnDhA5ss0lAISAA"
+  },
+  "tags": "Node.js, JavaScript, Backend",
+  "level": "Beginner",
+  "demoUrl": "https://www.youtube.com/watch?v=rF5Yor08uGw",
+  "benefits": [
+    {
+      "title": "checkkk",
+      "_id": {
+        "$oid": "66c205641b6d66b90ed6aac4"
+      }
+    }
+  ],
+  "prerequsites": [
+    {
+      "title": "chekckkkklsjdkf sfdf ",
+      "_id": {
+        "$oid": "66c205641b6d66b90ed6aac5"
+      }
+    }
+  ],
+  "categories": [
+    {
+      "$oid": "660a61b332152405cb0783a0"
+    }
+  ],
+  "rating": 0,
+  "purchase": 1,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2024-05-04T05:44:36.661Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-18T14:29:56.995Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6637c84a6313b3f19355800c"
+  },
+  "name": "MERN Stack LMS Series",
+  "playlistid": "PLyah27R0n8V6umBtqQHxc9MNMlLLkH-H5",
+  "description": "",
+  "price": 19,
+  "estimatedprice": 25,
+  "thumbnail": {
+    "url": "https://i.ytimg.com/vi/kf6yyxMck8Y/hqdefault.jpg?sqp=-oaymwEiCKgBEF5IWvKriqkDFQgBFQAAAAAYASUAAMhCPQCAokN4AQ==&rs=AOn4CLBNGVgV93v9L5x3UB8XzInzSmpjjA"
+  },
+  "tags": "Node.js, JavaScript, Backend",
+  "level": "Expert",
+  "demoUrl": "https://www.youtube.com/watch?v=kf6yyxMck8Y",
+  "benefits": [
+    {
+      "title": "test",
+      "_id": {
+        "$oid": "6637c84a6313b3f19355800d"
+      }
+    }
+  ],
+  "prerequsites": [
+    {
+      "title": "test",
+      "_id": {
+        "$oid": "6637c84a6313b3f19355800e"
+      }
+    }
+  ],
+  "categories": [
+    {
+      "$oid": "6635e82cfab7112cf65753f3"
+    },
+    {
+      "$oid": "660a61b332152405cb0783a0"
+    }
+  ],
+  "rating": 4,
+  "purchase": -2,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2024-05-05T17:56:26.708Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-04T10:11:36.906Z"
+  },
+  "__v": 0
+}]

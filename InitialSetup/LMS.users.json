@@ -1,0 +1,269 @@
+[
+
+{
+  "_id": {
+    "$oid": "660300261cd1aaff480fae32"
+  },
+  "name": "User 1 Update",
+  "email": "user1@example.com",
+  "password": "$2b$10$xDDRJdyZgl4NUme5tMkDgOaf4P69fGFHwR6dazcv.PZI7TU65EaZ6",
+  "profile": {
+    "public_id": "LMS_Project/userProfile/nznsvg1wkzw8isystgsr",
+    "url": "https://res.cloudinary.com/dml8opujw/image/upload/v1715961560/LMS_Project/userProfile/nznsvg1wkzw8isystgsr.jpg"
+  },
+  "role": "admin",
+  "isVerified": true,
+  "courses": [
+    {
+      "$oid": "65df8a551cf9c7602a747783"
+    },
+    {
+      "$oid": "6639338b2587b8784b062c7d"
+    },
+    {
+      "$oid": "660bf37d75774afb59dced00"
+    }
+  ],
+  "createdAt": {
+    "$date": "2024-01-26T18:08:35.548Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-17T16:09:50.710Z"
+  },
+  "__v": 3,
+  "isSocialAuth": false
+},
+{
+  "_id": {
+    "$oid": "660300261cd1aaff480fae33"
+  },
+  "name": "User 2",
+  "email": "user2@example.com",
+  "password": "$2b$10$xDDRJdyZgl4NUme5tMkDgOaf4P69fGFHwR6dazcv.PZI7TU65EaZ6",
+  "profile": {
+    "url": "https://randomuser.me/api/portraits/women/16.jpg"
+  },
+  "role": "user",
+  "isVerified": true,
+  "courses": [],
+  "createdAt": {
+    "$date": "2024-01-27T18:08:35.548Z"
+  },
+  "updatedAt": {
+    "$date": "2024-01-27T18:08:35.548Z"
+  },
+  "__v": 0,
+  "isSocialAuth": false
+},
+{
+  "_id": {
+    "$oid": "660300261cd1aaff480fae34"
+  },
+  "name": "User 3",
+  "email": "user3@example.com",
+  "password": "$2b$10$xDDRJdyZgl4NUme5tMkDgOaf4P69fGFHwR6dazcv.PZI7TU65EaZ6",
+  "profile": {
+    "url": "https://example.com/profiles/user3.png"
+  },
+  "role": "user",
+  "isVerified": true,
+  "courses": [],
+  "createdAt": {
+    "$date": "2024-01-28T18:08:35.548Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-09T10:10:20.537Z"
+  },
+  "__v": 0,
+  "isSocialAuth": false
+},
+{
+  "_id": {
+    "$oid": "660300261cd1aaff480fae35"
+  },
+  "name": "User 4",
+  "email": "user4@example.com",
+  "password": "$2b$10$xDDRJdyZgl4NUme5tMkDgOaf4P69fGFHwR6dazcv.PZI7TU65EaZ6",
+  "profile": {
+    "url": "https://example.com/profiles/user4.png"
+  },
+  "role": "user",
+  "isVerified": true,
+  "courses": [],
+  "createdAt": {
+    "$date": "2024-01-29T18:08:35.548Z"
+  },
+  "updatedAt": {
+    "$date": "2024-01-29T18:08:35.548Z"
+  },
+  "__v": 0,
+  "isSocialAuth": false
+},
+{
+  "_id": {
+    "$oid": "660300261cd1aaff480fae36"
+  },
+  "name": "User 5",
+  "email": "user5@example.com",
+  "password": "$2b$10$xDDRJdyZgl4NUme5tMkDgOaf4P69fGFHwR6dazcv.PZI7TU65EaZ6",
+  "profile": {
+    "url": "https://example.com/profiles/user5.png"
+  },
+  "role": "user",
+  "isVerified": true,
+  "courses": [],
+  "createdAt": {
+    "$date": "2024-01-30T18:08:35.548Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-09T10:10:32.195Z"
+  },
+  "__v": 0,
+  "isSocialAuth": false
+},
+{
+  "_id": {
+    "$oid": "660300261cd1aaff480fae37"
+  },
+  "name": "User 6",
+  "email": "user6@example.com",
+  "password": "$2b$10$.bv6wtTmcJxE77VtgNUAFu5gwbq1grShep8od9JJpqzgB7k1apBxq",
+  "profile": {
+    "url": "https://example.com/profiles/user6.png"
+  },
+  "role": "user",
+  "isVerified": true,
+  "courses": [
+    {
+      "$oid": "6637c84a6313b3f19355800c"
+    },
+    {
+      "$oid": "6637c84a6313b3f19355800c"
+    }
+  ],
+  "createdAt": {
+    "$date": "2024-01-31T18:08:35.548Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-18T14:25:04.573Z"
+  },
+  "__v": 2,
+  "isSocialAuth": false
+},
+{
+  "_id": {
+    "$oid": "660300261cd1aaff480fae38"
+  },
+  "name": "User 7",
+  "email": "user7@example.com",
+  "password": "$2b$10$.bv6wtTmcJxE77VtgNUAFu5gwbq1grShep8od9JJpqzgB7k1apBxq",
+  "profile": {
+    "url": "https://example.com/profiles/user7.png"
+  },
+  "role": "teacher",
+  "isVerified": true,
+  "courses": [],
+  "createdAt": {
+    "$date": "2024-02-01T18:08:35.548Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-04T14:47:18.937Z"
+  },
+  "__v": 0,
+  "isSocialAuth": false
+},
+{
+  "_id": {
+    "$oid": "665a0e262de2f8c0a3842f91"
+  },
+  "name": "posamij204",
+  "email": "posamij204@crodity.com",
+  "password": "$2b$10$3LLZdpPudkSRRFVL.v7N8eszvG/z/eC/XU1X9UPmn59u4TyS.tpSm",
+  "profile": {
+    "url": "https://res.cloudinary.com/dml8opujw/image/upload/v1689786795/ChatProjectMERN/ptf9embkszp4yjyput8s.png"
+  },
+  "role": "teacher",
+  "isVerified": true,
+  "isSocialAuth": false,
+  "courses": [
+    {
+      "$oid": "6637c84a6313b3f19355800c"
+    },
+    {
+      "$oid": "6635cb44ef094e9cc423d506"
+    },
+    {
+      "$oid": "6635cb44ef094e9cc423d506"
+    },
+    {
+      "$oid": "65df8a551cf9c7602a747783"
+    },
+    {
+      "$oid": "65df8a551cf9c7602a747783"
+    }
+  ],
+  "createdAt": {
+    "$date": "2024-05-31T17:51:34.490Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-04T14:48:03.362Z"
+  },
+  "__v": 8
+},
+{
+  "_id": {
+    "$oid": "66b797500c4eaa4cee56bb22"
+  },
+  "name": "gibodin246",
+  "email": "gibodin246@biowey.com",
+  "password": "$2b$10$.bv6wtTmcJxE77VtgNUAFu5gwbq1grShep8od9JJpqzgB7k1apBxq",
+  "profile": {
+    "url": "https://res.cloudinary.com/dml8opujw/image/upload/v1689786795/ChatProjectMERN/ptf9embkszp4yjyput8s.png"
+  },
+  "role": "user",
+  "isVerified": true,
+  "isSocialAuth": false,
+  "courses": [
+    {
+      "$oid": "6637c84a6313b3f19355800c"
+    },
+    {
+      "$oid": "6637c84a6313b3f19355800c"
+    },
+    {
+      "$oid": "65df8a551cf9c7602a747783"
+    },
+    {
+      "$oid": "65df8a551cf9c7602a747783"
+    }
+  ],
+  "createdAt": {
+    "$date": "2024-08-10T16:37:36.631Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-18T13:14:51.303Z"
+  },
+  "__v": 4
+},
+{
+  "_id": {
+    "$oid": "66dd698edbc5433e363be765"
+  },
+  "name": "waxesan459",
+  "email": "waxesan459@esterace.com",
+  "password": "$2b$10$oPllyBrtBtXYy4uFuNAnfef/ZMrDkDdYg8JU5bItVtXI3OIqDzKXe",
+  "profile": {
+    "url": "https://res.cloudinary.com/dml8opujw/image/upload/v1689786795/ChatProjectMERN/ptf9embkszp4yjyput8s.png"
+  },
+  "role": "user",
+  "isVerified": true,
+  "isSocialAuth": false,
+  "courses": [],
+  "createdAt": {
+    "$date": "2024-09-10T16:37:36.631Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-08T09:14:10.056Z"
+  },
+  "__v": 4
+}]

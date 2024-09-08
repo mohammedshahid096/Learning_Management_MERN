@@ -18,6 +18,8 @@ const {
   AdminDeleteUserController,
   userCoursesListController,
   GetUserIdByQueryController,
+  ForgotPasswordSendTokenController,
+  ResetPasswordController,
 } = require("../Controllers/user.controller");
 const { Authentication, Authorization } = require("../Middlewares/Auth");
 const { UserProfileUpload } = require("../Middlewares/Multer");
@@ -47,6 +49,11 @@ UserRoutes.route("/me/update-password").put(
   Authentication,
   Authorization("user", "admin"),
   UpdatePasswordController
+);
+
+UserRoutes.route("/password/forgot").post(ForgotPasswordSendTokenController);
+UserRoutes.route("/password/reset-password/:token").put(
+  ResetPasswordController
 );
 
 UserRoutes.route("/me/courses").get(

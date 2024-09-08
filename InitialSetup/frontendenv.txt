@@ -1,0 +1,18 @@
+VITE_DEVELOPMENT_MODE = development 
+# VITE_DEVELOPMENT_MODE = production
+
+# Server url
+VITE_SERVER_URL_API = https://production_url/api/v1
+
+# Auth0 
+VITE_AUTH0_DOMAIN = 
+VITE_AUTH0_CLIENT = 
+VITE_ACCESS_TOKEN_KEY_TIME_COOKIE=5
+
+# Razopay
+VITE_RAZOPAY_KEY = 
+
+# Sentry Url
+VITE_SENTRY_DSN = 
+
+

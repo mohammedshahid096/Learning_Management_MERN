@@ -82,3 +82,19 @@ module.exports.AddCourseByAdminValidation = (body) => {
   });
   return schema.validate(body);
 };
+
+// updating the user role by admin
+module.exports.SendResetPasswordLinkValidation = (body) => {
+  const schema = Joi.object({
+    email: Joi.string().email().required().label("email"),
+  });
+  return schema.validate(body);
+};
+// reseting the password
+module.exports.ResetPasswordValidation = (body) => {
+  const schema = Joi.object({
+    password: passwordComplexity().required().label("Password"),
+    confirm_password: passwordComplexity().required().label("Confirm Password"),
+  });
+  return schema.validate(body);
+};

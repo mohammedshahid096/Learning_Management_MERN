@@ -5,6 +5,7 @@ const { redis } = require("../Config/redis.config");
 const usetube = require("usetube");
 const youtubesearch = require("youtube-search-api");
 const getMetaData = require("metadata-scraper");
+const moment = require("moment");
 
 TestRouter.route("/redis").get(async (req, res) => {
   let data = await redis.mget("name", "isTrue");
@@ -42,6 +43,16 @@ TestRouter.route("/test3").post(async (req, res, next) => {
     const { url } = req.body;
     const data = await getMetaData(url);
     res.status(200).json(data);
+  } catch (error) {
+    next(httpErrors.InternalServerError(error.message));
+  }
+});
+TestRouter.route("/test4").get(async (req, res, next) => {
+  try {
+    res.status(200).json({
+      success: true,
+      time: moment("2024-09-08T07:02:15.591+00:00").format("LLL"),
+    });
   } catch (error) {
     next(httpErrors.InternalServerError(error.message));
   }
